@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const canvasSketch = require('../');
 
 const settings = {
   // Output resolution, we can use 300PPI for print
@@ -11,7 +11,7 @@ const settings = {
 
 const sketch = ({ context }) => {
   // Utility to draw a circle with or without a fill
-  const circle = (x, y, radius, fill) => {
+  const circle = (x, y, radius, fill = false) => {
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2, false);
     if (fill) context.fill();
@@ -26,20 +26,15 @@ const sketch = ({ context }) => {
 
     context.strokeStyle = '#fff';
     context.fillStyle = '#fff';
-    context.lineWidth = 0.005;
-    const count = 32 * 4;
-    for (let i = 0; i < count; i++) {
-      const t = i / count;
-      const angle = t * Math.PI * 40;
-      const offset = Math.pow(t, 0.5) * 0.75;
-      const tx = Math.cos(angle) * offset;
-      const ty = Math.sin(angle) * offset;
-      const cx = width / 2 + tx;
-      const cy = height / 2 + ty;
-      const radius = 0.02 * Math.pow(t, 0.5);
-      circle(cx, cy, radius, i % 2 === 0);
+    context.lineWidth = 0.01;
+    for (let i = 0; i < 5; i++) {
+      const x = i / 4 * width;
+      const y = height / 2;
+      const radius = i % 2 === 0 ? 0.5 : 0.25;
+      const fill = i % 4 === 0;
+      circle(x, y, radius, fill);
     }
   };
 };
 
-sketcher(sketch, settings);
+canvasSketch(sketch, settings);

@@ -9,7 +9,6 @@ const settings = {
 
 const sketch = () => {
   return ({ context, width, height }) => {
-    console.log('render')
     // Clear canvas
     context.clearRect(0, 0, width, height);
 

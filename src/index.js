@@ -5,10 +5,9 @@ import rightNow from 'right-now';
 import isPromise from 'is-promise';
 import { toPixels, isWebGLContext, isCanvas } from './util';
 import deepEqual from 'deep-equal';
-import { saveFile, saveCanvas, saveDataURL } from './save';
+import { saveFile, saveDataURL } from './save';
 
 class SketchManager {
-
   constructor () {
     this._settings = {};
     this._props = {};
@@ -21,10 +20,10 @@ class SketchManager {
       const oldSizes = this._getSizeProps();
       this.resize();
 
-      // For now, this avoids unnecessary re-renders
-      // However, it might just be overkill for games/etc.
+      // This is to avoid unnecessary re-renders on resize,
+      // as a lot of generative art projects can be slow to render.
       if (!deepEqual(oldSizes, this._getSizeProps())) {
-        this.draw();
+        this.render();
       }
     };
 
@@ -40,6 +39,7 @@ class SketchManager {
           } else this.record();
         } else this.exportFrame();
       } else if (ev.keyCode === 32) {
+        // Space
         if (this.props.playing) this.pause();
         else this.play();
       }
@@ -89,18 +89,25 @@ class SketchManager {
     };
   }
 
-  play () {
+  run () {
     if (!this.sketch) throw new Error('should wait until sketch is loaded before trying to play()');
 
-    this.draw();
+    // Render an initial frame
+    this.render();
 
-    // Start an animation frame loop
-    if (this.settings.animation) {
-      this.props.playing = true;
-      if (this._raf != null) window.cancelAnimationFrame(this._raf);
-      this._lastTime = rightNow();
-      this._raf = window.requestAnimationFrame(this._animateHandler);
+    // Start an animation frame loop if necessary
+    if (this.settings.playing !== false) {
+      this.play();
     }
+  }
+
+  play () {
+    if (!this.settings.animation) return;
+    // Start a render loop
+    this.props.playing = true;
+    if (this._raf != null) window.cancelAnimationFrame(this._raf);
+    this._lastTime = rightNow();
+    this._raf = window.requestAnimationFrame(this._animateHandler);
   }
 
   pause () {
@@ -116,7 +123,7 @@ class SketchManager {
     this.props.playhead = 0;
     this.props.time = 0;
     this.props.deltaTime = 0;
-    this.draw();
+    this.render();
   }
 
   record () {
@@ -128,13 +135,16 @@ class SketchManager {
     const frameInterval = 1 / this.props.fps;
     // Render each frame in the sequence
     if (this._raf != null) window.cancelAnimationFrame(this._raf)
+    const hasDuration = isFinite(this.props.duration);
     const tick = () => {
       if (!this.props.recording) return Promise.resolve();
       this.props.deltaTime = frameInterval;
       const frame = this.props.frame;
       return this.exportFrame({ sequence: true })
         .then(() => {
-          console.log(`Saved Frame ${frame} of ${this.props.totalFrames}`);
+          console.log(hasDuration
+            ? `Saved Frame ${frame} of ${this.props.totalFrames}`
+            : `Saved Frame ${frame}`);
           if (!this.props.recording) return; // was cancelled before
           this.props.deltaTime = 0;
           this.props.frame++;
@@ -145,7 +155,7 @@ class SketchManager {
           } else {
             console.log('Finished recording');
             this.endRecord();
-            this.play();
+            this.run();
           }
         });
     };
@@ -170,7 +180,7 @@ class SketchManager {
     this.resize();
 
     // Draw at this output resolution
-    let drawResult = this.draw();
+    let drawResult = this.render();
 
     // The self owned canvas
     const canvas = this.props.canvas;
@@ -183,39 +193,39 @@ class SketchManager {
 
     // Options for export function
     let exportOpts = assign({
-      frame: opt.sequence ? this.props.frame : undefined
-    }, this.settings.exporter, {
-      totalFrames: Math.max(100, this.props.totalFrames)
+      frame: opt.sequence ? this.props.frame : undefined,
+      file: this.settings.file,
+      totalFrames: isFinite(this.props.totalFrames) ? Math.max(100, this.props.totalFrames) : 1000
     });
 
-    // Whether one of the results to save is our own canvas
-    const hasSelfCanvas = drawResult.some(r => r === canvas);
+    // Transform the canvas/file descriptors into a consistent format,
+    // and pull out any data URLs from canvas elements
+    drawResult = drawResult.map(result => {
+      const hasDataObject = typeof result === 'object' && result && 'data' in result;
+      const data = hasDataObject ? result.data : result;
+      const opts = hasDataObject ? assign({}, result, { data }) : { data };
 
-    // If so, grab the data URL immediately
-    let dataURL;
-    if (hasSelfCanvas) {
-      dataURL = canvas.toDataURL('image/png');
-    }
+      if (isCanvas(data)) {
+        // Provide data URL hint
+        return Object.assign(opts, { url: data.toDataURL('image/png'), extension: '.png', type: 'image/png' });
+      } else {
+        return opts;
+      }
+    });
 
     // Now return to regular rendering mode
     this._props.exporting = false;
     this.resize();
-    this.draw();
+    this.render();
 
     // And now we can save each result
-    return Promise.all(drawResult.map((ret, i) => {
-      const prefix = drawResult.length > 1 ? `Render ${i} - ` : undefined;
-      const curOpt = assign({ prefix }, exportOpts);
-      if (ret === canvas) {
-        // this canvas, use dataURL we already captured
-        return saveDataURL(dataURL, assign({}, curOpt, { extension: '.png' }));
-      } else if (isCanvas(ret)) {
-        return saveCanvas(ret, assign({}, curOpt, { extension: '.png' }));
-      } else if (typeof ret.data !== 'undefined' && typeof ret.extension !== 'undefined') {
-        return saveFile(ret.data, Object.assign(curOpt, { type: ret.type, extension: ret.extension }));
-      } else {
-        throw new Error('Invalid return type; expected canvas, file descriptor as in { extension, data }, or an array of file descriptors');
-      }
+    return Promise.all(drawResult.map((result, i) => {
+      // By default, if rendering multiple layers we will give them indices
+      const prefix = drawResult.length > 1 ? `Render - Layer ${i} - ` : 'Render - ';
+      const curOpt = assign({ prefix }, exportOpts, result);
+      const data = result.data;
+      if (result.url) return saveDataURL(result.url, curOpt);
+      else return saveFile(data, curOpt);
     })).then(() => {
       if (typeof this.sketch.postExport === 'function') {
         this.sketch.postExport();
@@ -223,7 +233,7 @@ class SketchManager {
     });
   }
 
-  draw () {
+  render () {
     if (!this.sketch) return;
 
     const props = this.props;
@@ -251,6 +261,29 @@ class SketchManager {
     return drawResult;
   }
 
+  update (opt = {}) {
+    // Currently update() is only focused on resizing,
+    // but later we will support other options like switching
+    // frames and such.
+    const notYetSupported = [
+      'canvas', 'context', 'frame', 'time', 'duration',
+      'totalFrames', 'fps', 'playing', 'animation'
+    ];
+
+    Object.keys(opt).forEach(key => {
+      if (notYetSupported.indexOf(key) >= 0) {
+        throw new Error(`Sorry, the { ${key} } option is not yet supported with update().`);
+      }
+    });
+
+    // Merge in props
+    assign(this._settings, opt);
+
+    // Draw new frame
+    this.resize();
+    this.render();
+  }
+
   resize () {
     let width, height;
     let viewportWidth, viewportHeight;
@@ -262,7 +295,7 @@ class SketchManager {
     const hasDimensions = dimensions && Array.isArray(dimensions) && dimensions.length >= 2;
     const exporting = this.props.exporting;
     const scaleToFit = hasDimensions ? settings.scaleToFit !== false : false;
-    const scaleToView = hasDimensions ? settings.scaleToView : true;
+    const scaleToView = (!exporting && hasDimensions) ? settings.scaleToView : true;
     let pixelRatio = defined(settings.pixelRatio, window.devicePixelRatio);
     if (typeof settings.maxPixelRatio === 'number') {
       pixelRatio = Math.min(settings.maxPixelRatio, pixelRatio);
@@ -319,8 +352,8 @@ class SketchManager {
 
     // e.g. @2x exporting for PNG sprites
     let exportPixelRatio = 1;
-    if (exporting && typeof settings.exportPixelRatio === 'number') {
-      exportPixelRatio = settings.exportPixelRatio;
+    if (exporting) {
+      exportPixelRatio = defined(settings.exportPixelRatio, hasDimensions ? 1 : pixelRatio);
       pixelRatio = exportPixelRatio;
     }
 
@@ -393,6 +426,7 @@ class SketchManager {
     }
 
     // Re-start animation
+    let isFinished = false;
     if (hasDuration && newTime >= duration) {
       isNewFrame = true;
 
@@ -401,7 +435,7 @@ class SketchManager {
         newTime = newTime % duration;
       } else {
         newTime = duration;
-        this.stop();
+        isFinished = true;
       }
     }
 
@@ -410,8 +444,12 @@ class SketchManager {
       this.props.time = newTime;
       this.props.playhead = this._computePlayhead(newTime, duration);
       this.props.frame = this._computeCurrentFrame();
-      this.draw();
+      this.render();
       this.props.deltaTime = 0;
+    }
+
+    if (isFinished) {
+      this.stop();
     }
   }
 
@@ -431,23 +469,24 @@ class SketchManager {
   }
 
   setup (settings = {}) {
-    if (this.sketch) throw new Error('Already have a sketch, try await unload() before another setup()');
+    if (this.sketch) throw new Error('Multiple setup() calls not yet supported.');
 
-    this._settings = Object.assign({}, settings);
+    this._settings = Object.assign({}, settings, this._settings);
+
+    let context, canvas;
 
     // Determine the canvas and context to create
-    let context = settings.context;
+    context = settings.context;
     if (!context || typeof context === 'string') {
       const newCanvas = settings.canvas || document.createElement('canvas');
       const type = context || '2d';
-      context = getCanvasContext(type, { canvas: newCanvas });
+      context = getCanvasContext(type, assign({}, settings.attributes, { canvas: newCanvas }));
       if (!context) {
         throw new Error(`Failed at canvas.getContext('${type}') - the browser may not support this context, or a different context may already be in use with this canvas.`);
       }
     }
 
-    const canvas = context.canvas;
-
+    canvas = context.canvas;
     // Ensure context matches user's canvas expectations
     if (settings.canvas && canvas !== settings.canvas) {
       throw new Error('The { canvas } and { context } settings must point to the same underlying canvas element');
@@ -520,7 +559,18 @@ class SketchManager {
       playing: false,
       recording: false,
       totalFrames,
-      timeScale
+      timeScale,
+      settings: this.settings,
+
+      // Export some specific actions to the sketch
+      render: () => this.render(),
+      resize: () => this.resize(),
+      update: (opt) => this.update(opt),
+      exportFrame: opt => this.exportFrame(opt),
+      record: () => this.record(),
+      play: () => this.play(),
+      pause: () => this.pause(),
+      stop: () => this.stop()
     };
 
     // For WebGL sketches, a gl variable reads a bit better
@@ -561,10 +611,11 @@ export default function (sketch, settings = {}) {
     // Mount the sketch to its parent element (or document.body)
     manager.mount();
     // Load the sketch
-    manager.load(sketch).then(() => {
+    return manager.load(sketch).then(() => {
       // Start playback/rendering
-      manager.play();
+      manager.run();
+      return manager;
     });
   }
-  return manager;
+  return Promise.resolve(manager);
 }

@@ -1,9 +1,9 @@
 const sketcher = require('../');
 
 const settings = {
-  animation: true,
   dimensions: [ 512, 512 ],
   duration: 3,
+  animation: true,
   fps: 24,
   exportPixelRatio: 2
 };

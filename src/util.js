@@ -15,6 +15,8 @@ export function toPixels (dimension, units, pixelsPerInch = 72) {
   if (typeof units !== 'string') throw new Error("Invalid unit type, must be a string like 'cm' or 'in'");
   if (units === 'px') return dimension;
   if (availableUnits.includes(units)) {
+    // TODO: We can remove a huge chunk of bundle size by using a smaller
+    // utility module for converting units.
     const inches = convertUnits(dimension).from(units).to('in');
     return inchesToPixels(inches, pixelsPerInch);
   } else {

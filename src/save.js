@@ -25,8 +25,7 @@ export function saveDataURL (dataURI, opts = {}) {
 export function saveBlob (blob, opts = {}) {
   return new Promise(resolve => {
     // force download
-    const defaultPrefix = 'Render - ';
-    opts = assign({ extension: '', prefix: defaultPrefix, suffix: '' }, opts);
+    opts = assign({ extension: '', prefix: '', suffix: '' }, opts);
     link.download = resolveFilename(opts);
     link.href = window.URL.createObjectURL(blob);
     link.onclick = () => {
