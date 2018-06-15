@@ -325,7 +325,7 @@ For example, let's say we want to load the below "Baboon" test image and glitch 
 Our sketch might look like this:
 
 ```js
-const canvasSketch = require('../');
+const canvasSketch = require('canvas-sketch');
 const load = require('load-asset');
 
 // We create an 'async' sketch

@@ -19,7 +19,6 @@ canvasSketch(async ({ update }) => {
 
     // Manipualte pixels
     const data = pixels.data;
-
     let len = width;
     while (len) {
       const newX = Math.floor(Math.random() * len--);
