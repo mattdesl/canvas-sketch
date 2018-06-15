@@ -4,7 +4,7 @@ import padLeft from 'pad-left';
 import extname from 'get-ext';
 
 const noop = () => {};
-const link = document.createElement('a');
+let link;
 
 export function dataURIToBlob (dataURI) {
   const binStr = window.atob(dataURI.split(',')[1]);
@@ -26,6 +26,7 @@ export function saveBlob (blob, opts = {}) {
   return new Promise(resolve => {
     // force download
     opts = assign({ extension: '', prefix: '', suffix: '' }, opts);
+    if (!link) link = document.createElement('a');
     link.download = resolveFilename(opts);
     link.href = window.URL.createObjectURL(blob);
     link.onclick = () => {
@@ -40,20 +41,15 @@ export function saveBlob (blob, opts = {}) {
   });
 }
 
-export function getDefaultFile (prefix = '', suffix = '', ext) {
-  const dateFormatStr = `yyyy-mm-dd 'at' h.MM.ss TT`;
-  return `${prefix}${dateformat(new Date(), dateFormatStr)}${suffix}${ext}`;
-}
-
-export function saveCanvas (canvas, opts = {}) {
-  const uri = canvas.toDataURL(canvas, 'image/png');
-  return saveDataURL(uri, assign({}, opts, { extension: '.png' }));
-}
-
 export function saveFile (data, opts = {}) {
   const parts = Array.isArray(data) ? data : [ data ];
   const blob = new window.Blob(parts, { type: opts.type || '' });
   return saveBlob(blob, opts);
+}
+
+function getDefaultFile (prefix = '', suffix = '', ext) {
+  const dateFormatStr = `yyyy-mm-dd 'at' h.MM.ss TT`;
+  return `${prefix}${dateformat(new Date(), dateFormatStr)}${suffix}${ext}`;
 }
 
 function resolveFilename (opt = {}) {

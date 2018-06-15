@@ -334,7 +334,7 @@ canvasSketch(async ({ update }) => {
   const image = await load('assets/baboon.jpg');
 
   // Once the image is loaded, we can update the output
-  // settings to match
+  // settings to match it
   update({
     dimensions: [ image.width, image.height ]
   });
