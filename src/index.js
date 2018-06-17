@@ -5,7 +5,9 @@ import rightNow from 'right-now';
 import isPromise from 'is-promise';
 import { toPixels, isWebGLContext, isCanvas } from './util';
 import deepEqual from 'deep-equal';
-import { saveFile, saveDataURL } from './save';
+import { saveFile, saveDataURL, getFileName } from './save';
+
+const getClientAPI = () => window['canvas-sketch-cli'];
 
 class SketchManager {
   constructor () {
@@ -13,6 +15,9 @@ class SketchManager {
     this._props = {};
     this._sketch = undefined;
     this._raf = null;
+
+    this._thumbCanvas = null;
+    this._thumbContext = null;
 
     this._animateHandler = () => this.animate();
 
@@ -29,6 +34,8 @@ class SketchManager {
 
     this._exportHandler = ev => {
       if (this.settings.hotkeys === false) return;
+
+      const client = getClientAPI();
       if (ev.keyCode === 83 && (ev.metaKey || ev.ctrlKey)) {
         // Cmd + S
         ev.preventDefault();
@@ -42,6 +49,10 @@ class SketchManager {
         // Space
         if (this.props.playing) this.pause();
         else this.play();
+      } else if (client && ev.keyCode === 75 && (ev.metaKey || ev.ctrlKey)) {
+        // Cmd + K, only when canvas-sketch-cli is used
+        ev.preventDefault();
+        this.exportFrame({ commit: true });
       }
     };
   }
@@ -174,6 +185,29 @@ class SketchManager {
       this.sketch.preExport();
     }
 
+    // Options for export function
+    let exportOpts = assign({
+      frame: opt.sequence ? this.props.frame : undefined,
+      file: this.settings.file,
+      timeStamp: getFileName(),
+      totalFrames: isFinite(this.props.totalFrames) ? Math.max(100, this.props.totalFrames) : 1000
+    });
+
+    const client = getClientAPI();
+    let p = Promise.resolve();
+    if (client && opt.commit && typeof client.commit === 'function') {
+      const commitOpts = assign({}, exportOpts);
+      const hash = client.commit(commitOpts);
+      if (isPromise(hash)) p = hash;
+      else p = Promise.resolve(hash);
+    }
+
+    return p.then(hash => {
+      return this._doExportFrame(assign({}, exportOpts, { hash }));
+    });
+  }
+
+  _doExportFrame (exportOpts = {}) {
     this._props.exporting = true;
 
     // Resize to output resolution
@@ -191,12 +225,25 @@ class SketchManager {
     }
     drawResult = [].concat(drawResult).filter(Boolean);
 
-    // Options for export function
-    let exportOpts = assign({
-      frame: opt.sequence ? this.props.frame : undefined,
-      file: this.settings.file,
-      totalFrames: isFinite(this.props.totalFrames) ? Math.max(100, this.props.totalFrames) : 1000
-    });
+    // if (opt.thumbnail) {
+    //   if (!this._thumbCanvas) {
+    //     this._thumbCanvas = document.createElement('canvas');
+    //     this._thumbContext = this._thumbCanvas.getContext('2d');
+    //   }
+
+    //   const aspect = this.props.canvasWidth / this.props.canvasHeight;
+    //   const thumbnailWidth = Math.floor(defined(this.settings.thumbnailSize, 64));
+    //   const thumbnailHeight = Math.floor(thumbnailWidth / aspect);
+    //   this._thumbCanvas.width = thumbnailWidth;
+    //   this._thumbCanvas.height = thumbnailHeight;
+    //   this._thumbContext.clearRect(0, 0, thumbnailWidth, thumbnailHeight);
+    //   this._thumbContext.drawImage(canvas, 0, 0, thumbnailWidth, thumbnailHeight);
+
+    //   drawResult.push({
+    //     data: this._thumbCanvas,
+    //     suffix: '.thumb'
+    //   });
+    // }
 
     // Transform the canvas/file descriptors into a consistent format,
     // and pull out any data URLs from canvas elements
@@ -219,18 +266,30 @@ class SketchManager {
     this.render();
 
     // And now we can save each result
-    return Promise.all(drawResult.map((result, i) => {
+    return Promise.all(drawResult.map((result, i, layerList) => {
       // By default, if rendering multiple layers we will give them indices
-      const prefix = drawResult.length > 1 ? `Render - Layer ${i} - ` : 'Render - ';
-      const curOpt = assign({ prefix }, exportOpts, result);
+      // const prefix = drawResult.length > 1 ? `Render - Layer ${i} - ` : 'Render - ';
+      const curOpt = assign({ layer: i, totalLayers: layerList.length }, exportOpts, result);
       const data = result.data;
       if (result.url) return saveDataURL(result.url, curOpt);
       else return saveFile(data, curOpt);
-    })).then(() => {
-      if (typeof this.sketch.postExport === 'function') {
-        this.sketch.postExport();
-      }
-    });
+    }))
+      // .then(files => {
+      //   console.log('Saved files', files);
+      //   const client = getClientAPI();
+      //   let p = Promise.resolve();
+      //   if (client && opt.commit && typeof client.commit === 'function') {
+      //     const metaOpts = assign({}, exportOpts);
+      //     const result = client.commit(files, metaOpts);
+      //     if (isPromise(result)) p = result;
+      //   }
+      //   return p;
+      // })
+      .then(() => {
+        if (typeof this.sketch.postExport === 'function') {
+          this.sketch.postExport();
+        }
+      });
   }
 
   render () {

@@ -27,14 +27,17 @@ export function saveBlob (blob, opts = {}) {
     // force download
     opts = assign({ extension: '', prefix: '', suffix: '' }, opts);
     if (!link) link = document.createElement('a');
-    link.download = resolveFilename(opts);
+    const file = resolveFilename(opts);
+    link.download = file;
     link.href = window.URL.createObjectURL(blob);
     link.onclick = () => {
       link.onclick = noop;
       setTimeout(() => {
         window.URL.revokeObjectURL(blob);
         link.removeAttribute('href');
-        resolve();
+        resolve({
+          file
+        });
       });
     };
     link.click();
@@ -47,18 +50,33 @@ export function saveFile (data, opts = {}) {
   return saveBlob(blob, opts);
 }
 
-function getDefaultFile (prefix = '', suffix = '', ext) {
+export function getFileName () {
+  const dateFormatStr = `yyyy.mm.dd-HH.MM.ss`;
+  return dateformat(new Date(), dateFormatStr);
+}
+
+export function getDefaultFile (prefix = '', suffix = '', ext) {
+  // const dateFormatStr = `yyyy.mm.dd-HH.MM.ss`;
   const dateFormatStr = `yyyy-mm-dd 'at' h.MM.ss TT`;
   return `${prefix}${dateformat(new Date(), dateFormatStr)}${suffix}${ext}`;
 }
 
 function resolveFilename (opt = {}) {
-  const file = opt.file;
+  opt = assign({}, opt);
+
+  // Custom filename function
+  if (typeof opt.file === 'function') {
+    return opt.file(opt);
+  }
 
   let frame = null;
-  let extension;
+  let extension = '';
   if (typeof opt.extension === 'string') extension = opt.extension;
-  else if (file) extension = extname(file);
+
+  if (opt.file && extname(opt.file) === extension) {
+    const idx = opt.file.lastIndexOf(extension);
+    opt.file = opt.file.substring(0, idx);
+  }
 
   if (typeof opt.frame === 'number') {
     let totalFrames;
@@ -70,16 +88,11 @@ function resolveFilename (opt = {}) {
     frame = padLeft(String(opt.frame), String(totalFrames).length, '0');
   }
 
-  const formattedFile = formatFile(file, extension, frame);
+  const layerStr = isFinite(opt.totalLayers) && isFinite(opt.layer) && opt.totalLayers > 1 ? `${opt.layer}` : '';
   if (frame != null) {
-    if (file) return formattedFile;
-    return `${frame}${extension}`;
+    return [ frame, layerStr ].join('-') + extension;
   } else {
-    if (file) return formattedFile;
-    else return getDefaultFile(opt.prefix, opt.suffix, extension);
+    const defaultFileName = [ opt.timeStamp, layerStr, opt.hash ].filter(Boolean).join('-');
+    return [ opt.prefix, opt.file || defaultFileName, opt.suffix ].filter(Boolean).join('-') + extension;
   }
-}
-
-function formatFile (file = '', extension = '', frame = 0) {
-  return file.replace(/%d/, frame).replace(/%s/, extension);
 }
