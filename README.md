@@ -22,7 +22,7 @@ cd my-sketches
 canvas-sketch --new --open
 ```
 
-This will write a new plain sketch in a `sketches/` folder, generate a `package.json` if necessary, install any dependencies the sketch template requires, and then launch the development server and default browser.
+This will write a new plain sketch in a `sketches/` folder, generate a `package.json` if necessary, install any dependencies the sketch template requires, and then launch the development server and default browser. Now you can edit the newly created file in the `sketches/` folder.
 
 A few other commands to try:
 
@@ -41,6 +41,8 @@ When sketching, you can hit `Cmd + S` in the browser window to export a high qua
 Now that you have the basics running, you can read through the intro guide here:
 
 - [Intro - A Framework for Generative Sketching](./docs/basics.md)
+
+Or browse the [examples/](./examples/) folder for more inspiration.
 
 ---
 
