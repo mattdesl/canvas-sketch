@@ -94,9 +94,9 @@ function resolveFilename (opt = {}) {
 
   const layerStr = isFinite(opt.totalLayers) && isFinite(opt.layer) && opt.totalLayers > 1 ? `${opt.layer}` : '';
   if (frame != null) {
-    return [ frame, layerStr ].filter(Boolean).join('-') + extension;
+    return [ layerStr, frame ].filter(Boolean).join('-') + extension;
   } else {
-    const defaultFileName = [ opt.timeStamp, layerStr, opt.hash ].filter(Boolean).join('-');
-    return [ opt.prefix, opt.name || defaultFileName, opt.suffix ].filter(Boolean).join('-') + extension;
+    const defaultFileName = opt.timeStamp;
+    return [ opt.prefix, opt.name || defaultFileName, layerStr, opt.hash, opt.suffix ].filter(Boolean).join('-') + extension;
   }
 }

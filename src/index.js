@@ -263,8 +263,7 @@ class SketchManager {
     // And now we can save each result
     return Promise.all(drawResult.map((result, i, layerList) => {
       // By default, if rendering multiple layers we will give them indices
-      // const prefix = drawResult.length > 1 ? `Render - Layer ${i} - ` : 'Render - ';
-      const curOpt = assign({ layer: i, totalLayers: layerList.length }, exportOpts, result);
+      const curOpt = assign({}, exportOpts, result, { layer: i, totalLayers: layerList.length });
       const data = result.data;
       if (result.url) {
         const url = result.url;
@@ -289,7 +288,6 @@ class SketchManager {
           const hasTotalFrames = isFinite(this.props.totalFrames);
           ofSeq = hasTotalFrames ? ` (frame ${exportOpts.frame + 1} / ${this.props.totalFrames})` : ` (frame ${exportOpts.frame})`;
         }
-        // = exportOpts.sequence ? ` (frame ${curFrame} / ${})`;
         const client = isClient ? 'canvas-sketch-cli' : 'canvas-sketch';
         console.log(`%c[${client}]%c Exported %c${item}%c${ofSeq}`, 'color: #8e8e8e;', 'color: initial;', 'font-weight: bold;', 'font-weight: initial;');
       }
