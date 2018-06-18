@@ -2,19 +2,20 @@ import dateformat from 'dateformat';
 import assign from 'object-assign';
 import padLeft from 'pad-left';
 import extname from 'get-ext';
+import { getClientAPI } from './util';
 
 const noop = () => {};
 let link;
 
-export function dataURIToBlob (dataURI) {
-  const binStr = window.atob(dataURI.split(',')[1]);
-  const len = binStr.length;
-  const arr = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-    arr[i] = binStr.charCodeAt(i);
-  }
-  return new window.Blob([arr]);
-}
+// export function dataURIToBlob (dataURI) {
+//   const binStr = window.atob(dataURI.split(',')[1]);
+//   const len = binStr.length;
+//   const arr = new Uint8Array(len);
+//   for (var i = 0; i < len; i++) {
+//     arr[i] = binStr.charCodeAt(i);
+//   }
+//   return new window.Blob([arr]);
+// }
 
 export function saveDataURL (dataURI, opts = {}) {
   return window.fetch(dataURI)
@@ -24,23 +25,29 @@ export function saveDataURL (dataURI, opts = {}) {
 
 export function saveBlob (blob, opts = {}) {
   return new Promise(resolve => {
-    // force download
     opts = assign({ extension: '', prefix: '', suffix: '' }, opts);
-    if (!link) link = document.createElement('a');
-    const file = resolveFilename(opts);
-    link.download = file;
-    link.href = window.URL.createObjectURL(blob);
-    link.onclick = () => {
-      link.onclick = noop;
-      setTimeout(() => {
-        window.URL.revokeObjectURL(blob);
-        link.removeAttribute('href');
-        resolve({
-          file
+    const filename = resolveFilename(opts);
+
+    const client = getClientAPI();
+    if (client && typeof client.saveBlob === 'function' && client.output) {
+      // native saving using a CLI tool
+      return client.saveBlob(blob, assign({}, opts, { filename }))
+        .then(ev => resolve(ev));
+    } else {
+      // force download
+      if (!link) link = document.createElement('a');
+      link.download = filename;
+      link.href = window.URL.createObjectURL(blob);
+      link.onclick = () => {
+        link.onclick = noop;
+        setTimeout(() => {
+          window.URL.revokeObjectURL(blob);
+          link.removeAttribute('href');
+          resolve({ filename, client: false });
         });
-      });
-    };
-    link.click();
+      };
+      link.click();
+    }
   });
 }
 
@@ -67,16 +74,13 @@ function resolveFilename (opt = {}) {
   // Custom filename function
   if (typeof opt.file === 'function') {
     return opt.file(opt);
+  } else if (opt.file) {
+    return opt.file;
   }
 
   let frame = null;
   let extension = '';
   if (typeof opt.extension === 'string') extension = opt.extension;
-
-  if (opt.file && extname(opt.file) === extension) {
-    const idx = opt.file.lastIndexOf(extension);
-    opt.file = opt.file.substring(0, idx);
-  }
 
   if (typeof opt.frame === 'number') {
     let totalFrames;
@@ -90,9 +94,9 @@ function resolveFilename (opt = {}) {
 
   const layerStr = isFinite(opt.totalLayers) && isFinite(opt.layer) && opt.totalLayers > 1 ? `${opt.layer}` : '';
   if (frame != null) {
-    return [ frame, layerStr ].join('-') + extension;
+    return [ frame, layerStr ].filter(Boolean).join('-') + extension;
   } else {
     const defaultFileName = [ opt.timeStamp, layerStr, opt.hash ].filter(Boolean).join('-');
-    return [ opt.prefix, opt.file || defaultFileName, opt.suffix ].filter(Boolean).join('-') + extension;
+    return [ opt.prefix, opt.name || defaultFileName, opt.suffix ].filter(Boolean).join('-') + extension;
   }
 }

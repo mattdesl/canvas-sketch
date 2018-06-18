@@ -3,6 +3,10 @@ import isDOM from 'is-dom';
 
 const availableUnits = [ 'px', 'm', 'cm', 'mm', 'in', 'ft' ];
 
+export function getClientAPI () {
+  return window['canvas-sketch-cli'];
+}
+
 export function isWebGLContext (ctx) {
   return typeof ctx.clear === 'function' && typeof ctx.clearColor === 'function' && typeof ctx.bufferData === 'function';
 }

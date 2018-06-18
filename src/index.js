@@ -3,11 +3,9 @@ import assign from 'object-assign';
 import getCanvasContext from 'get-canvas-context';
 import rightNow from 'right-now';
 import isPromise from 'is-promise';
-import { toPixels, isWebGLContext, isCanvas } from './util';
+import { toPixels, isWebGLContext, isCanvas, getClientAPI } from './util';
 import deepEqual from 'deep-equal';
 import { saveFile, saveDataURL, getFileName } from './save';
-
-const getClientAPI = () => window['canvas-sketch-cli'];
 
 class SketchManager {
   constructor () {
@@ -146,16 +144,11 @@ class SketchManager {
     const frameInterval = 1 / this.props.fps;
     // Render each frame in the sequence
     if (this._raf != null) window.cancelAnimationFrame(this._raf)
-    const hasDuration = isFinite(this.props.duration);
     const tick = () => {
       if (!this.props.recording) return Promise.resolve();
       this.props.deltaTime = frameInterval;
-      const frame = this.props.frame;
       return this.exportFrame({ sequence: true })
         .then(() => {
-          console.log(hasDuration
-            ? `Saved Frame ${frame} of ${this.props.totalFrames}`
-            : `Saved Frame ${frame}`);
           if (!this.props.recording) return; // was cancelled before
           this.props.deltaTime = 0;
           this.props.frame++;
@@ -187,8 +180,10 @@ class SketchManager {
 
     // Options for export function
     let exportOpts = assign({
+      sequence: opt.sequence,
       frame: opt.sequence ? this.props.frame : undefined,
       file: this.settings.file,
+      name: this.settings.name,
       timeStamp: getFileName(),
       totalFrames: isFinite(this.props.totalFrames) ? Math.max(100, this.props.totalFrames) : 1000
     });
@@ -203,7 +198,7 @@ class SketchManager {
     }
 
     return p.then(hash => {
-      return this._doExportFrame(assign({}, exportOpts, { hash }));
+      return this._doExportFrame(assign({}, exportOpts, { hash: hash || '' }));
     });
   }
 
@@ -271,25 +266,37 @@ class SketchManager {
       // const prefix = drawResult.length > 1 ? `Render - Layer ${i} - ` : 'Render - ';
       const curOpt = assign({ layer: i, totalLayers: layerList.length }, exportOpts, result);
       const data = result.data;
-      if (result.url) return saveDataURL(result.url, curOpt);
-      else return saveFile(data, curOpt);
-    }))
-      // .then(files => {
-      //   console.log('Saved files', files);
-      //   const client = getClientAPI();
-      //   let p = Promise.resolve();
-      //   if (client && opt.commit && typeof client.commit === 'function') {
-      //     const metaOpts = assign({}, exportOpts);
-      //     const result = client.commit(files, metaOpts);
-      //     if (isPromise(result)) p = result;
-      //   }
-      //   return p;
-      // })
-      .then(() => {
-        if (typeof this.sketch.postExport === 'function') {
-          this.sketch.postExport();
+      if (result.url) {
+        const url = result.url;
+        delete curOpt.url; // avoid sending entire base64 data around
+        return saveDataURL(url, curOpt);
+      } else {
+        return saveFile(data, curOpt);
+      }
+    })).then(ev => {
+      if (ev.length > 0) {
+        const eventWithOutput = ev.find(e => e.outputName);
+        const isClient = ev.some(e => e.client);
+        let item;
+        // many files, just log how many were exported
+        if (ev.length > 1) item = ev.length;
+        // in CLI, we know exact path dirname
+        else if (eventWithOutput) item = `${eventWithOutput.outputName}/${ev[0].filename}`;
+        // in browser, we can only know it went to "browser download folder"
+        else item = `${ev[0].filename}`;
+        let ofSeq = '';
+        if (exportOpts.sequence) {
+          const hasTotalFrames = isFinite(this.props.totalFrames);
+          ofSeq = hasTotalFrames ? ` (frame ${exportOpts.frame + 1} / ${this.props.totalFrames})` : ` (frame ${exportOpts.frame})`;
         }
-      });
+        // = exportOpts.sequence ? ` (frame ${curFrame} / ${})`;
+        const client = isClient ? 'canvas-sketch-cli' : 'canvas-sketch';
+        console.log(`%c[${client}]%c Exported %c${item}%c${ofSeq}`, 'color: #8e8e8e;', 'color: initial;', 'font-weight: bold;', 'font-weight: initial;');
+      }
+      if (typeof this.sketch.postExport === 'function') {
+        this.sketch.postExport();
+      }
+    });
   }
 
   render () {
