@@ -350,7 +350,7 @@ class SketchManager {
 
   resize () {
     let width, height;
-    let viewportWidth, viewportHeight;
+    let styleWidth, styleHeight;
     let canvasWidth, canvasHeight;
 
     const settings = this.settings;
@@ -393,8 +393,8 @@ class SketchManager {
     }
 
     // How big to set the 'view' of the canvas in the browser (i.e. style)
-    viewportWidth = Math.round(realWidth);
-    viewportHeight = Math.round(realHeight);
+    styleWidth = Math.round(realWidth);
+    styleHeight = Math.round(realHeight);
 
     // If we wish to scale the view to the browser window
     if (scaleToFit && !exporting && hasDimensions) {
@@ -403,13 +403,13 @@ class SketchManager {
       const scaleToFitPadding = defined(settings.scaleToFitPadding, 40);
       const maxWidth = Math.round(parentWidth - scaleToFitPadding * 2);
       const maxHeight = Math.round(parentHeight - scaleToFitPadding * 2);
-      if (viewportWidth > maxWidth || viewportHeight > maxHeight) {
+      if (styleWidth > maxWidth || styleHeight > maxHeight) {
         if (windowAspect > aspect) {
-          viewportHeight = maxHeight;
-          viewportWidth = Math.round(viewportHeight * aspect);
+          styleHeight = maxHeight;
+          styleWidth = Math.round(styleHeight * aspect);
         } else {
-          viewportWidth = maxWidth;
-          viewportHeight = Math.round(viewportWidth / aspect);
+          styleWidth = maxWidth;
+          styleHeight = Math.round(styleWidth / aspect);
         }
       }
     }
@@ -421,8 +421,11 @@ class SketchManager {
       pixelRatio = exportPixelRatio;
     }
 
-    canvasWidth = scaleToView ? Math.round(pixelRatio * viewportWidth) : Math.round(exportPixelRatio * realWidth);
-    canvasHeight = scaleToView ? Math.round(pixelRatio * viewportHeight) : Math.round(exportPixelRatio * realHeight);
+    canvasWidth = scaleToView ? Math.round(pixelRatio * styleWidth) : Math.round(exportPixelRatio * realWidth);
+    canvasHeight = scaleToView ? Math.round(pixelRatio * styleHeight) : Math.round(exportPixelRatio * realHeight);
+
+    const viewportWidth = scaleToView ? Math.round(styleWidth) : Math.round(realWidth);
+    const viewportHeight = scaleToView ? Math.round(styleHeight) : Math.round(realHeight);
 
     const scaleX = canvasWidth / width;
     const scaleY = canvasHeight / height;
@@ -434,18 +437,20 @@ class SketchManager {
       height,
       scaleX,
       scaleY,
+      viewportWidth,
+      viewportHeight,
       canvasWidth,
       canvasHeight,
-      viewportWidth,
-      viewportHeight
+      styleWidth,
+      styleHeight
     });
 
     // Update canvas settings
     const canvas = this.props.canvas;
     if (canvas.width !== canvasWidth) canvas.width = canvasWidth;
     if (canvas.height !== canvasHeight) canvas.height = canvasHeight;
-    canvas.style.width = `${viewportWidth}px`;
-    canvas.style.height = `${viewportHeight}px`;
+    canvas.style.width = `${styleWidth}px`;
+    canvas.style.height = `${styleHeight}px`;
 
     // Send resize event to sketch
     if (this.sketch && typeof this.sketch.resize === 'function') {
@@ -660,6 +665,12 @@ class SketchManager {
     return loader.then(sketch => {
       if (!sketch) sketch = {};
       this._sketch = sketch;
+
+      // Send an initial 'resize' event now that the sketch
+      // has been configured and loaded
+      if (typeof this._sketch.resize === 'function') {
+        this.sketch.resize(this.props);
+      }
     }).catch(err => {
       console.warn('Could not start sketch, the async loading function rejected with an error:\n    Error: ' + err.message);
       throw err;

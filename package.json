@@ -17,6 +17,8 @@
     "defined": "^1.0.0",
     "get-canvas-context": "^1.0.2",
     "get-ext": "^1.0.2",
+    "glsl-aastep": "^1.0.1",
+    "glsl-hsl2rgb": "^1.1.0",
     "is-class": "0.0.5",
     "is-dom": "^1.0.9",
     "is-promise": "^2.1.0",
@@ -28,24 +30,32 @@
   "devDependencies": {
     "@mattdesl/microbundle": "^0.4.4",
     "array-shuffle": "^1.0.1",
+    "browserify": "^16.2.2",
+    "budo": "^11.3.0",
+    "eases": "^1.0.8",
     "glsl-dither": "^1.0.1",
     "glsl-noise": "0.0.0",
     "glslify": "^6.1.1",
     "hex-rgb": "^3.0.0",
+    "lerp": "^1.0.3",
     "microbundle": "^0.4.4",
     "npm-run-all": "^4.1.3",
     "perspective-camera": "^2.0.1",
     "primitive-icosphere": "^1.0.2",
+    "primitive-quad": "^2.0.0",
     "regl": "^1.3.6",
     "seed-random": "^2.2.0",
-    "sourceify": "^0.1.0"
+    "sourceify": "^0.1.0",
+    "three": "^0.93.0",
+    "uglify-es": "^3.3.9"
   },
   "scripts": {
-    "prepublishOnly": "npm run bundle",
-    "bundle": "microbundle --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist",
+    "prepublishOnly": "npm run dist:bundle",
+    "dist:bundle": "microbundle --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist",
     "dev:bundle": "microbundle watch --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist",
     "dev:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
-    "dev": "npm-run-all --parallel dev:bundle dev:server"
+    "dev": "npm-run-all --parallel dev:bundle dev:server",
+    "dev-site": "budo --live"
   },
   "keywords": [
     "sketch",
