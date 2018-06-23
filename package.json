@@ -28,6 +28,7 @@
   "devDependencies": {
     "@mattdesl/microbundle": "^0.4.4",
     "array-shuffle": "^1.0.1",
+    "budo": "^11.3.0",
     "glsl-dither": "^1.0.1",
     "glsl-noise": "0.0.0",
     "glslify": "^6.1.1",
@@ -42,8 +43,8 @@
   },
   "scripts": {
     "prepublishOnly": "npm run bundle",
-    "bundle": "microbundle --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist",
-    "dev:bundle": "microbundle watch --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist",
+    "bundle": "microbundle --entry src/index.js --target=browser --sourcemap --no-compress --format=es,umd -o dist/",
+    "dev:bundle": "microbundle watch --entry src/index.js --target=browser --sourcemap --no-compress --format=es,umd -o dist/",
     "dev:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
     "dev": "npm-run-all --parallel dev:bundle dev:server"
   },
