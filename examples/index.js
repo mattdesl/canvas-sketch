@@ -9,7 +9,9 @@
 // require('./save-multiple');
 // require('./save-svg');
 // require('./tutorial-1-animation');
-require('./load-image');
+// require('./load-image');
 // require('./regl');
 // require('./regl-basic');
 // require('./print-risograph');
+require("./tenprint.js");
+
