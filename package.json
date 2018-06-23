@@ -26,7 +26,7 @@
     "right-now": "^1.0.0"
   },
   "devDependencies": {
-    "@mattdesl/microbundle": "^0.4.4",
+    "@mattdesl/microbundle": "^0.4.5",
     "array-shuffle": "^1.0.1",
     "glsl-dither": "^1.0.1",
     "glsl-noise": "0.0.0",
