@@ -168,25 +168,25 @@ nav a {
   justify-content: flex-start;
 } */
 
-.intro {
+main{
   flex-grow: 1;
-  font-size: 1.6rem;
   display: flex;
   flex-direction: column;
   align-self: center;
   justify-content: center;
+  font-size: 1.6rem;
 }
 
-.intro-item {
+p {
   max-width: 430px;
   text-align: justify;
   position: relative;
   margin-bottom: 2rem;
 }
 
-.intro-item:last-child {
+p:last-child {
   font-size: 1.4rem;
-  margin-top: 4rem;
+  margin-top: 2rem;
   margin-bottom: 0;
 }
 

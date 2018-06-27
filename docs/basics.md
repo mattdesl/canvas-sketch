@@ -45,7 +45,7 @@ The *renderer* function is in charge of drawing the artwork based on `props`, i.
 
 For example, take the following image:
 
-![output](../assets/images/1.png)
+![output](assets/images/1.png)
 
 It was generated with this script:
 
@@ -142,7 +142,7 @@ Then, in your *renderer* function, you can use the following `props` to determin
 
 Below is an example of a seamless loop, using `playhead` with `Math.PI` to rotate around one semicircle per loop. For endless animations (no specified duration or total frames), you can instead use the elapsed `time` in seconds to animate your scenes.
 
-![anim](../assets/images/loop-1.gif)
+![anim](assets/images/loop-1.gif)
 
 ```js
 const settings = {
@@ -232,7 +232,7 @@ const sketch = () => {
 
 When you save with `Cmd + S` or `Ctrl + S`, the output image will be 1050 x 600 px, which can be imported into a 3.5 x 2 in document at full resolution. You can see the exported artwork here:
 
-<img src="../assets/images/business-card-simple.png" width="75%" />
+<img src="assets/images/business-card-simple.png" width="75%" />
 
 <p></p>
 
@@ -240,7 +240,7 @@ When you save with `Cmd + S` or `Ctrl + S`, the output image will be 1050 x 600 
 
 Here is another business card example, using `cos()` and `sin()` to spiral many circles around the center.
 
-<img src="../assets/images/business-card.png" width="75%" />
+<img src="assets/images/business-card.png" width="75%" />
 
 <p></p>
 
@@ -306,7 +306,7 @@ canvasSketch(({ gl }) => {
 
 Here's a more interesting example in WebGL, using [glslify](https://github.com/glslify/glslify) to pull in GLSL noise and dithering modules from npm.
 
-![blob](../assets/images/blob.gif)
+![blob](assets/images/blob.gif)
 
 > <sub>See [here](#) for the full source code of this sketch.</sub>
 
@@ -318,7 +318,7 @@ For convenience, we suggest the [load-asset](http://npmjs.com/package/load-asset
 
 For example, let's say we want to load the below "Baboon" test image and glitch its pixels.
 
-<img src="../assets/images/baboon.jpg" width="25%" />
+<img src="assets/images/baboon.jpg" width="25%" />
 
 <p></p>
 
@@ -358,7 +358,7 @@ canvasSketch(async ({ update }) => {
 
 After implementing some pixel sorting, we end up with:
 
-<img src="../assets/images/pixels-2.jpg" width="50%" />
+<img src="assets/images/pixels-2.jpg" width="50%" />
 
 <p></p>
 

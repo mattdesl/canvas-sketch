@@ -23,8 +23,8 @@ const sketch = ({ gl, update, render, pause }) => {
   // Draw command
   const drawQuad = regl({
     // Fragment & Vertex shaders
-    frag: glslify(path.resolve(__dirname, 'shaders/website-background.frag')),
-    vert: glslify(path.resolve(__dirname, 'shaders/website-background.vert')),
+    frag: glslify(path.resolve(__dirname, 'assets/shaders/website-background.frag')),
+    vert: glslify(path.resolve(__dirname, 'assets/shaders/website-background.vert')),
     // Pass down props from javascript
     uniforms: {
       fade: regl.prop('fade'),
