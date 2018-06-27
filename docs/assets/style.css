@@ -17,7 +17,7 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-family: "faricy-new-web";
 }
 
@@ -27,14 +27,23 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 4rem;
   display: flex;
   box-sizing: border-box;
-  justify-content: center;
   align-items: flex-start;
+  flex-direction: column;
+  flex-grow: 0;
+}
+
+.top-nav {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 main, header {
-  padding: 4rem;
 }
 
 header {
@@ -60,18 +69,47 @@ hr {
   background: #1f1f1f;
 }
 
+/* .left-edge-hr::after {
+  display: block;
+  content: ' ';
+  width: 25px;
+  height: 1px;
+  background: black;
+  position: absolute;
+  bottom: 0.85rem;
+  left: -8rem;
+} */
+
+hr.right {
+  position: absolute;
+  height: 1px;
+  width: 12.5px;
+  right: 0rem;
+  bottom: 0rem;
+  margin: 4rem;
+}
+
 .title {
-  letter-spacing: 0.25rem;
+  letter-spacing: 0.325rem;
 }
 
 .brief {
+  display: none;
+  width: 100%;
+  /* text-align: center; */
+  margin-bottom: 2rem;
   font-size: 1.2rem;
-  transform: rotate(-90deg);
-  transform-origin: left bottom 0;
   line-height: 1.2rem;
-  position: absolute;
-  bottom: 4rem;
-  left: 4.8rem;
+}
+
+.rotated-brief {
+  transform: rotateZ(-90deg);
+  transform-origin: top left;
+  position: relative;
+  top: 1.1rem;
+  left: -0.3rem;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
 }
 
 .background-canvas {
@@ -116,7 +154,7 @@ nav a {
 }
 
 
-main.third {
+/* .third {
   display: flex;
   box-sizing: border-box;
   margin: 4rem;
@@ -125,23 +163,27 @@ main.third {
   position: absolute;
   left: 0;
   top: 27vmin;
-  /* top: 33%; */
   align-items: flex-start;
   flex-direction: row;
   justify-content: flex-start;
+} */
+
+.intro {
+  flex-grow: 1;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
 }
 
-main .intro {
-  font-size: 1.6rem;
-  margin-top: -0.6rem;
-}
 .intro-item {
-  max-width: 440px;
-  line-height: 1.5;
+  max-width: 430px;
   text-align: justify;
   position: relative;
   margin-bottom: 2rem;
 }
+
 .intro-item:last-child {
   font-size: 1.4rem;
   margin-top: 4rem;
@@ -157,24 +199,23 @@ hr.left {
   margin: 0;
 }
 
-.hero-image-container {
-  width: 40vw;
-  height: 20rem;
-}
 
-.hero-image {
-  position: relative;
-  width: calc(100% - 5vw);
-  height: 100%;
-  background: blue;
-  background: url(images/hero.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: 0px 0px;
-}
-
-.content {
-}
-
-.text {
+@media only screen and (max-width: 580px) {
+  .rotated-brief {
+    transform: initial;
+    position: initial;
+    top: initial;
+    left: initial;
+    display: none;
+  }
+  body {
+    font-size: 1.4rem;
+  }
+  .title {
+    letter-spacing: 0.0rem;
+    font-weight: 500;
+  }
+  /* .brief {
+    display: block;
+  } */
 }
