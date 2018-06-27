@@ -14,6 +14,8 @@ budo(path.resolve(__dirname, 'src/index.js'), {
   serve: 'dist/website-bundle.js',
   stream: process.stdout,
   live: true,
+  pushstate: true,
+  dir: process.cwd(),
   browserify: {
     plugin: require('./resolve.js'),
     transform: [ babelify, glslify ]

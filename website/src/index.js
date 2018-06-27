@@ -1,7 +1,8 @@
 /** @jsx h */
-import Router from 'preact-router';
-import { h, render } from 'preact';
-import { Link } from 'preact-router/match';
+const Router = require('preact-router');
+const { h, render } = require('preact');
+const { Link } = require('preact-router/match');
+const Canvas = require('./Canvas');
 
 const gitHubUrl = 'https://github.com/mattdesl/canvas-sketch';
 
@@ -11,7 +12,7 @@ const Navbar = () => {
       <Link href='/' class='title'>canvas-sketch</Link>
       <nav>
         <Link activeClassName='active' href='/examples'>examples</Link>
-        <Link activeClassName='active' href='/docs' class='external'>docs</Link>
+        <Link activeClassName='active' href='/docs'>docs</Link>
         <a activeClassName='active' href={gitHubUrl} class='external'>code</a>
       </nav>
     </header>
@@ -41,8 +42,6 @@ const Footer = () => {
   </footer>;
 };
 
-const Canvas = () => <canvas class='background-canvas' />;
-
 const Content = () => {
   return <div class='content-layer'>
     <Navbar />
@@ -63,4 +62,3 @@ const App = () => {
 };
 
 render(<App />, document.body);
-console.log('hi')

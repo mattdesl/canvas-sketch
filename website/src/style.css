@@ -7,6 +7,10 @@ html {
   font-size: 62.5%;
 }
 
+canvas {
+  display: block;
+}
+
 body {
   margin: 0;
   color: #1f1f1f;
