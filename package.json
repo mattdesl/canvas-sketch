@@ -55,7 +55,7 @@
     "dev:bundle": "microbundle watch --entry src/index.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o dist/",
     "dev:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
     "dev": "npm-run-all --parallel dev:bundle dev:server",
-    "dev-site": "canvas-sketch docs/examples/website-background.js --no-install"
+    "dev-site": "canvas-sketch docs/examples/website-background.js --no-install -- -p ./tools/resolve.js"
   },
   "keywords": [
     "sketch",
