@@ -17,12 +17,8 @@ const babelify = require('babelify').configure({
   ]
 });
 
-// 1. Set up files in data.json
-// 2. Stop & re-run site:dev
-// 3. 
-
-// start();
-bundle();
+start();
+// bundle();
 
 async function start () {
   const factor = await getFactorPlugin();

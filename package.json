@@ -47,6 +47,7 @@
     "glsl-noise": "0.0.0",
     "glslify": "^6.1.1",
     "hex-rgb": "^3.0.0",
+    "history": "^4.7.2",
     "lerp": "^1.0.3",
     "load-asset": "^1.2.0",
     "microbundle": "^0.4.4",
