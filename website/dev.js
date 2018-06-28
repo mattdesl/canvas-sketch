@@ -51,7 +51,6 @@ async function bundle () {
       require('./plugin-resolve'),
       factor.plugin
     ],
-    output: factor.commonFile,
     transform: [ babelify, glslify ]
-  }).bundle();
+  }).bundle().pipe(fs.createWriteStream(factor.commonFile));
 }

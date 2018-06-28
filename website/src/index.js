@@ -2,7 +2,7 @@
 const Router = require('preact-router');
 
 // Until we publish on a proper host...
-const createHistory = require('history/createMemoryHistory').default;
+// const createHistory = require('history/createMemoryHistory').default;
 
 const { h, render } = require('preact');
 const { Link } = require('preact-router/match');
@@ -10,7 +10,7 @@ const Canvas = require('./components/Canvas');
 const Examples = require('./components/Examples');
 
 const gitHubUrl = 'https://github.com/mattdesl/canvas-sketch';
-const history = createHistory();
+// const history = createHistory();
 
 const Navbar = () => {
   return <div class='top-nav'>
@@ -48,7 +48,7 @@ class Content extends Router {
   render (props, state) {
     return <div class='content-layer'>
       <Navbar />
-      { super.render({ ...props, history }, state) }
+      { super.render(props, state) }
       { state.url === '/' && <Footer /> }
     </div>;
   }
