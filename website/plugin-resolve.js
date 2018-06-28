@@ -7,6 +7,8 @@ module.exports = function (bundler, opt = {}) {
   // Get this module's package dir
   const resolver = bundler._bresolve;
 
+  console.log('Resolving', canvasSketchModule);
+  console.log('Resolve folder', basedir);
   // Resolve canvas-sketch from here instead of using working directory
   bundler._bresolve = function (id, opts, cb) {
     if (/^canvas-sketch([\\/].*)?$/.test(id)) {
