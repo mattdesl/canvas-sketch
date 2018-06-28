@@ -1,13 +1,16 @@
 const path = require('path');
+
+const canvasSketchModule = require.resolve('../');
+const basedir = path.dirname(canvasSketchModule);
+
 module.exports = function (bundler, opt = {}) {
   // Get this module's package dir
-  const basedir = path.resolve(__dirname, '../');
   const resolver = bundler._bresolve;
 
   // Resolve canvas-sketch from here instead of using working directory
   bundler._bresolve = function (id, opts, cb) {
     if (/^canvas-sketch([\\/].*)?$/.test(id)) {
-      id = './';
+      id = canvasSketchModule;
       opts = Object.assign({}, opts, { basedir });
     }
 
