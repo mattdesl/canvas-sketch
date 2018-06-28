@@ -31,7 +31,7 @@ module.exports = (props, context) => {
   let view = <div class='no-sketch'>Choose a sketch from the list to begin.</div>;
   if (name) {
     if (name in examples.map) {
-      view = <div>{examples.map[name].name}</div>;
+      view = <iframe src={`examples/build/${examples.map[name].name}.html`} width='100%' height='100%' />;
     } else {
       console.warn(`Could not find example by id ${name}`);
       view = <div class='no-sketch'><p>No sketch found by the name <strong>/{name}</strong>.</p><p>Try choosing a different one from the list.</p></div>

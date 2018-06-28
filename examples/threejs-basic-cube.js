@@ -19,6 +19,8 @@ const sketch = ({ context }) => {
     antialias: true
   });
 
+  renderer.setClearColor('#000', 1);
+
   // create a camera
   const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
   camera.position.set(2, 2, -4);
@@ -51,4 +53,5 @@ const sketch = ({ context }) => {
     }
   };
 };
+
 canvasSketch(sketch, settings);

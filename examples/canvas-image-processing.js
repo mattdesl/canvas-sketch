@@ -1,4 +1,4 @@
-const canvasSketch = require('../');
+const canvasSketch = require('canvas-sketch');
 const load = require('load-asset');
 
 canvasSketch(async ({ update }) => {

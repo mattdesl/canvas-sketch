@@ -13,7 +13,7 @@ const sketch = () => {
   const random = (min, max) => Math.random() * (max - min) + min;
 
   // Generate a whole bunch of circles/arcs
-  const count = 8000;
+  const count = 2000;
   const circles = Array.from(new Array(count)).map(() => {
     const arcStart = Math.PI * 2 - random(0, Math.PI * 2 / 3);
     const arcLength = random(-0.1, 0.3) * Math.PI * 2;
@@ -25,7 +25,7 @@ const sketch = () => {
       arcEnd: arcStart + arcLength,
       arcLength,
       thickness: random(0.01, 1),
-      alpha: random(0.25, 0.33),
+      alpha: random(0.25, 0.73),
       radius: random(0.1, 0.75),
       x: 0.5 + random(-1, 1) * spread,
       y: 0.5 + random(-1, 1) * spread

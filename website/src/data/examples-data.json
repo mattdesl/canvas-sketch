@@ -4,44 +4,62 @@
     "name": "prints",
     "items": [
       {
-        "name": "generative-paint-splash",
-        "title": "Generative Paint Splash"
-      },
-      {
-        "visible": false,
         "name": "canvas-ten-print",
         "title": "Canvas Ten Print"
       },
       {
-        "visible": false,
-        "name": "canvas-business-card",
-        "title": "Algorithmic Business Card"
+        "name": "canvas-card",
+        "title": "Expanding Circles"
       },
       {
-        "visible": false,
-        "name": "p5-circles",
-        "title": "P5.js Circles"
+        "name": "canvas-card-simple",
+        "title": "Simple Circles"
+      },
+      {
+        "name": "canvas-random-circles",
+        "title": "Generative Circle"
+      },
+      {
+        "name": "canvas-risograph-layers",
+        "title": "Generative Risograph Print"
       }
     ]
   },
   {
-    "title": "Loops",
-    "name": "loops",
+    "title": "Animated",
+    "name": "animated",
     "items": [
       {
-        "visible": false,
-        "name": "threejs-grid",
-        "title": "ThreeJS Grid"
-      },
-      {
-        "visible": false,
         "name": "regl-dither-blob",
-        "title": "Regl Dither Blob"
+        "title": "REGL Dither Blob"
       },
       {
-        "visible": false,
-        "name": "glsl-playground",
-        "title": "GLSL Playground"
+        "name": "regl-fullscreen-shader",
+        "title": "REGL Fullscreen Shader"
+      },
+      {
+        "name": "threejs-basic-cube",
+        "title": "ThreeJS Basic Cube"
+      }
+    ]
+  },
+  {
+    "title": "Media",
+    "name": "media",
+    "items": [
+      {
+        "name": "canvas-image-processing",
+        "title": "Image Processing"
+      }
+    ]
+  },
+  {
+    "title": "Tests",
+    "name": "tests",
+    "items": [
+      {
+        "name": "canvas-pixel-processing",
+        "title": "Per-Pixel Processing"
       }
     ]
   }
