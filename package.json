@@ -75,7 +75,7 @@
     "lib": "npm-run-all --parallel lib:watch lib:server",
     "start": "npm-run-all --parallel lib:watch site:dev",
     "site:dev": "node website/dev.js",
-    "site:bundle": "npm run lib:bundle && NODE_ENV=production node website/dev.js"
+    "site:bundle": "mkdir -p dist/ && npm run lib:bundle && NODE_ENV=production node website/dev.js"
   },
   "keywords": [
     "sketch",
