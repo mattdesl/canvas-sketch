@@ -10,7 +10,6 @@ const settings = {
   pixelsPerInch: 300,
   animation: true,
   scaleToView: true,
-  time: 5,
   context: 'webgl',
   canvas: document.querySelector('.background-canvas')
 };
@@ -54,16 +53,15 @@ const sketch = ({ gl, update, render, pause }) => {
       // On each tick, update regl timers and sizes
       regl.poll();
 
-      // Clear backbuffer
-      const L = 35 / 255;
+      // Clear backbuffer with pure white
       regl.clear({
-        color: [ L, L, L, 1 ],
+        color: [ 0, 0, 0, 0 ],
         depth: 1,
         stencil: 0
       });
 
       // Draw generative / shader art
-      const fade = tween({ time, duration: 3, delay: 0.025, ease: 'sineOut' });
+      const fade = tween({ time, duration: 2, delay: 0, ease: 'sineOut' });
       drawQuad({ time, fade, aspect: width / height });
 
       // Flush pending GL calls for this frame

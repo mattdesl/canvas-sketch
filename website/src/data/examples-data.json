@@ -17,11 +17,11 @@
       },
       {
         "name": "canvas-random-circles",
-        "title": "Generative Circle"
+        "title": "Generative Circles"
       },
       {
         "name": "canvas-risograph-layers",
-        "title": "Generative Risograph Print"
+        "title": "Abstract Risograph Layers"
       }
     ]
   },
@@ -40,6 +40,10 @@
       {
         "name": "threejs-basic-cube",
         "title": "ThreeJS Basic Cube"
+      },
+      {
+        "name": "loop-simple-animation",
+        "title": "Basic 2D Animation"
       }
     ]
   },
@@ -60,6 +64,10 @@
       {
         "name": "canvas-pixel-processing",
         "title": "Per-Pixel Processing"
+      },
+      {
+        "name": "regl-empty-scene",
+        "title": "REGL Empty Canvas"
       }
     ]
   }

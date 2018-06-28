@@ -5,7 +5,7 @@ const glslify = require('glslify');
 const URL = require('url');
 const browserify = require('browserify');
 
-const getFactorPlugin = require('./factor');
+const getFactorPlugin = require('./factorize-examples');
 
 const babelify = require('babelify').configure({
   presets: ['@babel/preset-env'],
@@ -17,8 +17,8 @@ const babelify = require('babelify').configure({
   ]
 });
 
-start();
-// bundle();
+if (process.env.NODE_ENV === 'production') bundle();
+else start();
 
 async function start () {
   const factor = await getFactorPlugin();

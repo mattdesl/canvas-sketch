@@ -2,7 +2,7 @@ const sketcher = require('../');
 
 const settings = {
   // Pixel [width,height] of our artwork
-  dimensions: [ 1280, 1280 ],
+  dimensions: [ 800, 1280 ],
   // Export at a higher resolution than what we see
   // in the browser
   exportPixelRatio: 2
@@ -13,7 +13,7 @@ const sketch = () => {
   const random = (min, max) => Math.random() * (max - min) + min;
 
   // Generate a whole bunch of circles/arcs
-  const count = 2000;
+  const count = 1000;
   const circles = Array.from(new Array(count)).map(() => {
     const arcStart = Math.PI * 2 - random(0, Math.PI * 2 / 3);
     const arcLength = random(-0.1, 0.3) * Math.PI * 2;
@@ -25,7 +25,7 @@ const sketch = () => {
       arcEnd: arcStart + arcLength,
       arcLength,
       thickness: random(0.01, 1),
-      alpha: random(0.25, 0.73),
+      alpha: random(0.25, 0.5),
       radius: random(0.1, 0.75),
       x: 0.5 + random(-1, 1) * spread,
       y: 0.5 + random(-1, 1) * spread
@@ -40,6 +40,7 @@ const sketch = () => {
     context.fillRect(0, 0, width, height);
 
     const side = Math.min(width, height);
+    const globalThickness = 1.5;
 
     // Now draw each arc
     context.strokeStyle = 'white';
@@ -55,7 +56,7 @@ const sketch = () => {
         const x = circle.x * width + Math.cos(angle) * radius;
         const y = circle.y * height + Math.sin(angle) * radius;
         context.beginPath();
-        context.arc(x, y, circle.thickness * random(0.5, 1.25), 0, Math.PI * 2, false);
+        context.arc(x, y, circle.thickness * random(0.5, 1.25) * globalThickness, 0, Math.PI * 2, false);
         context.fill();
         context.globalAlpha = circle.alpha;
       });

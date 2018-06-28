@@ -209,7 +209,6 @@ main.split-view {
 }
 
 .sketch-view {
-  background: hsl(0, 0%, 98%);
   flex-grow: 2;
   justify-content: center;
   align-items: center;

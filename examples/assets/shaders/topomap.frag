@@ -44,8 +44,8 @@ vec4 isoline (vec2 uv) {
   float smoothness = 0.0025;
   float line = smoothstep(center - smoothness, center + smoothness, lineWidth);
 
-  float saturation = mix(0.0, 0.75, L);
-  float hue = 0.0;
+  float saturation = mix(0.0, 0.75, pow(L, 1.5));
+  float hue = sin(time * 0.5) * 0.5 + 0.5;
   float light = 0.5;
   return vec4(hsl2rgb(hue, saturation, light), line);
 }
