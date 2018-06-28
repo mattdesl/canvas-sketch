@@ -47,7 +47,7 @@ body {
   flex-direction: column;
 }
 
-main, header {
+main {
 }
 
 header {
@@ -126,16 +126,19 @@ hr.right {
 
 a {
   text-decoration: none;
+  text-decoration-color: transparent;
   font-weight: 500;
   color: currentColor;
 }
 
-header a {
+header a, .list-view a {
   font-weight: 300;
 }
 
-nav a.active, nav a:hover {
+nav a.active, nav a:hover, .list-view a.active {
   text-decoration: underline;
+  text-decoration-color: currentColor;
+  transition: text-decoration-color 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
 
 nav a {
@@ -172,7 +175,7 @@ nav a {
   justify-content: flex-start;
 } */
 
-main{
+main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -181,14 +184,59 @@ main{
   font-size: 1.6rem;
 }
 
-p {
+main.split-view {
+  align-self: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.list-view {
+  font-size: 1.4rem;
+  flex-grow: 1;
+  align-items: flex-start;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 0rem 0;
+  max-width: 20rem;
+  box-sizing: border-box;
+  /* box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.05); */
+  z-index: 1;
+}
+
+.sketch-view {
+  background: hsl(0, 0%, 98%);
+  flex-grow: 2;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.no-sketch {
+  font-size: 1.4rem;
+  max-width: 28rem;
+  margin: 0;
+  padding: 0;
+}
+.no-sketch p {
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+.landing p {
   max-width: 430px;
   text-align: justify;
   position: relative;
   margin-bottom: 2rem;
 }
 
-p:last-child {
+.landing p:last-child {
   font-size: 1.4rem;
   margin-top: 2rem;
   margin-bottom: 0;
@@ -203,6 +251,39 @@ hr.left {
   margin: 0;
 }
 
+ul.examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 1.0em;
+  text-indent: -1.0em;
+}
+
+ul.examples li {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+ul.examples li::before {
+  /* content: '\00a0'; */
+  position: relative;
+  /* top: 4.0px; */
+  opacity: 0.5;
+  /* font-size: 9px; */
+  display: block;
+  float: left;
+  width: 0.0em;
+  margin-right: 0.5rem;
+  color: currentColor;
+}
+
+.list-section-header {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  text-transform: lowercase;
+}
 
 @media only screen and (max-width: 580px) {
   .rotated-brief {
@@ -219,7 +300,4 @@ hr.left {
     letter-spacing: 0.0rem;
     font-weight: 500;
   }
-  /* .brief {
-    display: block;
-  } */
 }

@@ -1,0 +1,48 @@
+[
+  {
+    "title": "Prints",
+    "name": "prints",
+    "items": [
+      {
+        "name": "generative-paint-splash",
+        "title": "Generative Paint Splash"
+      },
+      {
+        "visible": false,
+        "name": "canvas-ten-print",
+        "title": "Canvas Ten Print"
+      },
+      {
+        "visible": false,
+        "name": "canvas-business-card",
+        "title": "Algorithmic Business Card"
+      },
+      {
+        "visible": false,
+        "name": "p5-circles",
+        "title": "P5.js Circles"
+      }
+    ]
+  },
+  {
+    "title": "Loops",
+    "name": "loops",
+    "items": [
+      {
+        "visible": false,
+        "name": "threejs-grid",
+        "title": "ThreeJS Grid"
+      },
+      {
+        "visible": false,
+        "name": "regl-dither-blob",
+        "title": "Regl Dither Blob"
+      },
+      {
+        "visible": false,
+        "name": "glsl-playground",
+        "title": "GLSL Playground"
+      }
+    ]
+  }
+]

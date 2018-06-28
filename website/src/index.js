@@ -1,8 +1,10 @@
 /** @jsx h */
 const Router = require('preact-router');
+
 const { h, render } = require('preact');
 const { Link } = require('preact-router/match');
-const Canvas = require('./Canvas');
+const Canvas = require('./components/Canvas');
+const Examples = require('./components/Examples');
 
 const gitHubUrl = 'https://github.com/mattdesl/canvas-sketch';
 
@@ -13,26 +15,10 @@ const Navbar = () => {
       <nav>
         <Link activeClassName='active' href='/examples'>examples</Link>
         <Link activeClassName='active' href='/docs'>docs</Link>
-        <a activeClassName='active' href={gitHubUrl} class='external'>code</a>
+        <a target='_blank' href={gitHubUrl} class='external'>code</a>
       </nav>
     </header>
   </div>;
-};
-
-const Home = () => {
-  return <main>
-    <p>This is a loose collection of tools, modules, and resources for creating generative artworks in JavaScript and the browser.</p>
-    <p>This framework can be used to render high-quality PNG images for Giclée prints, export image sequences for GIF and MP4 loops, generate SVG files for pen plotters (like AxiDraw), automatically git hash your artworks for long-term archiving, and more.</p>
-    <p>To get started, check out the <Link href='/docs'>documentation</Link>, or browse through <Link href='/examples'>some examples</Link>, or view the <a href={gitHubUrl}>source code</a> on GitHub.</p>
-  </main>;
-};
-
-const Examples = () => {
-  return <main>Examples...</main>;
-};
-
-const Docs = () => {
-  return <main>Docs...</main>;
 };
 
 const Footer = () => {
@@ -42,22 +28,36 @@ const Footer = () => {
   </footer>;
 };
 
-const Content = () => {
-  return <div class='content-layer'>
-    <Navbar />
-    <Router>
-      <Home path='/' />
-      <Examples path='/examples' />
-      <Docs path='/docs' />
-    </Router>
-    <Footer />
-  </div>;
+const Home = () => {
+  return <main class='landing'>
+    <p>This is a loose collection of tools, modules, and resources for creating generative artworks in JavaScript and the browser.</p>
+    <p>This framework can be used to render high-quality PNG images for Giclée prints, export image sequences for GIF and MP4 loops, generate SVG files for pen plotters (like AxiDraw), automatically git hash your artworks for long-term archiving, and more.</p>
+    <p>To get started, check out the <Link href='/docs'>documentation</Link>, or browse through <Link href='/examples'>some examples</Link>, or view the <a target='_blank' href={gitHubUrl}>source code</a> on GitHub.</p>
+  </main>;
 };
+
+const Docs = () => {
+  return <main>Docs...</main>;
+};
+
+class Content extends Router {
+  render (props, state) {
+    return <div class='content-layer'>
+      <Navbar />
+      { super.render(props, state) }
+      { state.url === '/' && <Footer /> }
+    </div>;
+  }
+}
 
 const App = () => {
   return <div class='app'>
     <Canvas />
-    <Content />
+    <Content>
+      <Home path='/' />
+      <Examples path='/examples/:name?' />
+      <Docs path='/docs' />
+    </Content>
   </div>;
 };
 

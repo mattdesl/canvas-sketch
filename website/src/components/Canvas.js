@@ -2,7 +2,7 @@
 const { h, Component } = require('preact');
 
 // Grab our sketch & settings
-const sketch = require('./sketch');
+const sketch = require('./background-sketch');
 
 // The actual canvas-sketch library
 const canvasSketch = require('canvas-sketch');
