@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const sketcher = require('canvas-sketch');
 
 const settings = {
   // Pixel [width,height] of our artwork

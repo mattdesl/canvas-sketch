@@ -1,4 +1,4 @@
-const canvasSketch = require('../');
+const canvasSketch = require('canvas-sketch');
 
 const settings = {
   // Output resolution, we can use 300PPI for print

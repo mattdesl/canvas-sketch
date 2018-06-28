@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const sketcher = require('canvas-sketch');
 
 const settings = {
   // Disable canvas smoothing

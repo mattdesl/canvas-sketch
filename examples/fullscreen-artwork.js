@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const sketcher = require('canvas-sketch');
 
 const sketch = () => {
   return ({ context, width, height }) => {

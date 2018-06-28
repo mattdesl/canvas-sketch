@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const sketcher = require('canvas-sketch');
 
 const settings = {
   dimensions: [ 256, 256 ]

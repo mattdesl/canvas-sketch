@@ -1,4 +1,4 @@
-const sketcher = require('../');
+const sketcher = require('canvas-sketch');
 
 // Import geometry & utilities
 const createRegl = require('regl');
