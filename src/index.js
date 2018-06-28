@@ -184,6 +184,8 @@ class SketchManager {
       frame: opt.sequence ? this.props.frame : undefined,
       file: this.settings.file,
       name: this.settings.name,
+      prefix: this.settings.prefix,
+      suffix: this.settings.suffix,
       timeStamp: getFileName(),
       totalFrames: isFinite(this.props.totalFrames) ? Math.max(100, this.props.totalFrames) : 1000
     });
@@ -219,26 +221,6 @@ class SketchManager {
       drawResult = [ canvas ];
     }
     drawResult = [].concat(drawResult).filter(Boolean);
-
-    // if (opt.thumbnail) {
-    //   if (!this._thumbCanvas) {
-    //     this._thumbCanvas = document.createElement('canvas');
-    //     this._thumbContext = this._thumbCanvas.getContext('2d');
-    //   }
-
-    //   const aspect = this.props.canvasWidth / this.props.canvasHeight;
-    //   const thumbnailWidth = Math.floor(defined(this.settings.thumbnailSize, 64));
-    //   const thumbnailHeight = Math.floor(thumbnailWidth / aspect);
-    //   this._thumbCanvas.width = thumbnailWidth;
-    //   this._thumbCanvas.height = thumbnailHeight;
-    //   this._thumbContext.clearRect(0, 0, thumbnailWidth, thumbnailHeight);
-    //   this._thumbContext.drawImage(canvas, 0, 0, thumbnailWidth, thumbnailHeight);
-
-    //   drawResult.push({
-    //     data: this._thumbCanvas,
-    //     suffix: '.thumb'
-    //   });
-    // }
 
     // Transform the canvas/file descriptors into a consistent format,
     // and pull out any data URLs from canvas elements

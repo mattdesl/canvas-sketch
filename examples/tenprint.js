@@ -1,4 +1,4 @@
-const createSketch = require("../");
+const createSketch = require('../');
 
 const settings = {
   dimensions: [2048, 2048]
@@ -35,13 +35,12 @@ const sketch = props => {
         });
     });
 
-  console.log(tiles);
   return ({ context, width, height }) => {
-    context.fillStyle = "black";
+    context.fillStyle = 'black';
     context.fillRect(0, 0, width, height);
 
-    context.lineWidth = "4";
-    context.strokeStyle = "white";
+    context.lineWidth = '4';
+    context.strokeStyle = 'white';
 
     tiles.map(row => {
       row.map(rect => {
@@ -58,4 +57,3 @@ const sketch = props => {
 };
 
 createSketch(sketch, settings);
-
