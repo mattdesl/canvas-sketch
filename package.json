@@ -17,7 +17,6 @@
     "defined": "^1.0.0",
     "factor-bundle": "^2.5.0",
     "get-canvas-context": "^1.0.2",
-    "get-ext": "^1.0.2",
     "is-class": "0.0.5",
     "is-dom": "^1.0.9",
     "is-promise": "^2.1.0",
@@ -75,7 +74,8 @@
     "lib": "npm-run-all --parallel lib:watch lib:server",
     "start": "npm-run-all --parallel lib:watch site:dev",
     "site:dev": "node website/dev.js",
-    "site:bundle": "mkdir -p dist/ && npm run lib:bundle && NODE_ENV=production node website/dev.js"
+    "site:bundle": "NODE_ENV=production node website/dev.js",
+    "build": "mkdir -p dist/ && npm-run-all lib:bundle site:bundle"
   },
   "keywords": [
     "sketch",
