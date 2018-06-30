@@ -37,6 +37,7 @@
     "babelify": "^9.0.0",
     "browserify": "^16.2.2",
     "budo": "^11.3.0",
+    "classnames": "^2.2.6",
     "concat-stream": "^1.6.2",
     "duplexer2": "^0.1.4",
     "eases": "^1.0.8",

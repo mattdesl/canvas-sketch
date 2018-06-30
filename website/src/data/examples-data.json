@@ -64,10 +64,6 @@
       {
         "name": "canvas-pixel-processing",
         "title": "Per-Pixel Processing"
-      },
-      {
-        "name": "regl-empty-scene",
-        "title": "REGL Empty Canvas"
       }
     ]
   }
