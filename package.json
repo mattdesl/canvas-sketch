@@ -32,7 +32,7 @@
     "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
     "@babel/runtime": "^7.0.0-beta.51",
-    "@mattdesl/microbundle": "^0.4.4",
+    "@mattdesl/microbundle": "^0.4.5",
     "array-shuffle": "^1.0.1",
     "babelify": "^9.0.0",
     "browserify": "^16.2.2",
@@ -75,7 +75,7 @@
     "start": "npm-run-all --parallel lib:watch site:dev",
     "site:dev": "node website/dev.js",
     "site:bundle": "NODE_ENV=production node website/dev.js",
-    "build": "mkdir -p dist/ && npm run lib:bundle && site:bundle"
+    "build": "mkdir -p dist/ && npm run lib:bundle && npm run site:bundle"
   },
   "keywords": [
     "sketch",
