@@ -58,7 +58,7 @@
     "preact-router": "^2.6.1",
     "primitive-icosphere": "^1.0.2",
     "primitive-quad": "^2.0.0",
-    "regl": "^1.3.6",
+    "regl": "^1.3.7",
     "rimraf": "^2.6.2",
     "seed-random": "^2.2.0",
     "surge": "^0.20.1",
