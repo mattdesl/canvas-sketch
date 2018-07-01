@@ -3,7 +3,7 @@ const createRegl = require('regl');
 const createQuad = require('primitive-quad');
 const glslify = require('glslify');
 const path = require('path');
-const tween = require('./util/tween-value');
+const tween = require('./util/tween');
 
 // Setup our sketch
 const settings = {
