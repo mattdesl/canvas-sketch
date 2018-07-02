@@ -1,9 +1,57 @@
-module.exports = {
-  lerp: require('lerp'),
-  inverseLerp: require('unlerp'),
-  smoothstep: require('smoothstep')
+const lerp = require('lerp');
+const inverseLerp = require('unlerp');
+const clamp = require('clamp');
+
+const toFinite = (n, defaultValue = 0) => {
+  return typeof n === 'number' && isFinite(n) ? n : defaultValue;
 };
 
+const expandVector = dims => {
+  return (p, defaultValue = 0) => {
+    let scalar;
+    if (p == null) {
+      // No vector, create a default one
+      scalar = defaultValue;
+    } else if (typeof p === 'number' && isFinite(p)) {
+      // Expand single channel to multiple vector
+      scalar = p;
+    }
+
+    const out = [];
+    if (scalar == null) {
+      for (let i = 0; i < dims; i++) {
+        out[i] = toFinite(p[i], defaultValue);
+      }
+    } else {
+      for (let i = 0; i < dims; i++) {
+        out[i] = scalar;
+      }
+    }
+    return out;
+  };
+};
+
+const lerpArray = (min, max, t, out = []) => {
+  if (min.length !== max.length) {
+    throw new Error('min and max array are expected to have the same length');
+  }
+  for (let i = 0; i < min.length; i++) {
+    out[i] = lerp(min[i], max[i], t);
+  }
+  return out;
+};
+
+module.exports = {
+  lerpArray,
+  lerp,
+  inverseLerp,
+  clamp,
+  clamp01: (v) => clamp(v, 0, 1),
+  smoothstep: require('smoothstep'),
+  expand2D: expandVector(2),
+  expand3D: expandVector(3),
+  expand4D: expandVector(4)
+};
 
 // clamp
 // clamp01

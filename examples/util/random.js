@@ -1,11 +1,15 @@
 // a utility for random number generation
 const seedRandom = require('seed-random');
 const SimplexNoise = require('simplex-noise');
+const { lerpArray, expand2D } = require('./math');
+const { getPolylineArclengths } = require('./geom');
 
 class Rand {
   constructor (defaultSeed = null, opt = {}) {
     this.defaultRandom = Math.random;
     this.quiet = opt.quiet !== false;
+    this._nextGaussian = null;
+    this._hasNextGaussian = false;
     this.setSeed(defaultSeed);
   }
 
@@ -18,16 +22,28 @@ class Rand {
     return seed;
   }
 
-  setSeed (seed) {
+  setSeed (seed, opt = {}) {
     if (typeof seed === 'number' || typeof seed === 'string') {
       this.seed = String(seed);
       if (!this.quiet) console.log('[util-random] Current Seed:', this.seed);
-      this.random = seedRandom(this.seed);
+      this.random = seedRandom(this.seed, opt);
     } else {
       this.seed = null;
       this.random = this.defaultRandom;
     }
     this.simplex = new SimplexNoise(this.random);
+    this._nextGaussian = null;
+    this._hasNextGaussian = false;
+  }
+
+  value () {
+    return this.random();
+  }
+
+  valueNonZero () {
+    let u = 0;
+    while (u === 0) u = this.value();
+    return u;
   }
 
   getSeed () {
@@ -46,16 +62,16 @@ class Rand {
     return this.simplex.noise4D(x, y, z, w);
   }
 
-  gaussian () {
-    return Math.sqrt(-2.0 * Math.log(this.random())) * Math.cos(2.0 * Math.PI * this.random());
-  }
-
   sign () {
     return this.randomBoolean() ? 1 : -1;
   }
 
   boolean () {
-    return this.random() > 0.5;
+    return this.value() > 0.5;
+  }
+
+  chance (n = 0.5) {
+    return this.value() < n;
   }
 
   range (min, max) {
@@ -68,7 +84,7 @@ class Rand {
       throw new TypeError('Expected all arguments to be numbers');
     }
 
-    return this.random() * (max - min) + min;
+    return this.value() * (max - min) + min;
   }
 
   rangeFloor (min, max) {
@@ -94,7 +110,7 @@ class Rand {
     var len = arr.length;
     var ret = arr.slice();
     while (len) {
-      rand = Math.floor(this.random() * len--);
+      rand = Math.floor(this.value() * len--);
       tmp = ret[len];
       ret[len] = ret[rand];
       ret[rand] = tmp;
@@ -102,56 +118,90 @@ class Rand {
     return ret;
   }
 
-  insideBox (out = [], scale = 1) {
-    if (!Array.isArray(scale)) scale = [ scale, scale ];
-    out[0] = scale[0] * this.range(-1, 1) / 2;
-    out[1] = scale[1] * this.range(-1, 1) / 2;
+  insideSquare (scale = 1, out = []) {
+    scale = expand2D(scale, 1);
+    out[0] = scale[0] * this.range(-1, 1);
+    out[1] = scale[1] * this.range(-1, 1);
     return out;
   }
 
-  onCircle (out = [], scale = 1) {
-    var r = this.random() * 2.0 * Math.PI;
-    out[0] = Math.cos(r) * scale;
-    out[1] = Math.sin(r) * scale;
+  onSquare (scale = 1, out = []) {
+    scale = expand2D(scale, 1);
+    const path = [
+      [ -scale[0], -scale[1] ], [ scale[0], -scale[1] ],
+      [ scale[0], scale[1] ], [ -scale[0], scale[1] ]
+    ];
+    path.push(path[0]);
+    return this.onPolyline(path, out);
+  }
+
+  onPolyline (path, out = []) {
+    if (path.length === 0) {
+      throw new Error('The path has no points; cannot determine a random point along it.');
+    }
+    if (path.length === 1) {
+      return path[0].slice();
+    }
+
+    const arclengths = getPolylineArclengths(path);
+    const edges = [];
+    for (let i = 0; i < path.length - 1; i++) {
+      edges.push(arclengths[i + 1] - arclengths[i]);
+    }
+
+    const index = this.weighted(edges);
+    return this.onLineSegment(path[index], path[index + 1], out);
+  }
+
+  onLineSegment (a, b, out = []) {
+    const t = this.value();
+    return lerpArray(a, b, t, out);
+  }
+
+  onCircle (radius = 1, out = []) {
+    const theta = this.value() * 2.0 * Math.PI;
+    out[0] = radius * Math.cos(theta);
+    out[1] = radius * Math.sin(theta);
     return out;
   }
 
-  insideCircle (out = [], scale = 1) {
-    return this.onCircle(out, this.range(0, scale));
-  }
-
-  onSphere (out = [], scale = 1) {
-    var r = this.random() * 2.0 * Math.PI;
-    var z = (this.random() * 2.0) - 1.0;
-    var zScale = Math.sqrt(1.0 - z * z) * scale;
-    out[0] = Math.cos(r) * zScale;
-    out[1] = Math.sin(r) * zScale;
-    out[2] = z * scale;
+  insideCircle (radius = 1, out = []) {
+    this.onCircle(1, out);
+    const r = radius * Math.sqrt(this.value());
+    out[0] *= r;
+    out[1] *= r;
     return out;
   }
 
-  insideSphere (out = [], scale = 1) {
-    return this.onSphere(out, this.range(0, scale));
-  }
-
-  onHemisphere (out = [], scale = 1) {
-    var r = this.random() * 1.0 * Math.PI;
-    var z = (this.random() * 2.0) - 1.0;
-    var zScale = Math.sqrt(1.0 - z * z) * scale;
-    out[0] = Math.cos(r) * zScale;
-    out[1] = Math.sin(r) * zScale;
-    out[2] = z * scale;
+  onSphere (radius = 1, out = []) {
+    const u = this.value() * Math.PI * 2;
+    const v = this.value() * 2 - 1;
+    const phi = u;
+    const theta = Math.acos(v);
+    out[0] = radius * Math.sin(theta) * Math.cos(phi);
+    out[1] = radius * Math.sin(theta) * Math.sin(phi);
+    out[2] = radius * Math.cos(theta);
     return out;
   }
 
-  insideHemisphere (out = [], scale = 1) {
-    return this.onHemisphere(out, this.range(0, scale));
+  insideSphere (radius = 1, out = []) {
+    const u = this.value() * Math.PI * 2;
+    const v = this.value() * 2 - 1;
+    const k = this.value();
+
+    const phi = u;
+    const theta = Math.acos(v);
+    const r = radius * Math.cbrt(k);
+    out[0] = r * Math.sin(theta) * Math.cos(phi);
+    out[1] = r * Math.sin(theta) * Math.sin(phi);
+    out[2] = r * Math.cos(theta);
+    return out;
   }
 
   quaternion (out = []) {
-    const u1 = this.random();
-    const u2 = this.random();
-    const u3 = this.random();
+    const u1 = this.value();
+    const u2 = this.value();
+    const u3 = this.value();
 
     const sq1 = Math.sqrt(1 - u1);
     const sq2 = Math.sqrt(u1);
@@ -190,7 +240,7 @@ class Rand {
 
     if (totalWeight <= 0) throw new Error('Weights must sum to > 0');
 
-    let random = this.random() * totalWeight;
+    let random = this.value() * totalWeight;
     for (let i = 0; i < weights.length; i++) {
       if (random < weights[i]) {
         return i;
@@ -198,6 +248,77 @@ class Rand {
       random -= weights[i];
     }
     return 0;
+  }
+
+  // Distributions
+
+  gaussian (mean = 0, standardDerivation = 1) {
+    // https://github.com/openjdk-mirror/jdk7u-jdk/blob/f4d80957e89a19a29bb9f9807d2a28351ed7f7df/src/share/classes/java/util/Random.java#L496
+    if (this._hasNextGaussian) {
+      this._hasNextGaussian = false;
+      const result = this._nextGaussian;
+      this._nextGaussian = null;
+      return mean + standardDerivation * result;
+    } else {
+      let v1 = 0;
+      let v2 = 0;
+      let s = 0;
+      do {
+        v1 = this.value() * 2 - 1; // between -1 and 1
+        v2 = this.value() * 2 - 1; // between -1 and 1
+        s = v1 * v1 + v2 * v2;
+      } while (s >= 1 || s === 0);
+      const multiplier = Math.sqrt(-2 * Math.log(s) / s);
+      this._nextGaussian = (v2 * multiplier);
+      this._hasNextGaussian = true;
+      return mean + standardDerivation * (v1 * multiplier);
+    }
+  }
+
+  laplace () {
+    let u = this.value();
+    u = u + u - 1.0;
+    if (u > 0) return -Math.log(1.0 - u);
+    else return Math.log(1.0 + u);
+  }
+
+  logistic () {
+    return (-Math.log(1.0 / this.valueNonZero() - 1.0));
+  }
+
+  powerLaw (alpha = 0, cut = 1) {
+    return cut * Math.pow(this.value(), 1.0 / (alpha + 1.0));
+  }
+
+  weibull (alpha = 1, beta = 1) {
+    return Math.pow(beta * (-Math.log(1.0 - this.value())), 1.0 / alpha);
+  }
+
+  erlang (mean = 1, variance = 1) {
+    if (variance === 0) throw new Error('variance must be != 0');
+    let k = Math.floor((mean * mean) / variance + 0.5);
+    k = (k > 0) ? k : 1;
+    let a = k / mean;
+    let prod = 1.0;
+    for (let i = 0; i < k; i++) prod *= this.value();
+    return -Math.log(prod) / a;
+  }
+
+  lambda (l3 = 1, l4 = 1) {
+    let lSign = ((l3 < 0) || (l4 < 0)) ? -1 : 1;
+    let u = this.valueNonZero();
+    let x = lSign * (Math.exp(Math.log(u) * l3) - Math.exp(Math.log(1.0 - u) * l4));
+    return x;
+  }
+
+  triangular () {
+    let u = this.value();
+    if (u <= 0.5) return (Math.sqrt(2.0 * u) - 1.0);
+    else return (1.0 - Math.sqrt(2.0 * (1.0 - u)));
+  }
+
+  cauchy () {
+    return Math.tan(Math.PI * this.value());
   }
 }
 
