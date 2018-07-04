@@ -47,7 +47,7 @@ const sketch = ({ context, width, height }) => {
   });
 
   points.forEach(point => {
-    const other = Random.shuffleArray(points).filter(p => p !== point);
+    const other = Random.shuffle(points).filter(p => p !== point);
     point.friends = other.slice(0, point.maxFriends);
   });
 

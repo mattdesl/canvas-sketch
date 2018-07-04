@@ -5,3 +5,4 @@ node_modules
 bundle.js
 dist/
 examples/build/
+tmp/

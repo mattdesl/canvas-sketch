@@ -43,7 +43,7 @@ module.exports = function () {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, shrink-to-fit=0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <title>${item.title}</title>
-  <link rel="stylesheet" href="https://use.typekit.net/etw2igk.css">
+  <!-- <link rel="stylesheet" href="https://use.typekit.net/etw2igk.css"> -->
   <link rel="stylesheet" href="/website/src/example.css">
 </head>
 <body>

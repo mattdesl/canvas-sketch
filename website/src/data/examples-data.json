@@ -30,6 +30,10 @@
     "name": "animated",
     "items": [
       {
+        "name": "canvas-dancing-scribble",
+        "title": "Scribble Curves"
+      },
+      {
         "name": "regl-dither-blob",
         "title": "REGL Dither Blob"
       },

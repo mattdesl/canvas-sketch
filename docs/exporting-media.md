@@ -130,6 +130,12 @@ ffmpeg -r 24 -i %03d.png -y -vf \
   output.gif
 ```
 
+Or, to create an MP4 with `ffmpeg`:
+
+```sh
+ffmpeg -framerate 24 -i %03d.png -y -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
+```
+
 ## Git Commit & File Hashing
 
 If you are doing a lot of generative artwork, you might start to accumulate artworks that cannot be reproduced since the exact combination of code & randomness for that print has been lost over time.

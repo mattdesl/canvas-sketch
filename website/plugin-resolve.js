@@ -1,12 +1,5 @@
 const path = require('path');
 
-console.log('resolve cur dir', __dirname);
-console.log('resolve cwd', process.cwd());
-
-const mainModule = path.resolve(__dirname, '../dist/canvas-sketch.umd.js')
-console.log('main module', mainModule);
-console.log('main module exists', require('fs').existsSync(mainModule));
-
 const canvasSketchModule = require.resolve('../');
 const basedir = path.dirname(canvasSketchModule);
 

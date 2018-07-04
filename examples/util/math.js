@@ -41,7 +41,20 @@ const lerpArray = (min, max, t, out = []) => {
   return out;
 };
 
+const newArray = (n = 0, initialValue) => {
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(initialValue);
+  return out;
+};
+
+const linspace = (n = 0, inclusive) => {
+  return inclusive
+    ? newArray(n).map((_, i) => i <= 1 ? 0 : (i / (n - 1)))
+    : newArray(n).map((_, i) => i / n);
+};
+
 module.exports = {
+  linspace,
   lerpArray,
   lerp,
   inverseLerp,

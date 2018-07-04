@@ -4,6 +4,28 @@ const SimplexNoise = require('simplex-noise');
 const { lerpArray, expand2D } = require('./math');
 const { getPolylineArclengths } = require('./geom');
 
+class NoiseGenerator {
+  constructor (rnd) {
+    this._simplex = new SimplexNoise(rnd);
+  }
+
+  noise1D (x) {
+    return this._simplex.noise2D(x, 0);
+  }
+
+  noise2D (x, y) {
+    return this._simplex.noise2D(x, y);
+  }
+
+  noise3D (x, y, z) {
+    return this._simplex.noise3D(x, y, z);
+  }
+
+  noise4D (x, y, z, w) {
+    return this._simplex.noise4D(x, y, z, w);
+  }
+}
+
 class Rand {
   constructor (defaultSeed = null, opt = {}) {
     this.defaultRandom = Math.random;
@@ -31,7 +53,7 @@ class Rand {
       this.seed = null;
       this.random = this.defaultRandom;
     }
-    this.simplex = new SimplexNoise(this.random);
+    this.noiseGenerator = this._createNoise();
     this._nextGaussian = null;
     this._hasNextGaussian = false;
   }
@@ -50,20 +72,33 @@ class Rand {
     return this.seed;
   }
 
+  // Should this be public?
+  _createNoise () {
+    return new NoiseGenerator(this.random);
+  }
+
+  permuteNoise () {
+    this.noiseGenerator = this._createNoise();
+  }
+
+  noise1D (x) {
+    return this.noiseGenerator.noise1D(x);
+  }
+
   noise2D (x, y) {
-    return this.simplex.noise2D(x, y);
+    return this.noiseGenerator.noise2D(x, y);
   }
 
   noise3D (x, y, z) {
-    return this.simplex.noise3D(x, y, z);
+    return this.noiseGenerator.noise3D(x, y, z);
   }
 
   noise4D (x, y, z, w) {
-    return this.simplex.noise4D(x, y, z, w);
+    return this.noiseGenerator.noise4D(x, y, z, w);
   }
 
   sign () {
-    return this.randomBoolean() ? 1 : -1;
+    return this.boolean() ? 1 : -1;
   }
 
   boolean () {
@@ -100,7 +135,7 @@ class Rand {
     return Math.floor(this.range(min, max));
   }
 
-  shuffleArray (arr) {
+  shuffle (arr) {
     if (!Array.isArray(arr)) {
       throw new TypeError('Expected Array, got ' + typeof arr);
     }
@@ -275,50 +310,52 @@ class Rand {
     }
   }
 
-  laplace () {
+  laplace (mean = 0, std = 1) {
     let u = this.value();
     u = u + u - 1.0;
-    if (u > 0) return -Math.log(1.0 - u);
-    else return Math.log(1.0 + u);
+    if (u > 0) return mean + std * -Math.log(1.0 - u);
+    else return mean + std * Math.log(1.0 + u);
   }
 
-  logistic () {
-    return (-Math.log(1.0 / this.valueNonZero() - 1.0));
+  logistic (mean = 0, std = 1) {
+    return mean + std * (-Math.log(1.0 / this.valueNonZero() - 1.0));
   }
 
-  powerLaw (alpha = 0, cut = 1) {
-    return cut * Math.pow(this.value(), 1.0 / (alpha + 1.0));
+  powerLaw (mean = 0, std = 1, alpha = 0, cut = 1) {
+    if (alpha < 0) throw new Error('alpha must be >= 0');
+    return mean + std * (cut * Math.pow(this.value(), 1.0 / (alpha + 1.0)));
   }
 
-  weibull (alpha = 1, beta = 1) {
-    return Math.pow(beta * (-Math.log(1.0 - this.value())), 1.0 / alpha);
+  weibull (mean = 0, std = 1, alpha = 1, beta = 1) {
+    if (alpha <= 0) throw new Error('alpha must be > 0');
+    return mean + std * Math.pow(beta * (-Math.log(1.0 - this.value())), 1.0 / alpha);
   }
 
-  erlang (mean = 1, variance = 1) {
+  erlang (mean = 0, std = 1, exp = 1, variance = 1) {
     if (variance === 0) throw new Error('variance must be != 0');
-    let k = Math.floor((mean * mean) / variance + 0.5);
+    let k = Math.floor((exp * exp) / variance + 0.5);
     k = (k > 0) ? k : 1;
-    let a = k / mean;
+    let a = k / exp;
     let prod = 1.0;
     for (let i = 0; i < k; i++) prod *= this.value();
-    return -Math.log(prod) / a;
+    return mean + std * (-Math.log(prod) / a);
   }
 
-  lambda (l3 = 1, l4 = 1) {
+  lambda (mean = 0, std = 1, l3 = 1, l4 = 1) {
     let lSign = ((l3 < 0) || (l4 < 0)) ? -1 : 1;
     let u = this.valueNonZero();
     let x = lSign * (Math.exp(Math.log(u) * l3) - Math.exp(Math.log(1.0 - u) * l4));
-    return x;
+    return mean + std * x;
   }
 
-  triangular () {
+  triangular (mean = 0, std = 1) {
     let u = this.value();
-    if (u <= 0.5) return (Math.sqrt(2.0 * u) - 1.0);
-    else return (1.0 - Math.sqrt(2.0 * (1.0 - u)));
+    if (u <= 0.5) return mean + std * (Math.sqrt(2.0 * u) - 1.0);
+    else return mean + std * (1.0 - Math.sqrt(2.0 * (1.0 - u)));
   }
 
-  cauchy () {
-    return Math.tan(Math.PI * this.value());
+  cauchy (mean = 0, std = 1) {
+    return mean + std * Math.tan(Math.PI * this.value());
   }
 }
 
