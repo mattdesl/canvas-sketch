@@ -97,7 +97,8 @@
     "start": "npm-run-all --parallel lib:watch site:dev",
     "site:dev": "node website/dev.js",
     "site:bundle": "NODE_ENV=production node website/dev.js",
-    "build": "mkdir -p dist/ && npm run lib:bundle && npm run site:bundle"
+    "build": "mkdir -p dist/ && npm run lib:bundle && npm run site:bundle",
+    "docs:dev": "documentation serve --watch lib/index.js -f html"
   },
   "keywords": [
     "sketch",
