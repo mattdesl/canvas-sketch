@@ -1,24 +1,33 @@
+/**
+ * A WebGL example of a basic rotating cube, using ThreeJS.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 
 // Import THREE and assign it to global scope
 global.THREE = require('three');
 
-// Now import any examples
+// Now import any ThreeJS example utilities
 require('three/examples/js/controls/OrbitControls');
 
 // Setup our sketch
 const settings = {
-  animation: true,
-  context: 'webgl'
+  // Make the loop animated
+  animate: true,
+  // Get a WebGL canvas rather than 2D
+  context: 'webgl',
+  // Turn on MSAA
+  attributes: { antialias: true }
 };
 
 const sketch = ({ context }) => {
-  // Get your renderer
+  // Create a renderer
   const renderer = new THREE.WebGLRenderer({
-    context,
-    antialias: true
+    context
   });
 
+  // Black background
   renderer.setClearColor('#000', 1);
 
   // create a camera
@@ -31,11 +40,25 @@ const sketch = ({ context }) => {
 
   // setup your scene
   const scene = new THREE.Scene();
+
+  // A cube with PBR mamterial
   const mesh = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 'white', wireframe: true })
+    new THREE.MeshPhysicalMaterial({
+      color: 'white',
+      roughness: 0.75,
+      flatShading: true
+    })
   );
   scene.add(mesh);
+
+  // Specify an ambient/unlit colour
+  scene.add(new THREE.AmbientLight('#59314f'));
+
+  // Add some light
+  const light = new THREE.PointLight('#45caf7', 1, 15.5);
+  light.position.set(2, 2, -4).multiplyScalar(1.25);
+  scene.add(light);
 
   // draw each frame
   return {
@@ -47,7 +70,8 @@ const sketch = ({ context }) => {
       camera.updateProjectionMatrix();
     },
     // And render events here
-    render ({ time }) {
+    render ({ time, deltaTime }) {
+      mesh.rotation.y += deltaTime * (5 * Math.PI / 180);
       controls.update();
       renderer.render(scene, camera);
     }

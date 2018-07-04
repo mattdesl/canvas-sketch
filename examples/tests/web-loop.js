@@ -3,7 +3,7 @@ const sketcher = require('canvas-sketch');
 const settings = {
   dimensions: [ 512, 512 ],
   duration: 3,
-  animation: true,
+  animate: true,
   fps: 24,
   exportPixelRatio: 2
 };

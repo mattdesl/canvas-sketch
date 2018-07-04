@@ -1,3 +1,8 @@
+/**
+ * A Canvas2D example of pixel-perfect RGBA manipualation.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const sketcher = require('canvas-sketch');
 
 const settings = {

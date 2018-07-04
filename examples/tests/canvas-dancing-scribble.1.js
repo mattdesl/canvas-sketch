@@ -14,7 +14,7 @@ console.log('Seed', Random.getSeed());
 const settings = {
   dimensions: [ 1024, 1024 ],
   // exportPixelRatio: 2,
-  animation: true,
+  animate: true,
   fps: 24,
   scaleToView: true,
   duration: 20,

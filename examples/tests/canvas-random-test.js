@@ -12,7 +12,7 @@ const rough = require('roughjs');
 // Random.setSeed(Random.getRandomSeed());
 
 const settings = {
-  // animation: true,
+  // animate: true,
   // When exporting, use the seed as the suffix
   // This way we can reproduce it more easily later
   suffix: Random.getSeed(),

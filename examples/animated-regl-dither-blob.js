@@ -1,4 +1,9 @@
-const sketcher = require('canvas-sketch');
+/**
+ * A WebGL example of a dithered noise blob/sphere, using Regl.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
+const canvasSketch = require('canvas-sketch');
 
 // Import geometry & utilities
 const createRegl = require('regl');
@@ -18,7 +23,7 @@ const settings = {
   dimensions: [ 256, 256 ],
 
   // Setup render loop
-  animation: true,
+  animate: true,
   duration: 7,
   fps: 24,
 
@@ -156,4 +161,4 @@ const sketch = ({ gl, canvasWidth, canvasHeight }) => {
   };
 };
 
-sketcher(sketch, settings);
+canvasSketch(sketch, settings);

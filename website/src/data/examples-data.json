@@ -4,24 +4,24 @@
     "name": "prints",
     "items": [
       {
-        "name": "canvas-ten-print",
-        "title": "Canvas Ten Print"
+        "name": "canvas-10-print",
+        "title": "10 PRINT"
       },
       {
-        "name": "canvas-card",
-        "title": "Expanding Circles"
+        "name": "canvas-dot-flower",
+        "title": "Dot Flower"
       },
       {
-        "name": "canvas-card-simple",
-        "title": "Simple Circles"
+        "name": "canvas-generative-silhouette",
+        "title": "Generative Silhouette"
       },
       {
-        "name": "canvas-random-circles",
-        "title": "Generative Circles"
+        "name": "canvas-generative-arcs",
+        "title": "Generative Arcs"
       },
       {
-        "name": "canvas-risograph-layers",
-        "title": "Abstract Risograph Layers"
+        "name": "canvas-abstract-risograph-print",
+        "title": "Abstract Risograph Print"
       }
     ]
   },
@@ -30,23 +30,23 @@
     "name": "animated",
     "items": [
       {
-        "name": "canvas-dancing-scribble",
+        "name": "animated-scribble-curves",
         "title": "Scribble Curves"
       },
       {
-        "name": "regl-dither-blob",
-        "title": "REGL Dither Blob"
+        "name": "animated-regl-dither-blob",
+        "title": "Dither Blob (WebGL/Regl)"
       },
       {
-        "name": "regl-fullscreen-shader",
-        "title": "REGL Fullscreen Shader"
+        "name": "animated-regl-fullscreen-shader",
+        "title": "Fullscreen Shader (WebGL/Regl)"
       },
       {
-        "name": "threejs-basic-cube",
-        "title": "ThreeJS Basic Cube"
+        "name": "animated-threejs-basic-cube",
+        "title": "Basic Cube (WebGL/ThreeJS)"
       },
       {
-        "name": "loop-simple-animation",
+        "name": "animated-simple-2d",
         "title": "Basic 2D Animation"
       }
     ]

@@ -9,7 +9,7 @@ When the canvas is in focus, you can trigger exports and playback changes with t
 - `CmdOrCtrl + S` - Export a single frame of media
 - `CmdOrCtrl + Shift + S` - Export a sequence of frames
 - `CmdOrCtrl + K` - Commit and export a single frame of media
-- `Space` - toggle play/pause when `{ animation: true }` is used
+- `Space` - toggle play/pause when `{ animate: true }` is used
 
 Where `CmdOrCtrl` can be `Command` or `Control` keys, depending on your keyboard preference.
 

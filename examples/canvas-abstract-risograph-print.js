@@ -1,3 +1,10 @@
+/**
+ * An advanced Canvas2D example of creating artwork for a Risograph printer.
+ * This exports multiple layers: each color as a black & white mask,
+ * a proof (composite of all colours), and a JSON metadata of ink colours & intensities.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const sketcher = require('canvas-sketch');
 const seedRandom = require('seed-random');
 

@@ -1,3 +1,8 @@
+/**
+ * A Canvas2D example of "10 PRINT" algorithm.
+ * @author Guido Schmidt (@guidoschmidt)
+ */
+
 const createSketch = require('canvas-sketch');
 
 const settings = {
@@ -44,9 +49,6 @@ const sketch = props => {
 
     tiles.map(row => {
       row.map(rect => {
-        const randomNumber = Math.random();
-        if (randomNumber > 0.5) {
-        }
         context.beginPath();
         context.moveTo(rect.x, rect.y);
         context.lineTo(rect.toX, rect.toY);

@@ -1,3 +1,8 @@
+/**
+ * A Canvas2D example of async loading and image processing.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 const load = require('load-asset');
 

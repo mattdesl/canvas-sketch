@@ -1,7 +1,12 @@
+/**
+ * A Canvas2D example of a basic animation.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  animation: true,
+  animate: true,
   duration: 3,
   fps: 24,
   dimensions: [ 256, 256 ]

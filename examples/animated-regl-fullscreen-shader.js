@@ -1,3 +1,8 @@
+/**
+ * A WebGL example of a full-screen shader effect, using Regl.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 const createRegl = require('regl');
 const createQuad = require('primitive-quad');
@@ -8,7 +13,7 @@ const tween = require('./util/tween');
 // Setup our sketch
 const settings = {
   pixelsPerInch: 300,
-  animation: true,
+  animate: true,
   scaleToView: true,
   context: 'webgl',
   canvas: document.querySelector('.background-canvas')

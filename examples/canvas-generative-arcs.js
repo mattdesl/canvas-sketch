@@ -1,3 +1,8 @@
+/**
+ * A Canvas2D example of generative/algorithmic artwork, sized for web & social media.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const sketcher = require('canvas-sketch');
 
 const settings = {

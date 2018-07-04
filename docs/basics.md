@@ -131,7 +131,7 @@ canvasSketch(({ context, width, height }) => {
 
 ## Animation Loops
 
-You can specify `{ animation: true }` in your settings, and a requestAnimationFrame loop will be started once your sketch is loaded.
+You can specify `{ animate: true }` in your settings, and a requestAnimationFrame loop will be started once your sketch is loaded.
 
 Then, in your *renderer* function, you can use the following `props` to determine how to draw your content:
 
@@ -147,7 +147,7 @@ Below is an example of a seamless loop, using `playhead` with `Math.PI` to rotat
 ```js
 const settings = {
   // Enable animation loop
-  animation: true,
+  animate: true,
   // Set a finite duration for the animation
   duration: 3,
   // Set an export frame rate (default is 30)

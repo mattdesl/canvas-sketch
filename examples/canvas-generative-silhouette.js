@@ -1,4 +1,9 @@
-const canvasSketch = require('canvas-sketch'); // not yet released
+/**
+ * A Canvas2D example of generative/algorithmic artwork, sized for print.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
+const canvasSketch = require('canvas-sketch');
 const Random = require('./util/random');
 const { lerp } = require('./util/math');
 
@@ -17,7 +22,7 @@ const settings = {
 const sketch = ({ width, height }) => {
   const margin = 0;
 
-  const sliceCount = 80000;
+  const sliceCount = 50000;
   const slices = Array.from(new Array(sliceCount)).map((_, i, list) => {
     const t = list.lenth <= 1 ? 0 : i / (list.length - 1);
 
@@ -29,16 +34,16 @@ const sketch = ({ width, height }) => {
     const noise = Random.noise2D(nx * nf, ny * nf);
     const noise01 = noise * 0.5 + 0.5;
 
-    const tOffset = Random.gaussian() * 0.01;
+    const tOffset = Random.gaussian(0, 0.01);
 
     const cx = width / 2;
     const x = cx + noise * amplitude;
     return {
-      alpha: Random.range(0.5, 1) * (1 - noise01),
+      alpha: Random.range(0.75, 1) * (1 - noise01),
       color: 'white',
       lineWidth: Random.range(0.005, 0.02) * 0.1,
       length: Random.gaussian() * noise01 * 0.5,
-      angle: Random.range(-1, 1) * noise01 * 40 * Math.PI / 180,
+      angle: Random.gaussian(0, 1),
       x,
       y: lerp(margin, height - margin, t + tOffset)
     };

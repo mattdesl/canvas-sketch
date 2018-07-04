@@ -1,15 +1,18 @@
+/**
+ * A Canvas2D example of a procedurally animated 'scribble'.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 const canvasPainter = require('./util/canvas-painter');
 
 const Random = require('./util/random');
 const { clamp, linspace } = require('./util/math');
-const hsl2rgb = require('float-hsl2rgb');
 
-Random.setSeed(Random.getRandomSeed());
-
+// Setup our sketch & export parameters
 const settings = {
   dimensions: [ 1024, 1024 ],
-  animation: true,
+  animate: true,
   fps: 25,
   duration: 20,
   scaleToView: true,
@@ -109,12 +112,16 @@ const sketch = ({ context, width, height, render }) => {
       context.translate(width / 2, height / 2);
       context.scale(scale, scale);
 
+      // Create a HSL from the loop playhead
       const hue = (playhead + hueStart) % 1;
       const sat = 0.75;
       const light = 0.5;
-      const rgb = hsl2rgb([ hue, sat, light ]).map(n => Math.floor(n * 255));
-      // const stroke = `hsl(${hue}, ${sat}, ${light}`
-      const stroke = `rgb(${rgb.join(', ')})`;
+      const hsl = [
+        Math.floor(hue * 360),
+        `${Math.floor(100 * sat)}%`,
+        `${Math.floor(100 * light)}%`
+      ].join(', ');
+      const stroke = `hsl(${hsl})`;
 
       const line = generate(playhead);
       painter.polyline(line, {
@@ -127,7 +134,8 @@ const sketch = ({ context, width, height, render }) => {
       context.restore();
     },
     begin: () => {
-      // Re-compute the noise tables so we get a new set of random values on the next loop
+      // On loop start, re-compute the noise tables so we get a new
+      // set of random values on the next loop
       randomize();
     }
   };

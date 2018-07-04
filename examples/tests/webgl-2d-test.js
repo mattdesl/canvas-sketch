@@ -11,7 +11,7 @@ const settings = {
   units: 'in',
   pixelsPerInch: 300,
   context: 'webgl',
-  animation: true,
+  animate: true,
   attributes: {
     premultipliedAlpha: true,
     antialias: true // turn on MSAA

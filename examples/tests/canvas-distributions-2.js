@@ -13,10 +13,10 @@ const colors = {
 };
 
 const settings = {
-  // animation: true,
+  // animate: true,
   // When exporting, use the seed as the suffix
   // This way we can reproduce it more easily later
-  animation: true,
+  animate: true,
   dimensions: [ 1280, 1280 ]
   // units: 'in',
   // pixelsPerInch: 300
