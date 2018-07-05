@@ -15,13 +15,8 @@
 
 - [Examples Source Code](./examples/)
 
-<p></p>
+<center><img src="docs/assets/images/canvas-sketch-cli-2.png" width="50%" /></center>
 
-<center>
-
-<img src="docs/assets/images/canvas-sketch-cli.png" width="65%" />
-
-</center>
 
 ### Quick Start with Node.js & npm
 
