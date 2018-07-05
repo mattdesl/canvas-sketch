@@ -10,10 +10,19 @@
 `canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.
 
 - [Website](https://competent-beaver-2ad4cc.netlify.com/)
+
 - [Documentation](./docs/README.md)
+
 - [Examples Source Code](./examples/)
 
-#### Quick Start with Node.js & npm
+
+<p></p>  
+  
+<center>
+
+###### <sup>using `canvas-sketch` in Chrome</sup><img src="docs/assets/images/canvas-sketch-cli.png" width="75%" /> </center>
+
+### Quick Start with Node.js & npm
 
 To jump directly into `canvas-sketch`, try the following terminal commands.
 
