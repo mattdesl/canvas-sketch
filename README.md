@@ -17,9 +17,12 @@
 
 
 <center>
-<img src="docs/assets/images/canvas-sketch-cli.png" width="50%" /> </center>
 
-<sup>using `canvas-sketch` in Chrome</sup>
+<img src="docs/assets/images/canvas-sketch-cli.png" width="50%" />
+
+</center>
+
+<center><sup>using `canvas-sketch` in Chrome</sup></center>
 
 ### Quick Start with Node.js & npm
 
