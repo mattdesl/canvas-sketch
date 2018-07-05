@@ -2,7 +2,7 @@
 
 ---
 
-### Exporting Artwork to PNG, GIF, MP4 and Other Files
+### Exporting Artwork to PNG, GIF, MP4, SVG and Other Files
 
 One of the main features of `canvas-sketch` is a unified structure for exporting image sequences, print-resolution PNGs, and even other formats like SVG and JSON.
 
@@ -123,6 +123,12 @@ canvasSketch(() => {
 });
 ```
 
+### Exporting Pen Plotter Artwork (SVG)
+
+You can export your own SVG file as a string, like in the above examples. Since this is a common task, we've included some third-party utilities specifically designed to export SVGs compatible with AxiDraw V3 mecahnical pen plotter.
+
+You can read more about it in [Developing Pen Plotter Artwork](./other-topics.md#developing-pen-plotter-artwork).
+
 ### Exporting Multiple Layers
 
 Some artworks may be composed of multiple files, for example:
@@ -166,12 +172,8 @@ If you are using `canvas-sketch-cli` from within a git repo, you can use `Cmd + 
 
 To further improve reproducibility, you can export a JSON metadata layer (for example, containing `dat.gui` slider parameters), or embed information (like a random seed) into the `{ suffix }` option.
 
-### Next Steps
+## 
 
-Now that you've got a basic sketch, you can move on to more advanced concepts:
+<sub>To create more interesting artwork, check out the guide on [Other Topics](./other-topics.md) to learn about WebGL, GLSL, Pen Plotters and more.</sub>
 
-- [Utilities: Randomness, Math, Geometry, Color and More](#)
-
-- [Using ThreeJS, P5.js, Regl, and other libraries](#)
-
-Or, you can go [back to the documentation](./README.md) to browse the rest of the topics.
+#### <sup>[← Back to Documentation](./README.md)

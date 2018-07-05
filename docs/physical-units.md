@@ -65,8 +65,6 @@ When you save with `Cmd + S` or `Ctrl + S`, the output image will be 1050 x 600 
 
 <p></p>
 
-> <sub>See [here](#) for the full source code of this sketch.</sub>
-
 Here is another business card example, using `cos()` and `sin()` to spiral many circles around the center.
 
 <img src="assets/images/dot-flower.png" width="75%" />

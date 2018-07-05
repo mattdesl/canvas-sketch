@@ -9,6 +9,7 @@
 - [Using `canvas-sketch` without Node.js and npm]
 (#using-canvas-sketch-without-nodejs-and-npm)
 - [Fixing EACCESS Error on `npm install -g`](#fixing-eaccess-error-on-npm-install--g)
+- [Installing `ffmpeg` For Animation Sequences](#installing-ffmpeg-for-animation-sequences)
 
 ### Installing Node.js, npm and a terminal
 
@@ -58,9 +59,22 @@ If you get an EACCESS error when installing `canvas-sketch-cli` globally, you ma
 
 ### Installing `ffmpeg` For Animation Sequences
 
+To use `canvas-sketch-mp4` and `canvas-sketch-gif`, you'll need to install `ffmpeg` for your platform:
+
+- **macOS** Use [homebrew](https://brew.sh/) and run `brew install ffmpeg`
+- **Windows** TODO
+- **Linux** TODO
+
+Once installed, `ffmpeg` should be available on your PATH environment variable. This may require restarting terminal or rebooting your computer.
+
+## 
+
+#### <sup>[← Back to Documentation](./README.md)
+
+<!--
 ### Using `ffmpeg` manually and with custom commands
 
-For example, a high quality 256x256 GIF sequence at 24 FPS can be generated with `ffmpeg` like so:
+The `canvas-sketch-gif` tool is a thin wrapper around a command that looks like this, with configurable size and fps:
 
 ```sh
 ffmpeg -r 24 -i %03d.png -y -vf \
@@ -71,8 +85,9 @@ ffmpeg -r 24 -i %03d.png -y -vf \
   output.gif
 ```
 
-Or, to create an MP4 with `ffmpeg`:
+And the `canvas-sketch-mp4` roughly translates to:
 
 ```sh
 ffmpeg -framerate 24 -i %03d.png -y -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
 ```
+-->

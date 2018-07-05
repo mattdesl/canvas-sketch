@@ -4,7 +4,7 @@
 
 ### About
 
-`canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser. It is ideal for creating artworks and images with code, randomness, algorithms, and emergent systems.
+`canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser. It is designed to help create artworks and images with code, randomness, algorithms, and emergent systems.
 
 You can use `canvas-sketch` to export high-resolution PNG for Giclée prints, render image sequences for GIF and MP4 loops, generate SVG files for mechanical pen plotters (like AxiDraw), automatically git hash your artworks for long-term archiving, and much more.
 
@@ -26,19 +26,27 @@ These tools can be used on their own, or combined with your favourite graphics l
 
 - [Developing with Physical Units (inches, centimeters)](./physical-units.md)
 
-- [Exporting Artwork to PNG, GIF, MP4 and other files](./exporting-artwork.md)
+- [Exporting Artwork to PNG, GIF, SVG, MP4 and other files](./exporting-artwork.md)
 
-  - [Exporting Animations](#)
+  - [Exporting Animations](./exporting-artwork.md#exporting-animations)
 
-  - [Automatic Git Hashing for Long-Term Archiving](#)
+  - [Exporting Other File Types](./exporting-artwork.md#exporting-other-file-types)
 
-- [Third-Party Libraries](./third-party.md)
+  - [Automatic Git Hashing for Long-Term Archiving](./exporting-artwork.md#automatic-git-hashing-for-long-term-archiving)
 
-  - [Utilities: Randomness, Math, Geometry, Color and More](#)
+- [Other Topics](./other-topics.md)
 
-  - [Async: Loading Images & Other Assets](#)
+  - [Using WebGL](./other-topics.md#using-webgl)
 
-  - [Using ThreeJS, P5.js, Regl, and other libraries](#)
+  - [Using glslify for modular GLSL](./other-topics.md#using-glslify-for-modular-glsl)
+
+  - [Using ThreeJS, P5.js, and other libraries](./other-topics.md#using-threejs-p5js-and-other-libraries)
+
+  - [Utilities for Randomness, Math, Geometry, Color, etc.](./other-topics.md#utilities-for-randomness-math-geometry-color-etc)
+
+  - [Developing Pen Plotter Artwork](./other-topics.md#developing-pen-plotter-artwork)
+
+  - [Async Sketches: Loading Images & Other Assets](./other-topics.md#loading-images--other-assets)
 
 - [Troubleshooting](./troubleshooting.md)
 
@@ -46,7 +54,7 @@ These tools can be used on their own, or combined with your favourite graphics l
 
 If you are interested in helping develop or maintain `canvas-sketch` ecosystem:
 
-- [Contribution Guideline](#)
+- [Contribution Guideline](./contributing.md)
 
 
 

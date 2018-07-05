@@ -69,12 +69,12 @@ We will come back to this feature later, as there are many options to export hig
 
 The structure of `canvas-sketch` is inspired by React rendering, and it's recommended to make the renderer as *pure* as possible (i.e. same props always leads to same result).
 
-You can't always control when the render function is called (it may be called before exporting higher resolutions), so you don't want to introduce side-effects in the renderer.
+Since your sketch may re-render at times (i.e. during export or when the canvas size changes), you shouldn't introduce side-effects and randomness into your render function.
 
 Here is what *not* to do:
 
 ```js
-// BAD !
+// NOT SO GOOD !
 const sketch = () => {
   return ({ width }) => {
     // !!!
