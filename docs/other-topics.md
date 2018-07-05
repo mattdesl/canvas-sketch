@@ -155,6 +155,9 @@ After implementing some pixel sorting, we end up with:
 
 > <sub>See [here](../examples/canvas-image-processing.js) for the full source code of this sketch.</sub>
 
+### Building for Web, Installations & VJ
+
+TODO.
 
 ## 
 

@@ -48,6 +48,8 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Async Sketches: Loading Images & Other Assets](./other-topics.md#loading-images--other-assets)
 
+  - [Building for Web, Installations & VJ](./other-topics.md#building-for-web-installations--vj)
+
 - [Troubleshooting](./troubleshooting.md)
 
 ### Contributing
