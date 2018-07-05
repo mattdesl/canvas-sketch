@@ -15,6 +15,8 @@
 
 - [Examples Source Code](./examples/)
 
+<p></p>
+
 <center>
 
 <img src="docs/assets/images/canvas-sketch-cli.png" width="65%" />
