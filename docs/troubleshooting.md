@@ -6,8 +6,7 @@
 
 - [Installing Node.js, npm and a terminal](#installing-nodejs-npm-and-a-terminal)
 - [Using `canvas-sketch` with Webpack and Other Bundlers](#using-canvas-sketch-with-webpack-and-other-bundlers)
-- [Using `canvas-sketch` without Node.js and npm]
-(#using-canvas-sketch-without-nodejs-and-npm)
+- [Using `canvas-sketch` without Node.js and npm](#using-canvas-sketch-without-nodejs-and-npm)
 - [Fixing EACCESS Error on `npm install -g`](#fixing-eaccess-error-on-npm-install--g)
 - [Installing `ffmpeg` For Animation Sequences](#installing-ffmpeg-for-animation-sequences)
 
