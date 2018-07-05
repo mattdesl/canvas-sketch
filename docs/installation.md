@@ -46,7 +46,9 @@ This does a few things:
 
 It also launches your default browser to [http://localhost:9966/](http://localhost:9966/) (the development server), showing a blank white canvas.
 
-<center><img src="./assets/images/installation-2.png" width="60%" /></center>
+<p align="center">
+  <img src="./assets/images/installation-2.png" width="60%" />
+</p>
 
 Now you can edit the newly created JavaScript file in the `sketches/` folder. When you save changes, the browser will reload immediately.
 

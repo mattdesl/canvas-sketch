@@ -3,7 +3,7 @@
 ### :warning:
 ### WORK IN PROGRESS
 
-#
+---
 
 ### canvas-sketch
 
@@ -15,10 +15,19 @@
 
 - [Examples Source Code](./examples/)
 
+#
+
+<p align="center">
+  <sub>example of <code>canvas-sketch</code> running in Chrome</sub>
+</p>
+
+<p align="center">
+  <sub>↓</sub> 
+</p>
+
 <p align="center">
   <img src="docs/assets/images/canvas-sketch-cli-2.png" width="50%" />
 </p>
-
 
 ### Quick Start with Node.js & npm
 
