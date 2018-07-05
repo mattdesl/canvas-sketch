@@ -13,4 +13,4 @@
 // require('./regl');
 // require('./regl-basic');
 // require('./print-risograph');
-require("./tenprint.js");
+// require("./tenprint.js");
