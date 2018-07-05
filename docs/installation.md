@@ -9,19 +9,20 @@ The recommended way to use `canvas-sketch` and its tooling is with its *command-
 Requirements:
 
 - [Node.js](https://nodejs.org/en/) 8.10.0 or higher
-- [npm](https://www.npmjs.com/) 6.1.0 or higher
-- A command-line terminal (such as the default `Terminal.app` in OSX, or [cmder](http://cmder.net/) in Windows)
+- [npm](https://www.npmjs.com/) 5.6.0 or higher
+- A command-line terminal (such as the default `Terminal.app` in macOS, or [cmder](http://cmder.net/) in Windows)
 
-If you haven't got these requirements, or if you'd rather use the tool without a package manager, see the following sections:
+If you don't have these tools, or would rather not use them, see the following:
 
-- [How to Install Node.js and npm](#installing-node-npm)
-- [Using `canvas-sketch` with Webpack and Other Bundlers](#using-with-other-bundlers)
-- [Using `canvas-sketch` without Node.js and npm]
-(#using-without-nodejs-and-npm)
+- [Installing Node.js, npm and a terminal](./faq.md#installing-nodejs-npm-and-a-terminal)
+- [Using `canvas-sketch` with Webpack and Other Bundlers](./faq.md#using-canvas-sketch-with-webpack-and-other-bundlers)
+- [Using `canvas-sketch` without Node.js and npm](./faq.md#using-canvas-sketch-without-nodejs-and-npm)
 
 ### Quick Start
 
-The fastest way to get started is to install the tool globally:
+The fastest way to get started is to install the tool globally with `npm`.
+
+In your terminal, enter the following:
 
 ```sh
 # Install the CLI tool globally
@@ -37,19 +38,19 @@ cd my-sketches
 canvas-sketch --new --open
 ```
 
-<center><img src="./assets/images/installation-1.png" width="75%" /></center>
+This does a few things:
 
-The above `canvas-sketch` command does a few things:
+- Stub out a new sketch into `sketches/[current-timestamp].js`
+- Generate a default `package.json` for your dependencies
+- Install any required dependencies (in this case, `canvas-sketch`)
 
-- Write a new dummy JavaScript file into a `sketches/` folder in your current working directory with a time-stamped name, like `2018.07.04-19.25.02.js`
-- Generate a default `package.json` file for your dependencies
-- Install any dependencies needed to run the sketch (in this case, the `canvas-sketch` library)
-
-It should also launch your default browser to [http://localhost:9966/](http://localhost:9966/) (the local development server), and present you with a square white canvas.
+It also launches your default browser to [http://localhost:9966/](http://localhost:9966/) (the development server), showing a blank white canvas.
 
 <center><img src="./assets/images/installation-2.png" width="60%" /></center>
 
-Now, you can edit the newly created file in the `sketches/` folder with your favourite code editor, like [VSCode](https://code.visualstudio.com/) or [Sublime Text](https://www.sublimetext.com/). For example, change the `'white'` fill style to `'red'` and save your file, and the browser should reload immediately.
+Now you can edit the newly created JavaScript file in the `sketches/` folder. When you save changes, the browser will reload immediately.
+
+For example, try changing the `'white'` fill style to `'red'`.
 
 ```js
 const canvasSketch = require('canvas-sketch');
@@ -60,7 +61,7 @@ const settings = {
 
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = 'red'; // <-- try changing the color
+    context.fillStyle = 'red'; // <-- Try changing the color
     context.fillRect(0, 0, width, height);
   };
 };
@@ -68,18 +69,30 @@ const sketch = () => {
 canvasSketch(sketch, settings);
 ```
 
+#### 💾 Exporting as PNG
+
+In the browser, hit `Cmd + S` or `Ctrl + S` to export your canvas as a PNG file. It will be saved to your `~/Downloads` folder (and similar across other platforms).
+
+#### :bulb: A Few More Examples to Try
+
 Now that you've got it running, you could try out a few different commands:
 
 ```sh
 # Run the development server on an existing file
-canvas-sketch sketches/my-sketch.js
+canvas-sketch src/foobar.js
 
-# Generate a new sketch from the regl template
-canvas-sketch --new --template=regl --open
+# Start a new sketch from the Three.js template
+canvas-sketch --new --template=three --open
 
-# Bundle your sketch to a HTML + JS file in dist/ folder
-canvas-sketch sketches/my-sketch.js --build --dir dist/
+# Build your sketch to a sharable HTML + JS website
+canvas-sketch sketches/my-sketch.js --build
 
-# Paste the clipboard contents to a new file at './foo.js'
+# Paste the clipboard contents & run a new sketch at './foo.js'
 pbpaste | canvas-sketch foo.js --new
 ```
+
+## 
+
+<sub>Now that you're set up, you might like to read [A "Hello, World" Sketch](./hello-world.md).</sub>
+
+#### <sup>[← Back to Documentation](./README.md)

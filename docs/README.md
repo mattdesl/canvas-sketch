@@ -10,31 +10,37 @@ You can use `canvas-sketch` to export high-resolution PNG for Giclée prints, re
 
 These tools can be used on their own, or combined with your favourite graphics library like ThreeJS, P5.js, Pixi, Regl, D3, etc.
 
-### Contents
+### API Docs
+
+  - [`canvas-sketch` — API Docs](./api.md)
+
+  - [`canvas-sketch-cli` — CLI Docs](./cli.md)
+
+### Guides
 
 - [Installing and Using `canvas-sketch`](./installation.md)
 
-- [A "Hello, World" Sketch](#)
+- [A "Hello, World" Sketch](./hello-world.md)
 
-- [Exporting Artwork to PNG, GIF and MP4 files](#)
+- [Animated Sketches](./animated-sketches.md)
 
-- [Using Physical Units (inches, centimeters)](#)
+- [Developing with Physical Units (inches, centimeters)](./physical-units.md)
 
-- [Utilities: Randomness, Math, Geometry, Color and More](#)
+- [Exporting Artwork to PNG, GIF, MP4 and other files](./exporting-artwork.md)
 
-- [Using ThreeJS, P5.js, Regl, and other libraries](#)
+  - [Exporting Animations](#)
 
-- [Async: Loading Images & Other Assets](#)
+  - [Automatic Git Hashing for Long-Term Archiving](#)
 
-- [Automatic Git Hashing for Long-Term Archiving](#)
+- [Third-Party Libraries](./third-party.md)
 
-- [Advanced Exporting: 3D Objects, Layers, Triptychs, etc](#)
+  - [Utilities: Randomness, Math, Geometry, Color and More](#)
 
-- Full API Documentation:
+  - [Async: Loading Images & Other Assets](#)
 
-  - [API Docs](#)
+  - [Using ThreeJS, P5.js, Regl, and other libraries](#)
 
-  - [Command-Line Interface Docs](#)
+- [Troubleshooting](./troubleshooting.md)
 
 ### Contributing
 
