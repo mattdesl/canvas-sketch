@@ -1,7 +1,7 @@
 const defined = require('defined');
 const { expand2D } = require('./math');
 
-module.exports = function ({ context }) {
+module.exports = function (context) {
   const paint = (opt = {}) => {
     let fill = opt.fill;
     let stroke = opt.stroke;
@@ -31,7 +31,7 @@ module.exports = function ({ context }) {
 
   const circle = (opt = {}) => {
     context.beginPath();
-    const radius = defined(opt.radius, 1);
+    const radius = Math.max(0, defined(opt.radius, 1));
     const position = expand2D(opt.position);
     context.arc(position[0], position[1], radius, 0, Math.PI * 2, false);
     paint(opt);
@@ -53,7 +53,22 @@ module.exports = function ({ context }) {
     });
   };
 
+  const clear = (opt = {}) => {
+    const position = expand2D(opt.position);
+    const width = defined(opt.width, context.canvas.width);
+    const height = defined(opt.height, context.canvas.height);
+
+    if (opt.fill) {
+      context.beginPath();
+      context.rect(position[0], position[1], width, height);
+      paint(opt);
+    } else {
+      context.clearRect(position[0], position[1], width, height);
+    }
+  };
+
   return {
+    clear,
     paint,
     circle,
     polyline,

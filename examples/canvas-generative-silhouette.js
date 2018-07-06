@@ -15,7 +15,9 @@ const settings = {
   // When exporting, use the seed as the suffix
   // This way we can reproduce it more easily later
   suffix: Random.getSeed(),
-  dimensions: 'a4',
+  // Standard A4 paper size
+  dimensions: 'A4',
+  // We'll work in inches for the rendering
   units: 'in'
 };
 

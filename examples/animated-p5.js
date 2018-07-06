@@ -45,7 +45,7 @@ canvasSketch(() => {
   // Return a renderer to 'draw' the p5.js content
   return ({ playhead, width, height }) => {
     // Draw with p5.js things
-    background(255);
+    clear()
     normalMaterial();
     rotateX(playhead * 2 * PI);
     rotateZ(playhead * 2 * PI);

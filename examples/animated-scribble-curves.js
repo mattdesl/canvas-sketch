@@ -87,7 +87,7 @@ const sketch = ({ context, width, height, render }) => {
   let hueStart;
 
   // Basic 2D canvas utility
-  const painter = canvasPainter({ context });
+  const painter = canvasPainter(context);
 
   // Gets new random noise & hue
   const randomize = () => {

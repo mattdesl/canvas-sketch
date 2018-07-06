@@ -22,7 +22,7 @@ canvasSketch(async ({ update }) => {
     // Extract bitmap pixel data
     const pixels = context.getImageData(0, 0, width, height);
 
-    // Manipualte pixels
+    // Manipulate pixels
     const data = pixels.data;
     let len = width;
     while (len) {

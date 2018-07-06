@@ -45,7 +45,7 @@ async function start () {
 
 async function bundle () {
   const factor = await getFactorPlugin();
-  const app = browserify({
+  browserify({
     entries: factor.entries,
     plugin: [
       require('./plugin-resolve'),

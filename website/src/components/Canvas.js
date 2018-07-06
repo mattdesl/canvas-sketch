@@ -7,6 +7,9 @@ const sketch = require('./background-sketch');
 // The actual canvas-sketch library
 const canvasSketch = require('canvas-sketch');
 
+// Utility for preact className
+const classnames = require('classnames');
+
 module.exports = class Canvas extends Component {
 
   componentDidMount () {
@@ -14,14 +17,29 @@ module.exports = class Canvas extends Component {
     const canvas = this.base;
 
     // Setup a new canvas-sketch
-    canvasSketch(sketch, Object.assign({}, sketch.settings, { canvas }));
+    this.sketch = canvasSketch(sketch, Object.assign({}, sketch.settings, { canvas }));
+    this._handleActive(this.props);
   }
 
-  shouldComponentUpdate () {
-    return false;
+  componentWillReceiveProps (newProps) {
+    this._handleActive(newProps);
+  }
+
+  _handleActive (newProps) {
+    this.sketch.then(sketch => {
+      if (newProps.active && !sketch.playing) sketch.play();
+      else sketch.stop();
+    });
+  }
+
+  shouldComponentUpdate (newProps) {
+    return newProps.active !== this.props.active;
   }
 
   render () {
-    return <canvas />;
+    const className = classnames('background-canvas', {
+      active: this.props.active
+    });
+    return <canvas className={className} />;
   }
 };

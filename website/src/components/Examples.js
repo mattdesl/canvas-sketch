@@ -52,14 +52,13 @@ class View extends Component {
   }
 
   componentDidUpdate () {
-    if (this.element && window.hljs && this.state.code) {
+    if (this.element && window.hljs && this.state.code && this.element.parentElement) {
       this.element.innerHTML = this.state.code;
       window.hljs.highlightBlock(this.element.parentElement);
     }
   }
 
   render (props) {
-    // <div className='no-sketch'>Choose a sketch from the list to begin.</div>;
     const name = props.name;
 
     // User selected an example
@@ -89,6 +88,8 @@ class View extends Component {
 
     return <div className='sketch-view no-sketch'>
       <p>Choose a sketch from the list to begin.</p>
+      {/* It's a bit awkward since the user has to click the iframe to gain focus first... :\ */}
+      {/* <p className='hotkey-tip'>While viewing a sketch, push <code className='hotkey'>Ctrl + S</code> or <code className='hotkey'>Cmd + S</code> to download the artwork.</p> */}
     </div>;
   }
 }
@@ -111,7 +112,7 @@ module.exports = (props, context) => {
   const view = <View name={name} />;
   return <main className='split-view'>
     <div className='list-view'>
-      {sections}
+      <div className='list-view-scroll'>{sections}</div>
     </div>
     {view}
   </main>;

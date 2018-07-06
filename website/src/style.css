@@ -8,7 +8,14 @@ html {
 }
 
 canvas {
+  opacity: 0.0;
   display: block;
+  transition: opacity 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+
+canvas.active {
+  opacity: 1.0;
+  transition: opacity 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
 
 body {
@@ -41,6 +48,7 @@ body {
 
 .top-nav {
   height: 2rem;
+  min-height: 2rem;
   width: 100%;
   display: flex;
   box-sizing: border-box;
@@ -120,6 +128,7 @@ hr.right {
 
 .background-canvas {
   position: absolute;
+  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
@@ -154,7 +163,7 @@ nav a {
   content: '↗';
   font-size: 8px;
   margin-left: 3px;
-  opacity: 0.5;
+  opacity: 0.75;
   position: absolute;
   top: 0px;
   left: 100%;
@@ -200,14 +209,23 @@ main.split-view {
 .list-view {
   font-size: 1.4rem;
   flex-grow: 0;
-  align-items: flex-start;
-  justify-content: flex-end;
-  display: flex;
-  padding: 2rem 2rem 0rem 0;
-  flex-direction: column;
+  flex-shrink: 1;
+  /* padding: 2rem 2rem 0rem 0; */
+  width: 23rem;
+  overflow: auto;
+  height: 100%;
   box-sizing: border-box;
   /* box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.05); */
   z-index: 1;
+}
+
+.list-view-scroll {
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .sketch-view {
@@ -218,6 +236,7 @@ main.split-view {
   align-items: center;
   box-sizing: border-box;
   display: flex;
+  flex-shrink: 2;
   flex-direction: row;
 }
 
@@ -229,20 +248,25 @@ main.split-view {
 }
 
 .sketch-view .sketch {
+  /* width: 30vw; */
+  flex-basis: 50rem;
   height: 100%;
-  width: 100%;
-  flex-grow: 1;
+  flex-grow: 0;
+  flex-shrink: 1;
   box-sizing: border-box;
 }
 
 .sketch-view .code {
-  flex-grow: 1;
+  width: 40vw;
+  flex-grow: 2;
+  flex-shrink: 1;
+  /* max-width: 70rem; */
+  flex-basis: 70rem;
+  /* min-width: 60rem; */
   box-sizing: border-box;
   display: flex;
   background: white;
   height: 100%;
-  width: 100%;
-  max-width: 50rem;
   margin: 0;
   padding: 0rem;
   overflow: hidden;
@@ -256,6 +280,7 @@ main.split-view {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  white-space: pre-wrap;
   font-size: 1.2rem;
 }
 
@@ -277,13 +302,33 @@ main.split-view {
   flex-direction: column;
   font-size: 1.4rem;
   margin: 0;
-  padding: 0;
+  padding: 4rem;
 }
+
 .no-sketch p {
   text-align: center;
   line-height: 1.5;
   margin: 0;
   padding: 0;
+}
+
+.no-sketch p.hotkey-tip {
+  margin-top: 2rem;
+  opacity: 0.75;
+  font-size: 1.4rem;
+}
+
+.hotkey {
+  border: 1px solid hsl(0, 0%, 90%);
+  box-shadow: 0px 2.5px 10px -2.5px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  padding: 5px 5px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  background: hsl(0, 0%, 100%);
+  white-space: nowrap;
 }
 
 .landing p {
@@ -339,8 +384,15 @@ ul.examples li::before {
 .list-section-header {
   font-weight: 500;
   margin-bottom: 0.5rem;
-  margin-top: 2rem;
   text-transform: lowercase;
+}
+
+.list-view .examples {
+  margin-top: 2rem;
+}
+
+.list-view .examples:first-child {
+  margin-top: auto;
 }
 
 @media only screen and (max-width: 580px) {
