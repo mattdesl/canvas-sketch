@@ -93,6 +93,20 @@ canvas-sketch sketches/my-sketch.js --build
 pbpaste | canvas-sketch foo.js --new
 ```
 
+### Updating `canvas-sketch`
+
+To update the CLI tool, you can re-install it globally:
+
+```sh
+npm install canvas-sketch-cli@latest -g
+```
+
+When you run `canvas-sketch` in a folder, it will often install the library locally as a `dependency` in your `package.json` for that folder. To update this, you can re-install the library (not the CLI) locally:
+
+```sh
+npm install canvas-sketch@latest
+```
+
 ## 
 
 <sub>Now that you're set up, you might like to read [A "Hello, World" Sketch](./hello-world.md).</sub>
