@@ -26,6 +26,10 @@ These tools can be used on their own, or combined with your favourite graphics l
 
 - [Developing with Physical Units (inches, centimeters)](./physical-units.md)
 
+  - [Paper Size Presets](./physical-units.md#paper-size-presets)
+
+  - [Bleeds & Safe Zones](./physical-units.md#bleeds--safe-zones)
+
 - [Exporting Artwork to PNG, GIF, SVG, MP4 and other files](./exporting-artwork.md)
 
   - [Exporting Animations](./exporting-artwork.md#exporting-animations)

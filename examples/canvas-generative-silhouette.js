@@ -15,7 +15,7 @@ const settings = {
   // When exporting, use the seed as the suffix
   // This way we can reproduce it more easily later
   suffix: Random.getSeed(),
-  dimensions: [ 7, 11 ],
+  dimensions: 'a4',
   units: 'in'
 };
 
