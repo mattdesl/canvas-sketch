@@ -42,12 +42,16 @@
         "title": "Fullscreen Shader (WebGL/Regl)"
       },
       {
-        "name": "animated-three-basic-cube",
-        "title": "Basic Cube (WebGL/ThreeJS)"
+        "name": "animated-simple-2d",
+        "title": "Simple 2D Animation"
       },
       {
-        "name": "animated-simple-2d",
-        "title": "Basic 2D Animation"
+        "name": "animated-p5",
+        "title": "Basic p5.js Integration"
+      },
+      {
+        "name": "animated-three-basic-cube",
+        "title": "Basic Three.js Integration"
       }
     ]
   },
