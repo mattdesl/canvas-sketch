@@ -9,3 +9,5 @@ examples/
 docs/
 .npmignore
 LICENSE.md
+tmp/
+website/
