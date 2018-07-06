@@ -8,12 +8,12 @@
 const sketcher = require('canvas-sketch');
 
 const settings = {
-  // Output resolution, we can use 300PPI for print
+  // 300 PPI for print resolution
   pixelsPerInch: 300,
+  // We can use a preset
+  dimensions: [ 3.5, 2 ],
   // All our dimensions and rendering units will use inches
   units: 'in',
-  // Standard business card size
-  dimensions: [ 3.5, 2 ],
   // Include a bit of 'bleed' to the dimensions above
   bleed: 1 / 8
 };
@@ -53,9 +53,9 @@ const sketch = ({ context }) => {
     const color = '#fff';
     context.fillStyle = context.strokeStyle = color;
 
-    // Make circles expand to edge of trim (card) height,
+    // Make circles expand to edge of smallest trim (card) edge,
     // but with a 1/4" padding.
-    const maxRadius = (trimHeight / 2) - (1 / 4);
+    const maxRadius = (Math.min(trimWidth, trimHeight) / 2) - (1 / 4);
 
     // Draw circles
     const count = 63 * 4;

@@ -37,6 +37,15 @@ module.exports = function (context) {
     paint(opt);
   };
 
+  const rect = (opt = {}) => {
+    context.beginPath();
+    const position = expand2D(opt.position);
+    const width = defined(opt.width, 1);
+    const height = defined(opt.height, 1);
+    context.rect(position[0], position[1], width, height);
+    paint(opt);
+  };
+
   const polyline = (path, opt = {}) => {
     context.beginPath();
     path.forEach(point => context.lineTo(point[0], point[1]));
@@ -70,6 +79,7 @@ module.exports = function (context) {
   return {
     clear,
     paint,
+    rect,
     circle,
     polyline,
     polylines
