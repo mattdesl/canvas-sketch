@@ -30,6 +30,8 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Bleeds & Safe Zones](./physical-units.md#bleeds--safe-zones)
 
+  - [Running `canvas-sketch` in Node.js for Very Large Prints](./physical-units.md#running-canvas-sketch-in-node-js-for-very-large-prints)
+
 - [Exporting Artwork to PNG, GIF, SVG, MP4 and other files](./exporting-artwork.md)
 
   - [Exporting Animations](./exporting-artwork.md#exporting-animations)

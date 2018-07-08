@@ -4,11 +4,30 @@
 
 ### Troubleshooting
 
+- [Supported Engines & Browsers](#supported-engines--browsers)
 - [Installing Node.js, npm and a terminal](#installing-nodejs-npm-and-a-terminal)
 - [Using `canvas-sketch` with Webpack and Other Bundlers](#using-canvas-sketch-with-webpack-and-other-bundlers)
 - [Using `canvas-sketch` without Node.js and npm](#using-canvas-sketch-without-nodejs-and-npm)
 - [Fixing EACCESS Error on `npm install -g`](#fixing-eaccess-error-on-npm-install--g)
 - [Installing `ffmpeg` For Animation Sequences](#installing-ffmpeg-for-animation-sequences)
+
+### Supported Engines & Browsers
+
+The `canvas-sketch` ecosystem is generally designed with ES6 support in mind, intended to be run on modern browsers with support for hardware-accelerated Canvas/WebGL.
+
+The JavaScript library/module is transpiled to ES5 syntax, but relies on some ES6 APIs such as Promise, fetch, etc. Polyfills may allow the library to work in legacy browsers, but it has not been tested.
+
+It should work with a variety of bundlers (Webpack, Rollup, Parcel, Browserify, etc). If you run into integration issues, please open a new issue.
+
+Recommended minimum versions:
+
+- Safari 11+
+- iOS Safari 10+
+- FireFox 60+
+- Chrome for Android 66+
+- Chrome 66+
+- Node.js 8.10.0+
+- npm 5.6.0+
 
 ### Installing Node.js, npm and a terminal
 
