@@ -135,6 +135,11 @@ class Rand {
     return Math.floor(this.range(min, max));
   }
 
+  pick (array) {
+    if (array.length === 0) return undefined;
+    return array[this.rangeFloor(0, array.length)];
+  }
+
   shuffle (arr) {
     if (!Array.isArray(arr)) {
       throw new TypeError('Expected Array, got ' + typeof arr);
