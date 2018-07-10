@@ -3,7 +3,6 @@
   "version": "0.0.9",
   "description": "A utility for quickly prototyping 2D and WebGL sketches",
   "main": "./dist/canvas-sketch.umd.js",
-  "module": "./dist/canvas-sketch.m.js",
   "license": "MIT",
   "author": {
     "name": "Matt DesLauriers",
@@ -97,8 +96,8 @@
   },
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
-    "lib:bundle": "microbundle --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o ./dist/",
-    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=es,umd -o ./dist/",
+    "lib:bundle": "microbundle --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=umd -o ./dist/",
+    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=umd -o ./dist/",
     "lib:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
     "lib": "npm-run-all --parallel lib:watch lib:server",
     "start": "npm-run-all --parallel lib:watch site:dev",
