@@ -59,6 +59,14 @@ Notice we passed a `settings` object to `canvasSketch()` which defines how the c
 
 The `dimensions` specifies the `[ width, height ]` of our artwork (by default, in pixels). If you don't specify dimensions, the artwork will scale to the full size of the browser.
 
+### `require()` and Node/npm
+
+The docs and examples use CommonJS `require()` to bring in the `canvas-sketch` library, as well as other libraries and utilities. If you prefer, you can also write your sketches with `import` and `export` statements, as the CLI tool also supports ES Module syntax:
+
+```js
+import canvasSketch from 'canvas-sketch';
+```
+
 ### Exporting Artworks as PNG
 
 If you hit `Cmd + S` or `Ctrl + S` while developing (with the window in focus), the browser will download a PNG image of your canvas. Usually this file is saved to your `~/Downloads` folder.
@@ -74,7 +82,7 @@ Since your sketch may re-render at times (i.e. during export or when the canvas 
 Here is what *not* to do:
 
 ```js
-// NOT SO GOOD !
+// Not so good !
 const sketch = () => {
   return ({ width }) => {
     // !!!
@@ -88,7 +96,7 @@ const sketch = () => {
 Instead, you can define local state (like random values that should be consistent across renders) outside your renderer.
 
 ```js
-// GOOD !
+// Good !
 const sketch = () => {
   // Select an initial 0..1 random, outside your renderer
   const startXScale = Math.random();

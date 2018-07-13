@@ -46,20 +46,24 @@ module.exports = function (context) {
     paint(opt);
   };
 
-  const polyline = (path, opt = {}) => {
+  const _line = (path, opt = {}, defaultToStroke = false) => {
+    opt = Object.assign({}, opt);
+
+    if (defaultToStroke) {
+      if (opt.fill == null && opt.stroke == null) opt.stroke = true;
+    }
+
     context.beginPath();
     path.forEach(point => context.lineTo(point[0], point[1]));
     if (opt.closed) context.closePath();
     paint(opt);
   };
 
+  const polyline = (path, opt = {}) => _line(path, opt, true);
+  const shape = (shape, opt = {}) => _line(shape, opt, false);
+
   const polylines = (lines, opt = {}) => {
-    lines.forEach(path => {
-      context.beginPath();
-      path.forEach(point => context.lineTo(point[0], point[1]));
-      if (opt.closed) context.closePath();
-      paint(opt);
-    });
+    lines.forEach(path => polyline(path, opt));
   };
 
   const clear = (opt = {}) => {
@@ -82,6 +86,7 @@ module.exports = function (context) {
     rect,
     circle,
     polyline,
-    polylines
+    polylines,
+    shape
   };
 };
