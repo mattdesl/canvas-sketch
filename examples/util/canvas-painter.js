@@ -17,10 +17,11 @@ module.exports = function (context) {
       context.globalAlpha = alpha * fillAlpha;
       context.fill();
     }
-    if (stroke) {
+    const lineWidth = defined(opt.lineWidth, 1);
+    if (stroke && lineWidth > 0) {
       const strokeAlpha = defined(opt.strokeAlpha, 1);
       context.strokeStyle = typeof stroke === 'boolean' ? defaultColor : stroke;
-      context.lineWidth = defined(opt.lineWidth, 1);
+      context.lineWidth = lineWidth;
       context.lineCap = opt.lineCap || 'butt';
       context.lineJoin = opt.lineJoin || 'miter';
       context.miterLimit = defined(opt.miterLimit, 10);
@@ -71,12 +72,14 @@ module.exports = function (context) {
     const width = defined(opt.width, context.canvas.width);
     const height = defined(opt.height, context.canvas.height);
 
+    // clear first in case we have a translucent fill
+    context.clearRect(position[0], position[1], width, height);
+
+    // now allow user to fill
     if (opt.fill) {
       context.beginPath();
       context.rect(position[0], position[1], width, height);
       paint(opt);
-    } else {
-      context.clearRect(position[0], position[1], width, height);
     }
   };
 

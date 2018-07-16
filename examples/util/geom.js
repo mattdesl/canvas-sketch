@@ -157,4 +157,31 @@ module.exports.cubicSpline = (points, tension = 0.5, segments = 25, closed = fal
     rolled.push([ res[i * 2 + 0], res[i * 2 + 1] ]);
   }
   return rolled;
-}
+};
+
+module.exports.intersectLineSegmentLineSegmentParam = (p1, p2, p3, p4) => {
+  // Reference:
+  // https://github.com/evil-mad/EggBot/blob/master/inkscape_driver/eggbot_hatch.py
+  const d21x = p2[0] - p1[0];
+  const d21y = p2[1] - p1[1];
+  const d43x = p4[0] - p3[0];
+  const d43y = p4[1] - p3[1];
+
+  // denominator
+  const d = d21x * d43y - d21y * d43x;
+  if (d === 0) return -1;
+
+  const nb = (p1[1] - p3[1]) * d21x - (p1[0] - p3[0]) * d21y;
+  const sb = nb / d;
+  if (sb < 0 || sb > 1) return -1;
+
+  const na = (p1[1] - p3[1]) * d43x - (p1[0] - p3[0]) * d43y;
+  const sa = na / d;
+  if (sa < 0 || sa > 1) return -1;
+  return sa;
+};
+
+module.exports.intersectLineSegmentLineSegment = (p1, p2, p3, p4) => {
+  const val = module.exports.intersectLineSegmentLineSegmentParam(p1, p2, p3, p4);
+  return val >= 0 && val <= 1;
+};
