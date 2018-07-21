@@ -65,20 +65,21 @@ class View extends Component {
     if (name) {
       if (name in examples.map) {
         // Sketch exists!
-        const sketch = examples.map[name];
         const code = this.state.code;
-        const classes = classnames('code', { loading: !code });
-        return <div className='sketch-view'>
-          <iframe className='sketch' src={`examples/build/${sketch.name}.html`} width='100%' height='100%' />
-          <div className={classes}>
-            { code
-              ? <pre>
+        if (code) {
+          const sketch = examples.map[name];
+          const classes = classnames('code', { loading: !code });
+          return <div className='sketch-view'>
+            <iframe className='sketch' src={`examples/build/${sketch.name}.html`} width='100%' height='100%' />
+            <div className={classes}>
+              <pre>
                 <code className='js' ref={c => { this.element = c; }} />
               </pre>
-              : 'loading'
-            }
-          </div>
-        </div>;
+            </div>
+          </div>;
+        } else {
+          return <div className='sketch-view no-sketch'><p>loading</p></div>;
+        }
       } else {
         // Sketch doesn't exist
         console.warn(`Could not find example by id ${name}`);

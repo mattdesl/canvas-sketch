@@ -1,3 +1,7 @@
+/**
+ * Highly experimental! Subject to removal.
+ */
+
 const GUI = require('dat.gui').GUI;
 const defined = require('defined');
 const parseColor = require('parse-color');
