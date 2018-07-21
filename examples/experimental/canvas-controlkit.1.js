@@ -1,5 +1,5 @@
 const canvasSketch = require('canvas-sketch');
-const GUI = require('./util/gui');
+const GUI = require('../util/gui');
 
 const { Controls, parent, panel } = GUI();
 

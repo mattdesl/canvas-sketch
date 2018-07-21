@@ -1,37 +1,17 @@
 const canvasSketch = require('canvas-sketch');
-const GUI = require('./util/gui');
-const Painter = require('./util/canvas-painter');
+const GUI = require('../util/gui');
+const { lerp } = require('../util/math');
+const Painter = require('../util/canvas-painter');
 const { vec2 } = require('gl-matrix');
 const { Controls, parent, panel } = GUI({ width: 250 });
+const Random = require('../util/Random');
+const { grid } = require('../util/procedural');
 
 const settings = {
   parent,
   pixelsPerInch: 300,
-  dimensions: 'a4',
-  scaleToView: true,
-};
-
-// It seems like Math.random() is causing trouble
-// with paint worklets ... let's use a seeded one instead
-const createRandom = (seed) => {
-  // From:
-  // https://gist.github.com/blixt/f17b47c62508be59987b
-  let _seed = seed % 2147483647;
-  if (_seed <= 0) _seed += 2147483646;
-  const next = () => {
-    _seed = _seed * 16807 % 2147483647;
-    return _seed;
-  };
-  const value = () => {
-    return (next() - 1) / 2147483646;
-  };
-  const gaussian = () => {
-    return Math.sqrt(-2.0 * Math.log(value())) * Math.cos(2.0 * Math.PI * value())
-  };
-  return {
-    value,
-    gaussian
-  };
+  dimensions: 'postcard',
+  scaleToView: true
 };
 
 const circleCollides = (a, b, padding = 0) => {
@@ -51,9 +31,10 @@ const controls = Controls({
   background: Controls.Color('#fff'),
   foreground: Controls.Color('#000'),
   stroke: Controls.Checkbox(false),
-  count: Controls.Slider(300, { range: [ 1, 500 ], dp: 0 }),
-  radius: Controls.Slider(0.5),
-  seed: Controls.Slider(100, { range: [ 1, 500 ], dp: 0 }),
+  count: Controls.Slider(300, { range: [ 1, 1500 ], dp: 0 }),
+  radius: Controls.Slider(0.5, { range: [ 0, 0.05 ], dp: 4 }),
+  seed: Controls.Slider(100, { range: [ 1, 1500 ], dp: 0 }),
+  genRadius: Controls.Slider(0.1, { range: [ 0, 2 ], dp: 2 }),
   lineWidth: Controls.Slider(3, { range: [ 0.1, 20 ] }),
   // lineCapSelect: Controls.Select([ 'round', 'butt', 'square' ], { label: 'lineCap', target: 'lineCap' })
 });
@@ -80,46 +61,80 @@ const loadData = () => {
   }
 };
 
-// loadData();
+loadData();
 persist();
 Controls.onChange(persist);
 
-const pointsOnCircles = (a, b) => {
+const inCircle = (point, circle) => {
+  const distSq = circle.radius * circle.radius;
+  return vec2.squaredDistance(point, circle.position) <= distSq;
+};
+
+const pointsOnCircles = (a, b, padding = 0.0005) => {
   const circleADir = vec2.sub([], b.position, a.position);
   vec2.normalize(circleADir, circleADir);
-  const newA = vec2.scaleAndAdd([], a.position, circleADir, a.radius);
+  const r1 = a.radius + Random.gaussian(0, 0.005);
+  const r2 = b.radius + Random.gaussian(0, 0.005);
+  const newA = vec2.scaleAndAdd([], a.position, circleADir, r1 + padding);
   const circleBDir = vec2.sub([], a.position, b.position);
   vec2.normalize(circleBDir, circleBDir);
-  const newB = vec2.scaleAndAdd([], b.position, circleBDir, b.radius);
+  const newB = vec2.scaleAndAdd([], b.position, circleBDir, r2 + padding);
   return [ newA, newB ];
 };
 
-const sketch = ({ render, update, context, exportFrame }) => {
+const sketch = ({ render, update, context, exportFrame, width, height }) => {
   Controls({
     export: exportFrame
   });
 
-  let seed, random, count;
+  let seed, count;
   const circles = [];
   const connections = [];
 
+  const toPos = (position) => {
+    // const border = 0.3;
+    // const aspect = width / height;
+    // return [
+    //   lerp(-1 + border / aspect, 1 - border / aspect, position[0]),
+    //   lerp(-1 + border, 1 - border, position[1])
+    // ]
+    // return position;
+    return [
+      (position[0] * 2 - 1),
+      (position[1] * 2 - 1)
+    ];
+  };
+
   const pack = () => {
-    const darts = 500;
+    const darts = 600;
     const newCircles = [];
-    const padding = 0.005;
+    // const padding = 0.005;
     // throw N darts on board
     for (let i = 0; i < darts; i++) {
+      const position = Random.insideSquare([ 1, 1 / (width / height) ]);
+      const border = 1 - 0.2;
+      position[0] *= border;
+      position[1] *= border;
+      position[0] = position[0] * 0.5 + 0.5;
+      position[1] = position[1] * 0.5 + 0.5;
+      
       newCircles.push({
-        radius: Math.abs(random.gaussian()) * 0.1,
-        position: [ random.value(), random.value() ],
-        collisions: 0
+        radius: Math.abs(Random.gaussian()) * controls.genRadius,
+        position,
+        // position: [ Random.value(), Random.value() ],
+        collisions: 0,
+        altRadius: 1 + Math.abs(Random.gaussian()) * 0.25
       });
     }
     // collide each dart with all other circles
+    const padding = Random.gaussian(0, 0.01);
     newCircles.forEach(circle => {
+
       circles.forEach(other => {
         const collides = circleCollides(circle, other, padding);
-        if (collides) circle.collisions++;
+        if (collides) {
+          circle.collisions++;
+        }
       });
     });
     // find best fit
@@ -130,30 +145,34 @@ const sketch = ({ render, update, context, exportFrame }) => {
 
   const generate = (newSeed = 0, newCount = 100) => {
     seed = newSeed;
+    console.log('generate')
     count = newCount;
-    random = createRandom(seed);
+    Random.setSeed(newSeed);
     circles.length = 0;
     for (let i = 0; i < count; i++) {
       pack();
     }
     connections.length = 0;
     circles.forEach(circle => {
-      const maxNearest = 3;
-      const maxDist = 0.05;
-
+      const maxNearest = 20;
+      const maxDist = Math.abs(Random.range(0.025, 0.05)) * (1 + 0.1 * Math.abs(Random.gaussian())) * 1.0;
+      const maxDistSq = maxDist * maxDist;
+      const padding = Random.gaussian(0, 0.01);
       for (let i = 0, c = 0; c < maxNearest && i < circles.length; i++) {
         const other = circles[i];
         if (other === circle) continue;
-        const dist = vec2.distance(other.position, circle.position);
-        if (dist < maxDist) {
-          connections.push(pointsOnCircles(circle, other));
-          c++;
+        const distSq = vec2.squaredDistance(other.position, circle.position);
+        if (distSq < maxDistSq && !circleCollides(circle, other, padding)) {
+          const line = pointsOnCircles(circle, other);
+          if (line) {
+            connections.push(line.map(position => toPos(position)));
+            c++;
+          }
         }
       }
     });
   };
 
-  generate();
   const paint = Painter(context);
 
   const change = () => {
@@ -167,7 +186,7 @@ const sketch = ({ render, update, context, exportFrame }) => {
   return ({ context, width, height }) => {
     const size = controls.radius;
     const newSeed = controls.seed;
-    const newCount = Math.floor(controls.count);
+    const newCount =  Math.floor(controls.count);
     if (newSeed !== seed || newCount !== count) {
       generate(newSeed, newCount);
     }
@@ -176,26 +195,36 @@ const sketch = ({ render, update, context, exportFrame }) => {
 
     context.save();
 
-    const scale = Math.max(width, height);
+    const border = height * 0.1;
+    let scale = Math.min(width, height) / 2;
+    context.translate(width / 2, height / 2);
     context.scale(scale, scale);
 
-    circles.forEach(({ position, radius }) => {
-      paint.circle({ 
-        position,
-        radius: radius * size,
+    connections.forEach(connection => {
+      paint.polyline(connection, {
+        stroke: controls.foreground,
+        lineCap: 'round',
+        lineJoin: 'round',
+        alpha: 0.9,
+        lineWidth: controls.lineWidth / scale
+      });
+    });
+    circles.forEach(({ position, radius, altRadius }) => {
+      paint.circle({
+        position: toPos(position),
+        radius: altRadius * controls.radius,
         fill: controls.stroke ? false : controls.foreground,
         lineWidth: controls.lineWidth / scale,
         stroke: controls.stroke ? controls.foreground : false
       });
     });
 
-    paint.polylines(connections, {
-      stroke: controls.foreground,
-      lineWidth: controls.lineWidth / scale
-    });
     context.restore();
 
-    return [ context.canvas, { extension: '.json', data: JSON.stringify(Controls.save(), null, 2) } ];
+    return [
+      context.canvas,
+      // { extension: '.json', data: JSON.stringify(Controls.save(), null, 2) }
+    ];
   };
 };
 
@@ -231,7 +260,7 @@ canvasSketch(sketch, settings);
 //   console.log(controls.position)
 
 //   const paint = painter(context);
-//   return ({ context, width, height, frame }) => {
+//   return ({ context, scale, width, frame }) => {
 //     paint.clear({ fill: controls.background, width, height });
 //     paint.circle({
 //       fill: controls.foreground,
@@ -259,3 +288,4 @@ canvasSketch(sketch, settings);
 // Drop-down
 // Filter box
 // Rulers/guides for cm/m/px
+

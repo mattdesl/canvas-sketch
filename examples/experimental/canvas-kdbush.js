@@ -7,9 +7,9 @@ const canvasSketch = require('canvas-sketch');
 const painter = require('./util/canvas-painter');
 const kdbush = require('kdbush').default;
 const simplify = require('simplify-path');
-
 // Three ways to update:
 // - Re-run artwork to build new generative sketch
+// 
 
 const settings = {
   parent: Controls.parent,

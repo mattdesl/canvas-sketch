@@ -1,14 +1,13 @@
 const canvasSketch = require('canvas-sketch');
-const GUI = require('./util/gui');
+const GUI = require('./util/controls');
 const { lerp } = require('./util/math');
 const Painter = require('./util/canvas-painter');
 const { vec2 } = require('gl-matrix');
-const { Controls, parent, panel } = GUI({ width: 250 });
 const Random = require('./util/Random');
 const { grid } = require('./util/procedural');
 
 const settings = {
-  parent,
+  parent: GUI.parent,
   pixelsPerInch: 300,
   dimensions: 'postcard',
   scaleToView: true
@@ -25,45 +24,17 @@ const circleCollides = (a, b, padding = 0) => {
 
 // ---- Sketch / Artwork Code
 
-const controls = Controls({
-  dimensionsSelect: Controls.Select([ 'a4', 'a5', 'a6', 'a7', 'a8', 'letter', 'legal', 'postcard' ], { label: 'dimensions', target: 'dimensions' }),
-  orientationSelect: Controls.Select([ 'portrait', 'landscape' ], { label: 'orientation', target: 'orientation' }),
-  background: Controls.Color('#fff'),
-  foreground: Controls.Color('#000'),
-  stroke: Controls.Checkbox(false),
-  count: Controls.Slider(300, { range: [ 1, 1500 ], dp: 0 }),
-  radius: Controls.Slider(0.5, { range: [ 0, 0.05 ], dp: 4 }),
-  seed: Controls.Slider(100, { range: [ 1, 1500 ], dp: 0 }),
-  genRadius: Controls.Slider(0.1, { range: [ 0, 2 ], dp: 2 }),
-  lineWidth: Controls.Slider(3, { range: [ 0.1, 20 ] }),
-  // lineCapSelect: Controls.Select([ 'round', 'butt', 'square' ], { label: 'lineCap', target: 'lineCap' })
+const config = GUI({
+  background: 'white',
+  foreground: 'black',
+  stroke: false,
+  count: GUI.Slider(300, { range: [ 1, 1500 ], step: 1 }),
+  radius: GUI.Slider(0.5, { range: [ 0, 0.05 ], step: 0.001 }),
+  seed: GUI.Slider(100, { range: [ 1, 1500 ], step: 1 }),
+  genRadius: GUI.Slider(0.1, { range: [ 0, 2 ], step: 0.001 }),
+  lineWidth: GUI.Slider(3, { range: [ 0.1, 20 ], step: 0.001 }),
+  // lineCapSelect: GUI.Select('butt', [ 'round', 'butt', 'square' ])
 });
-
-const persist = () => {
-  const data = Controls.save();
-  window.localStorage.setItem('data', JSON.stringify(data));
-};
-
-const loadData = () => {
-  try {
-    const data = JSON.parse(window.localStorage.getItem('data'));
-    Controls.load(data);
-    panel.getGroups().forEach(group => {
-      group.getComponents().forEach(component => {
-        if (component._value) {
-          component._value = component._obj[component._key];
-          component._updateColor();
-        }
-      });
-    });
-  } catch (err) {
-    throw err;
-  }
-};
-
-loadData();
-persist();
-Controls.onChange(persist);
 
 const inCircle = (point, circle) => {
   const distSq = circle.radius * circle.radius;
@@ -83,22 +54,11 @@ const pointsOnCircles = (a, b, padding = 0.0005) => {
 };
 
 const sketch = ({ render, update, context, exportFrame, width, height }) => {
-  Controls({
-    export: exportFrame
-  });
-
   let seed, count;
   const circles = [];
   const connections = [];
 
   const toPos = (position) => {
-    // const border = 0.3;
-    // const aspect = width / height;
-    // return [
-    //   lerp(-1 + border / aspect, 1 - border / aspect, position[0]),
-    //   lerp(-1 + border, 1 - border, position[1])
-    // ]
-    // return position;
     return [
       (position[0] * 2 - 1),
       (position[1] * 2 - 1)
@@ -119,7 +79,7 @@ const sketch = ({ render, update, context, exportFrame, width, height }) => {
       position[1] = position[1] * 0.5 + 0.5;
       
       newCircles.push({
-        radius: Math.abs(Random.gaussian()) * controls.genRadius,
+        radius: Math.abs(Random.gaussian()) * config.genRadius,
         position,
         // position: [ Random.value(), Random.value() ],
         collisions: 0,
@@ -145,7 +105,6 @@ const sketch = ({ render, update, context, exportFrame, width, height }) => {
 
   const generate = (newSeed = 0, newCount = 100) => {
     seed = newSeed;
-    console.log('generate')
     count = newCount;
     Random.setSeed(newSeed);
     circles.length = 0;
@@ -176,22 +135,22 @@ const sketch = ({ render, update, context, exportFrame, width, height }) => {
   const paint = Painter(context);
 
   const change = () => {
-    update(controls);
+    update(config);
     render();
   };
 
   change();
-  Controls.onChange(change);
+  config.controls.on('change', change);
 
   return ({ context, width, height }) => {
-    const size = controls.radius;
-    const newSeed = controls.seed;
-    const newCount =  Math.floor(controls.count);
+    const size = config.radius;
+    const newSeed = config.seed;
+    const newCount = Math.floor(config.count);
     if (newSeed !== seed || newCount !== count) {
       generate(newSeed, newCount);
     }
 
-    paint.clear({ width, height, fill: controls.background });
+    paint.clear({ width, height, fill: config.background });
 
     context.save();
 
@@ -202,20 +161,20 @@ const sketch = ({ render, update, context, exportFrame, width, height }) => {
 
     connections.forEach(connection => {
       paint.polyline(connection, {
-        stroke: controls.foreground,
+        stroke: config.foreground,
         lineCap: 'round',
         lineJoin: 'round',
         alpha: 0.9,
-        lineWidth: controls.lineWidth / scale
+        lineWidth: config.lineWidth / scale
       });
     });
     circles.forEach(({ position, radius, altRadius }) => {
       paint.circle({
         position: toPos(position),
-        radius: altRadius * controls.radius,
-        fill: controls.stroke ? false : controls.foreground,
-        lineWidth: controls.lineWidth / scale,
-        stroke: controls.stroke ? controls.foreground : false
+        radius: altRadius * config.radius,
+        fill: config.stroke ? false : config.foreground,
+        lineWidth: config.lineWidth / scale,
+        stroke: config.stroke ? config.foreground : false
       });
     });
 
@@ -229,63 +188,3 @@ const sketch = ({ render, update, context, exportFrame, width, height }) => {
 };
 
 canvasSketch(sketch, settings);
-
-// const canvasSketch = require('canvas-sketch');
-// const GUI = require('./util/gui');
-// const painter = require('./util/canvas-painter');
-
-// const { Controls, parent } = GUI();
-
-// const settings = {
-//   parent,
-//   animate: true,
-//   dimensions: 'a4',
-//   scaleToView: true,
-//   // Output resolution, we can use 300PPI for print
-//   pixelsPerInch: 300,
-//   // all our dimensions and rendering units will use inches
-//   units: 'in'
-// };
-
-// const sketch = ({ context, render }) => {
-//   Controls.onChange(render);
-
-//   const controls = Controls({
-//     background: Controls.Color(),
-//     foreground: Controls.Color(),
-//     position: Controls.Pad(),
-//     radius: Controls.Slider(0, { range: [ 0, 1 ] })
-//   });
-
-//   console.log(controls.position)
-
-//   const paint = painter(context);
-//   return ({ context, scale, width, frame }) => {
-//     paint.clear({ fill: controls.background, width, height });
-//     paint.circle({
-//       fill: controls.foreground,
-//       position: [ width / 2, height / 2 ],
-//       radius: controls.radius
-//     })
-//   };
-// };
-
-// canvasSketch(sketch, settings);
-// persist all values into localStorage
-// on Cmd + S, user can save out the data as well
-// on another computer they can drag + drop the JSON
-// Cmd + Z undo UI changes
-// Cmd + Shift + Z or Cmd + Y redos UI changes
-// History is persisted across uses
-// Entire history + UI state can be saved if desired
-
-
-
-// 1D Slider
-// Number Slider
-// 2D Pad
-// Checkbox
-// Drop-down
-// Filter box
-// Rulers/guides for cm/m/px
-
