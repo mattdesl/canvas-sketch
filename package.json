@@ -10,6 +10,8 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
+    "array-almost-equal": "^1.0.0",
+    "bezier-easing": "^2.1.0",
     "controlkit": "^0.1.9",
     "convert-units": "^2.3.4",
     "dateformat": "^3.0.3",
@@ -20,9 +22,12 @@
     "is-class": "0.0.5",
     "is-dom": "^1.0.9",
     "is-promise": "^2.1.0",
+    "lineclip": "^1.1.5",
     "object-assign": "^4.1.1",
     "pad-left": "^2.1.0",
-    "right-now": "^1.0.0"
+    "point-in-triangle": "^1.0.1",
+    "right-now": "^1.0.0",
+    "triangle-centroid": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",

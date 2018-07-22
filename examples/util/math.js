@@ -1,6 +1,7 @@
 const lerp = require('lerp');
 const inverseLerp = require('unlerp');
 const clamp = require('clamp');
+const defined = require('defined');
 
 const toFinite = (n, defaultValue = 0) => {
   return typeof n === 'number' && isFinite(n) ? n : defaultValue;
@@ -47,10 +48,14 @@ const newArray = (n = 0, initialValue) => {
   return out;
 };
 
-const linspace = (n = 0, inclusive) => {
-  return inclusive
-    ? newArray(n).map((_, i) => i <= 1 ? 0 : (i / (n - 1)))
-    : newArray(n).map((_, i) => i / n);
+const linspace = (n = 0, opts = {}) => {
+  if (typeof opts === 'boolean') {
+    opts = { endpoint: true };
+  }
+  const offset = defined(opts.offset, 0);
+  return opts.endpoint
+    ? newArray(n).map((_, i) => n <= 1 ? 0 : ((i + offset) / (n - 1)))
+    : newArray(n).map((_, i) => (i + offset) / n);
 };
 
 module.exports = {
