@@ -58,12 +58,30 @@ const linspace = (n = 0, opts = {}) => {
     : newArray(n).map((_, i) => (i + offset) / n);
 };
 
+const mod = (a, b) => ((a % b) + b) % b;
+
+const lerpKeyframes = (values, t) => {
+  t = mod(t, 1);
+
+  const len = values.length - 1;
+  const whole = t * len;
+  const frame = Math.floor(whole);
+  const fract = whole - frame;
+
+  const nextFrame = Math.min(frame + 1, len);
+  const a = values[frame];
+  const b = values[nextFrame];
+  return lerp(a, b, fract);
+};
+
 module.exports = {
   linspace,
   lerpArray,
   lerp,
   inverseLerp,
+  lerpKeyframes,
   clamp,
+  mod,
   clamp01: (v) => clamp(v, 0, 1),
   smoothstep: require('smoothstep'),
   expand2D: expandVector(2),

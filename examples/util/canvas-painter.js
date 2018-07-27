@@ -34,7 +34,9 @@ module.exports = function (context) {
     context.beginPath();
     const radius = Math.max(0, defined(opt.radius, 1));
     const position = expand2D(opt.position);
-    context.arc(position[0], position[1], radius, 0, Math.PI * 2, false);
+    const arcStart = defined(opt.arcStart, 0);
+    const arcEnd = defined(opt.arcEnd, Math.PI * 2);
+    context.arc(position[0], position[1], radius, arcStart, arcEnd, false);
     paint(opt);
   };
 
