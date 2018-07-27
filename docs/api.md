@@ -1,8 +1,4 @@
-#### <sup>:closed_book: [canvas-sketch](../README.md) → [Documentation](./README.md) → API Docs</sup>
-
----
-
-<style>
+<!-- <style type="text/css">
 .param-table table {
   font-size: 13px;
 }
@@ -15,7 +11,11 @@
 .param-table table td {
   padding: 20px 13px;
 }
-</style>
+</style> -->
+
+#### <sup>:closed_book: [canvas-sketch](../README.md) → [Documentation](./README.md) → API Docs</sup>
+
+---
 
 ### `canvas-sketch` — API Docs
 
