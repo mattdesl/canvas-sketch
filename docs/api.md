@@ -2,7 +2,7 @@
 
 ---
 
-<style>
+<!--<style>
 .param-table table {
   font-size: 13px;
 }
@@ -15,7 +15,7 @@
 .param-table table td {
   padding: 20px 13px;
 }
-</style>
+</style>-->
 
 ### `canvas-sketch` — API Docs
 
@@ -98,10 +98,10 @@ const settings = {
 
 parameter | type | default | description
 --- | --- | --- | ---
-`dimension` | Array \| String | *window size* | The dimension of your sketch in `[width, height]` units. If not specified, the sketch will fill the browser window. You can also specify a [preset string](#dimension-presets) such as `"A4"` or `"Letter"`.
+`dimension` | Array \| String | *window size* | The dimension of your sketch in `[width, height]` units. If not specified, the sketch will fill the browser window. You can also specify a [preset string](./physical-units.md#paper-size-presets) such as `"A4"` or `"Letter"`.
 `units` | String | `"px"` | The working units if `dimensions` is specified, can be `"in"`, `"cm"`, `"px"`, `"ft"`, `"m"`, `"mm"`.
 `pixelsPerInch` | Number | 72 | When `units` is a physical measurement (e.g. inches), this value will be used as the resolution to convert inches to pixels for exporting and rendering.
-`orientation` | String | `"initial"` | If `"landscape"` or `"portrait"` are specified, the dimensions will be rotated to the respective orientation, otherwise no change will be made. Useful alongside [`dimensions` presets](#dimension-presets). 
+`orientation` | String | `"initial"` | If `"landscape"` or `"portrait"` are specified, the dimensions will be rotated to the respective orientation, otherwise no change will be made. Useful alongside [`dimensions` presets](./physical-units.md#paper-size-presets). 
 `scaleToFit` | Boolean | true | When true, scales down the canvas to fit within the browser window.
 `scaleToView` | Boolean | false | When true, scales up or down the canvas so that it is no larger or smaller than it needs to be based on the window size. This makes rendering more crisp and performant, but may not accurately represent the exported image. This is ignored during export.
 `bleed` | Number | 0 | You can pad the dimensions of your artwork by `bleed` units, e.g. for print trim and safe zones.
@@ -154,9 +154,23 @@ parameter | type | default | description
 `hotkeys` | Boolean | true | Attaches hotkeys like `Cmd + S` to the window, for exporting and other features. Set this to false to disable export hotkeys.
 `p5` | Boolean \| P5 | false | Specify `true` or a P5 instance to integrate this sketch with P5.js.
 
-
 </div>
 
-### `dimension` presets
+## Settings
+
+The `settings` object often looks like this:
+
+```js
+// 11 x 7 inches artwork
+const settings = {
+  dimensions: [ 11, 7 ],
+  units: 'in'
+}
+```
+
+<div class="param-table">
+
+#### Size Settings
+
 
 #### <sup>[← Back to Documentation](./README.md)
