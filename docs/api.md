@@ -92,7 +92,7 @@ const settings = {
 }
 ```
 
-<div class="param-table">
+<div class="param-table" style="font-size: 13px">
 
 #### Size Settings
 
