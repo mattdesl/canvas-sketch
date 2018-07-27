@@ -1,9 +1,5 @@
 const canvasSketch = require('canvas-sketch');
-const { vec2 } = require('gl-matrix');
-const { grid } = require('./util/procedural');
-const { lerp, lerpArray, lerpKeyframes, smoothstep } = require('./util/math');
-const Painter = require('./util/canvas-painter');
-const Random = require('./util/random');
+const { lerp } = require('./util/math');
 
 const settings = {
   animate: true,

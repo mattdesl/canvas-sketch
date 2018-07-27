@@ -30,6 +30,10 @@
     "name": "animated",
     "items": [
       {
+        "name": "animated-grid",
+        "title": "2D Grid Animation"
+      },
+      {
         "name": "animated-scribble-curves",
         "title": "Scribble Curves"
       },
