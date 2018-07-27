@@ -92,7 +92,7 @@ const settings = {
 }
 ```
 
-<div class="param-table">
+<div class="param-table" style="font-size: 13px">
 
 #### Size Settings
 
@@ -156,21 +156,28 @@ parameter | type | default | description
 
 </div>
 
-## Settings
+## Props
 
-The `settings` object often looks like this:
+The `props` object is passed to your *sketch* function, as well as passed to your *render* (and similar) functions.
 
 ```js
-// 11 x 7 inches artwork
-const settings = {
-  dimensions: [ 11, 7 ],
-  units: 'in'
-}
+const sketch = (initialProps) => {
+  return (renderProps) => { /* ... */ };
+};
 ```
 
-<div class="param-table">
+> :bulb: **Note:** For performance reasons, the same object reference is passed to all functions. This means you can store the object once and access its properties like `time` in each render. However, we recommend treating it like an immutable object where possible.
+
+
+<!--<div class="param-table">
 
 #### Size Settings
+
+parameter | type | default | description
+--- | --- | --- | ---
+`canvasWidth`, `canvasHeight` | Boolean | true | When true, WebGL contexts will be flushed after each render call in order to ensure the exported content is in sync with the GL calls.
+
+</div>-->
 
 
 #### <sup>[← Back to Documentation](./README.md)
