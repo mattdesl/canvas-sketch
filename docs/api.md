@@ -19,7 +19,17 @@
 
 ### `canvas-sketch` — API Docs
 
-Here is the JavaScript API documentation for the `canvas-sketch` library. It should work in Node.js and the browser, including browserify, Webpack, Rollup, and similar build tools.
+Below are the docs for the `canvas-sketch` JavaScript library. It should work in Node.js and the browser, including browserify, Webpack, Rollup, and similar build tools.
+
+> :bulb: If you are just getting started, you may want to look at some of the guides first, such as the [Installation](./installation.md) guide, or [A "Hello, World" Sketch](./hello-world.md).
+
+## Contents
+
+- [Importing](./importing.md)
+- [Methods](./methods.md)
+- [Settings](./settings.md)
+- [Props](./props.md)
+- [Renderer Objects](./renderer-objects.md)
 
 ## Importing
 
@@ -35,7 +45,7 @@ const canvasSketch = require('canvas-sketch');
 
 CommonJS is recommended for better compatibility with Node.js (i.e. for generating super-high resolution prints).
 
-## Functions
+## Methods
 
 #### `canvasSketch(sketch, [settings])`
 
@@ -166,10 +176,52 @@ const sketch = (initialProps) => {
 };
 ```
 
+These are typically destructured with ES6, such as `{ width, height }`.
+
 > :bulb: **Note:** For performance reasons, the same object reference is passed to all functions. This means you can store the object once and access its properties like `time` in each render. However, we recommend treating it like an immutable object where possible.
 
-TODO.
+#### TODO: The following props are usable but not yet documented here.
 
+- width, height, dimensions
+- canvasWidth, canvasHeight
+- pixelRatio,
+- bleed
+- units,
+- scaleX, scaleY
+- viewportWidth, viewportHeight
+- trimWidth, trimHeight
+- styleWidth, styleHeight
+- context, canvas
+- fps, time, deltaTime, playhead, frame, totalFrames, duration
+- started, playing, recording
+- timeScale
+- settings
+- exporting
+- **functions:** render, resize, update, exportFrame, play, pause, stop
+
+## Renderer Objects
+
+Instead of returning a function, you can return an object with various methods, for example:
+
+```js
+const sketch = () => {
+  return {
+    render ({ frame }) {
+      console.log('Rendering frame #%d', frame);
+    },
+    begin () {
+      // First frame of loop
+    },
+    end () {
+      // Last frame of loop
+    }
+  };
+}
+```
+
+#### TODO: Still need to document these. They include:
+
+- render, resize, begin, end, tick, dispose, preExport, postExport
 
 <!--<div class="param-table">
 
