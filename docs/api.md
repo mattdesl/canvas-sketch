@@ -168,6 +168,8 @@ const sketch = (initialProps) => {
 
 > :bulb: **Note:** For performance reasons, the same object reference is passed to all functions. This means you can store the object once and access its properties like `time` in each render. However, we recommend treating it like an immutable object where possible.
 
+TODO.
+
 
 <!--<div class="param-table">
 

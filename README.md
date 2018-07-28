@@ -3,13 +3,15 @@
 ### :warning:
 ### WORK IN PROGRESS
 
+**This is in early beta stages, don't expect it to work reliably across versions yet. I'm looking for collaborators and beta testers, so please post an issue if you find any problems or want to help out with this project in some way.**
+
 ---
 
 ### canvas-sketch
 
 `canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.
 
-- :sparkles: [Website](https://competent-beaver-2ad4cc.netlify.com/)
+<!-- - :sparkles: Website (not yet public) -->
 
 - :closed_book: [Documentation](./docs/README.md)
 
@@ -43,8 +45,8 @@ mkdir my-sketches
 # Move into that folder
 cd my-sketches
 
-# Start a new basic sketch and open the browser
-canvas-sketch --new --open
+# Scaffold a new 'sketch.js' file and open the browser
+canvas-sketch sketch.js --new --open
 ```
 
 While in the browser, hit `Cmd + S` or `Ctrl + S` to export a high-resolution PNG of your artwork to your `~/Downloads` folder.
@@ -63,6 +65,19 @@ canvas-sketch src/foobar.js --build
 ```
 
 For more features and details, see the [Documentation](./docs/README.md).
+
+### Roadmap
+
+There are many features still outstanding, such as:
+
+- API & CLI Docs
+- Easy & beginner-friendly examples
+- Website/frontend
+- HUD/GUI controls
+- "Gallery Mode" for viewing many local sketches
+- External Module for utilities (randomness, geometry, etc)
+- Unit tests
+- More??
 
 ### License
 
