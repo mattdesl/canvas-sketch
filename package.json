@@ -1,6 +1,6 @@
 {
   "name": "canvas-sketch",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A utility for quickly prototyping 2D and WebGL sketches",
   "main": "./dist/canvas-sketch.umd.js",
   "license": "MIT",
