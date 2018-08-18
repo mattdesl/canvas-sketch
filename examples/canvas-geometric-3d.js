@@ -6,7 +6,7 @@ const { mat4, vec3 } = require('gl-matrix');
 const BezierEasing = require('bezier-easing');
 
 // A utility for random number generation
-const Random = require('./util/random');
+const Random = require('canvas-sketch-util/random');
 
 // Sketch settings/export params
 const settings = {

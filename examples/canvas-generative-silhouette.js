@@ -4,8 +4,8 @@
  */
 
 const canvasSketch = require('canvas-sketch');
-const Random = require('./util/random');
-const { lerp } = require('./util/math');
+const Random = require('canvas-sketch-util/random');
+const { lerp } = require('canvas-sketch-util/math');
 
 // We can force a random seed or a specific string/number
 Random.setSeed(Random.getRandomSeed());

@@ -4,10 +4,9 @@
  */
 
 const canvasSketch = require('canvas-sketch');
-const canvasPainter = require('./util/canvas-painter');
 
-const Random = require('./util/random');
-const { clamp, linspace } = require('./util/math');
+const Random = require('canvas-sketch-util/random');
+const { clamp, linspace } = require('canvas-sketch-util/math');
 
 // Setup our sketch & export parameters
 const settings = {
@@ -86,9 +85,6 @@ const sketch = ({ context, width, height, render }) => {
   // Initial value for slowly rotation hue
   let hueStart;
 
-  // Basic 2D canvas utility
-  const painter = canvasPainter(context);
-
   // Gets new random noise & hue
   const randomize = () => {
     // Reset our random noise function to a new seed
@@ -124,12 +120,15 @@ const sketch = ({ context, width, height, render }) => {
       const stroke = `hsl(${hsl})`;
 
       const line = generate(playhead);
-      painter.polyline(line, {
-        stroke,
-        lineWidth: 6 / scale,
-        linecap: 'round',
-        lineJoin: 'round'
+      context.lineWidth = 6 / scale;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      context.beginPath();
+      line.forEach(point => {
+        context.lineTo(point[0], point[1]);
       });
+      context.strokeStyle = stroke;
+      context.stroke();
 
       context.restore();
     },

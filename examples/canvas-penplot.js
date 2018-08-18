@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const { clipPolylinesToBox } = require('./util/geom');
 const { exportPolylines } = require('./util/penplot');
-const { linspace } = require('./util/math');
+const { linspace } = require('canvas-sketch-util/math');
 const Painter = require('./util/canvas-painter');
 
 const settings = {

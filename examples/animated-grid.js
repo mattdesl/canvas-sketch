@@ -1,5 +1,5 @@
 const canvasSketch = require('canvas-sketch');
-const { lerp } = require('./util/math');
+const { lerp } = require('canvas-sketch-util/math');
 
 const settings = {
   animate: true,
