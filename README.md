@@ -106,9 +106,11 @@ canvasSketch(sketch, settings);
 
 When exporting the image in browser with `Cmd + S` or `Ctrl + S` keystrokes, the saved PNG file matches 21 x 29.7 cm at 300 DPI, and can be printed with archival ink on quality paper.
 
-Resulting image:
+Resulting image looks something like this:
 
 <img src="docs/assets/images/gradient.png" width="50%" />
+
+###### <sup>Note: The above PNG file has been scaled/optimized for web.</sup>
 
 ### Roadmap
 
