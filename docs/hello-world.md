@@ -53,6 +53,15 @@ You should see this in the browser:
 
 ![output](assets/images/1-browser.png)
 
+### Canvas API
+
+`canvas-sketch` is built around the browser's `<canvas>` element. There are two different APIs you can take advantage of with Canvas:
+
+- [Canvas 2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) — for rendering 2D shapes, lines, polygons, gradients, and text
+- [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL) — for rendering 3D and hardware-accelerated graphics
+
+By default, `canvas-sketch` will set up a new 2D canvas, giving you a `{ context }` property. For more details on what is possible with the Canvas 2D context, see the [MDN Canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
+
 ### The `settings` Parameter
 
 Notice we passed a `settings` object to `canvasSketch()` which defines how the canvas should be scaled, rendered and exported.

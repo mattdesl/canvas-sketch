@@ -25,29 +25,30 @@ Below are the docs for the `canvas-sketch` JavaScript library. It should work in
 
 ## Contents
 
-- [Importing](./importing.md)
-- [Methods](./methods.md)
-- [Settings](./settings.md)
-- [Props](./props.md)
-- [Renderer Objects](./renderer-objects.md)
+- [Importing](#importing)
+- [Methods](#methods)
+- [Settings](#settings)
+- [Props](#props)
+- [Renderer Objects](#renderer-objects)
+- [`SketchManager`](#sketchmanager)
 
 ## Importing
 
 The default export is a function, `canvasSketch` which can be imported like so:
 
 ```js
-// ES Modules
-import canvasSketch from 'canvas-sketch';
-
 // Node.js/CommonJS
 const canvasSketch = require('canvas-sketch');
+
+// ES Modules
+import canvasSketch from 'canvas-sketch';
 ```
 
 CommonJS is recommended for better compatibility with Node.js (i.e. for generating super-high resolution prints).
 
 ## Methods
 
-#### `canvasSketch(sketch, [settings])`
+#### `promise = canvasSketch(sketch, [settings])`
 
 The library exports the default `canvasSketch` function, which takes in a `sketch` function and optional [`settings` object](#settings).
 
@@ -99,7 +100,7 @@ The `settings` object often looks like this:
 const settings = {
   dimensions: [ 11, 7 ],
   units: 'in'
-}
+};
 ```
 
 <div class="param-table" style="font-size: 13px">
@@ -180,26 +181,75 @@ These are typically destructured with ES6, such as `{ width, height }`.
 
 > :bulb: **Note:** For performance reasons, the same object reference is passed to all functions. This means you can store the object once and access its properties like `time` in each render. However, we recommend treating it like an immutable object where possible.
 
-#### TODO: The following props are usable but not yet documented here.
+#### Size Props
 
-- width, height, dimensions
-- canvasWidth, canvasHeight
-- pixelRatio,
-- bleed
-- units,
-- scaleX, scaleY
-- viewportWidth, viewportHeight
-- trimWidth, trimHeight
-- styleWidth, styleHeight
-- context, canvas
-- fps, time, deltaTime, playhead, frame, totalFrames, duration
-- started, playing, recording
-- timeScale
-- settings
-- exporting
-- **functions:** render, resize, update, exportFrame, play, pause, stop
+prop | type | description
+--- | --- | ---
+`units` | String | The working units, which will be `'px'` if you didn't specify one.
+`width` | Number | The width of your artwork in working `units`.
+`height` | Number | The height of your artwork in working `units`.
+`canvasWidth` | Number | The current pixel width of the canvas.
+`canvasHeight` | Number | The current pixel height of the canvas.
+`styleWidth` | Number | The current CSS width of the canvas element, which may be smaller than the canvas width when scaled to Retina screens.
+`styleHeight` | Number | The current CSS height of the canvas element, which may be smaller than the canvas height when scaled to Retina screens.
+`scaleX` | Number | The current X scaling factor of the context, which is equivalent to `canvasWidth / width`
+`scaleY` | Number | The current Y scaling factor of the context, which is equivalent to `canvasHeight / height`
+`pixelRatio` | Number | The current pixel density being used when rendering the canvas and adjusting the CSS style size. e.g. Full-screen canvas in Retina devices will have a pixelRatio of 2.
+
+#### DOM Props
+
+parameter | type | description
+--- | --- | ---
+`canvas` | `<canvas>` | The canvas element currently being rendered into.
+`context` | CanvasContext | The WebGL or 2D canvas context currently being rendered into
+
+#### Animation Props
+
+parameter | type | description
+--- | --- | ---
+`time` | Number | The current elapsed time of the loop in seconds
+`frame` | Number | The current elapsed frame index of the loop
+`playhead` | Number | The current playhead of the loop, between 0 and 1 (inclusive), which will always be 0 when `duration` and `totalFrames` is not defined.
+`deltaTime` | Number | The delta time in seconds since last frame
+`playing` | Boolean | Whether the loop is currently playing
+`duration` | Number | The duration of the loop, or Infinity if the animation has no defined duration
+`totalFrames` | Number | The total number of frames in the loop, or Infinity if the animation has no defined duration
+`fps` | Number | The current frames per second
+
+#### Misc Props
+
+parameter | type | description
+--- | --- | ---
+`exporting` | Boolean | When rendering to a file or an animation sequence, this flag will be true.
+`recording` | Boolean | When rendering to an animation sequence, this flag will be true.
+`settings` | Object | A reference to the settings that were instantiated with this sketch, defaulting to an empty object if no settings were passed.
+
+#### Function Props
+
+Some properties are actually functions you can call, for example:
+
+```js
+const sketch = ({ render }) => {
+  // Re-render on click
+  window.addEventListener('click', () => render());
+  return () => {
+    // ... draw something ...
+  };
+};
+```
+
+function | description
+--- | ---
+`render()` | Dispatches a re-draw, which will in turn trigger your sketch's renderer.
+`update(obj)` | Pass new settings, such as `{ width, height }` or `{ canvas }` to mutate the state of the sketch.
+`exportFrame(obj)` | Programmatically trigger a frame export. You can specify `{ commit: true }` if you also wish to git commit before exporting.
+`play()` | Play/resume the loop. If already playing, this does nothing.
+`pause()` | Pause the loop. If already paused, this does nothing.
+`stop()` | Stop the loop and return to frame zero. If already stopped, this does nothing.
 
 ## Renderer Objects
+
+> :warning: The Renderer Objects feature is still experimental. If you wish to contribute to its architecture/design, please create a new issue.
 
 Instead of returning a function, you can return an object with various methods, for example:
 
@@ -223,15 +273,34 @@ const sketch = () => {
 
 - render, resize, begin, end, tick, dispose, preExport, postExport
 
-<!--<div class="param-table">
+## `SketchManager`
 
-#### Size Settings
+> :warning: The SketchManager interface is still experimental. If you wish to contribute to its architecture/design, please create a new issue.
 
-parameter | type | default | description
---- | --- | --- | ---
-`canvasWidth`, `canvasHeight` | Boolean | true | When true, WebGL contexts will be flushed after each render call in order to ensure the exported content is in sync with the GL calls.
+The `canvasSketch()` function is resolved to a SketchManager instance, which allows you to control the sketch programmatically:
 
-</div>-->
+```js
+const start = async () => {
+  const manager = await canvasSketch(sketch, settings);
+  window.addEventListener('click', () => {
+    if (manager.props.playing) manager.pause();
+    else manager.play();
+  });
+};
+```
 
+Functions inlcude:
+
+- `manager.play()`, `manager.pause()`, `manager.stop()` — control playback
+- `manager.render()` — trigger a re-render of current frame
+- `manager.exportFrame()` — trigger export of current frame
+- `manager.update(newSettings)` — update sketch with new settings
+- `manager.unload()` — dispose of the current sketch
+- `manager.loadAndRun(sketch, settings)` — this unloads and starts up a new sketch
+
+Instance variables include:
+
+- `manager.props` — A getter to retrieve the current properties of the sketch
+- `manager.settings` — A getter to retrieve the settings applied to the sketch
 
 #### <sup>[← Back to Documentation](./README.md)

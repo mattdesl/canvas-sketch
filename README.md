@@ -66,6 +66,50 @@ canvas-sketch src/foobar.js --build
 
 For more features and details, see the [Documentation](./docs/README.md).
 
+### Code Example
+
+Once you have the CLI tool running, you can try this example of an A4 print artwork.
+
+```js
+const canvasSketch = require('canvas-sketch');
+
+// Sketch parameters
+const settings = {
+  dimensions: 'a4',
+  pixelsPerInch: 300,
+  units: 'in'
+};
+
+// Artwork function
+const sketch = () => {
+  return ({ context, width, height }) => {
+    // Margin in inches
+    const margin = 1 / 4;
+
+    // Off-white background
+    context.fillStyle = 'hsl(0, 0%, 98%)';
+    context.fillRect(0, 0, width, height);
+
+    // Gradient foreground
+    const fill = context.createLinearGradient(0, 0, width, height);
+    fill.addColorStop(0, 'cyan');
+    fill.addColorStop(1, 'orange');
+
+    context.fillStyle = fill;
+    context.fillRect(margin, margin, width - margin * 2, height - margin * 2);
+  };
+};
+
+// Start the sketch
+canvasSketch(sketch, settings);
+```
+
+When exporting the image in browser with `Cmd + S` or `Ctrl + S` keystrokes, the saved PNG file matches 21 x 29.7 cm at 300 DPI, and can be printed with archival ink on quality paper.
+
+Resulting image:
+
+<img src="docs/assets/images/gradient.png" width="50%" />
+
 ### Roadmap
 
 There are many features still outstanding, such as:

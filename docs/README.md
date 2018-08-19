@@ -4,7 +4,7 @@
 
 ### About
 
-`canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser. It is designed to help create artworks and images with code, randomness, algorithms, and emergent systems.
+`canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser using the `<canvas>` tag. It is designed to help create artworks and images with code, randomness, algorithms, and emergent systems.
 
 You can use `canvas-sketch` to export high-resolution PNG for Giclée prints, render image sequences for GIF and MP4 loops, generate SVG files for mechanical pen plotters (like AxiDraw), automatically git hash your artworks for long-term archiving, and much more.
 
