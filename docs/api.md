@@ -246,6 +246,7 @@ function | description
 `play()` | Play/resume the loop. If already playing, this does nothing.
 `pause()` | Pause the loop. If already paused, this does nothing.
 `stop()` | Stop the loop and return to frame zero. If already stopped, this does nothing.
+`togglePlay()` | Toggles play/pause depending on current state. If playing, this will pause the loop, and if paused, this will resume the loop.
 
 ## Renderer Objects
 
