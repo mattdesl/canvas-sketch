@@ -33,7 +33,7 @@
 
 ### Quick Start with Node.js & npm
 
-To jump directly into `canvas-sketch`, try the following terminal commands.
+To jump directly into `canvas-sketch`, try the following terminal commands with `node@8.x` and `npm@5.x` or newer.
 
 ```sh
 # Install the CLI tool globally
