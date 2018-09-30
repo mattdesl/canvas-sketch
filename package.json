@@ -77,8 +77,8 @@
   },
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
-    "lib:bundle": "microbundle --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=umd -o ./dist/",
-    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --target=browser --sourcemap=inline --no-compress --format=umd -o ./dist/",
+    "lib:bundle": "microbundle --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/",
+    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/",
     "lib:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
     "lib": "npm-run-all --parallel lib:watch lib:server",
     "start": "npm-run-all --parallel lib:watch site:dev",
