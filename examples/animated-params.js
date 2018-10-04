@@ -11,8 +11,9 @@ const settings = {
   scaleToView: true,
   playbackRate: 'throttle',
   fps: 24,
+  parent: document.body,
   params: {
-    color: 'pink',
+    background: 'pink',
     time: {
       value: 0.5,
       min: 0,
