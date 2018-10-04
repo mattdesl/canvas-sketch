@@ -130,7 +130,7 @@ parameter | type | default | description
 `canvas` | `<canvas>` | undefined | A canvas to use for the artwork, otherwise will create a new canvas.
 `context` | String \| Context | `"2d"` | Can be an existing canvas context, or a string like `"webgl"` or `"2d"` hinting which canvas type should be created.
 `attributes` | Object | `{}` | Optional context attributes when creating a new canvas in WebGL or 2D
-`parent` | Element | `<body>` | The parent to append to when mounting, if the canvas is not already added to the DOM.
+`parent` | Element \| Boolean | `<body>` | The parent to append to when mounting, if the canvas is not already added to the DOM. If `false`, the canvas will not be mounted to DOM.
 
 #### Export Settings
 
@@ -303,5 +303,6 @@ Instance variables include:
 
 - `manager.props` — A getter to retrieve the current properties of the sketch
 - `manager.settings` — A getter to retrieve the settings applied to the sketch
+- `manager.sketch` — A getter to retrieve the 'sketch' interface, which may be a renderer function or a [renderer object](#renderer-object)
 
 #### <sup>[← Back to Documentation](./README.md)
