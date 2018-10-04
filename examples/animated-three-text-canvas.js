@@ -1,5 +1,10 @@
 /**
- * A WebGL example of a basic rotating cube, using ThreeJS.
+ * A WebGL example of a basic rotating cube with text, using ThreeJS.
+ *
+ * This is similar to canvas-in-canvas.js example, in that it uses
+ * a second sketch to hold the canvas. You may or may not consider
+ * this to be overkill, depending on your application...
+ *
  * @author Matt DesLauriers (@mattdesl)
  */
 
