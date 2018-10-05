@@ -272,7 +272,7 @@ const sketch = () => {
 
 #### TODO: Still need to document these. They include:
 
-- render, resize, begin, end, tick, dispose, preExport, postExport
+- render, resize, begin, end, tick, unload, preExport, postExport
 
 ## `SketchManager`
 
