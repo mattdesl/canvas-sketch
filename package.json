@@ -55,6 +55,7 @@
     "glslify": "^6.1.1",
     "hex-rgb": "^3.0.0",
     "insert-css": "^2.0.0",
+    "lerp": "^1.0.3",
     "lineclip": "^1.1.5",
     "load-asset": "^1.2.0",
     "mkdirp": "^0.5.1",
