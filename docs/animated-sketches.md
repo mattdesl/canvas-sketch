@@ -69,6 +69,6 @@ For details on how to export animations (like the GIF above), see the [Exporting
 
 ## 
 
-<sub>After animation, you might like to read about [Developing with Physical Units](./physical-units.md).</sub>
+<sub>After animation, you might like to read about using [Hot Reloading](./hot-reloading.md) during development.</sub>
 
 #### <sup>[← Back to Documentation](./README.md)

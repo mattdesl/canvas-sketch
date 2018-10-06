@@ -164,6 +164,7 @@ parameter | type | default | description
 `pixelated` | Boolean | false | When true, the canvas will be set up with image smoothing ideal for pixel art.
 `hotkeys` | Boolean | true | Attaches hotkeys like `Cmd + S` to the window, for exporting and other features. Set this to false to disable export hotkeys.
 `p5` | Boolean \| P5 | false | Specify `true` or a P5 instance to integrate this sketch with P5.js.
+`id` | String | undefined | When using `--hot` through the CLI tool, sketches are managed by a unique string identifier. If you have more than one sketch in your application, you must provide unique string identifiers to each sketch with the `id` setting in order to use hot replacement on all of them.
 
 </div>
 
