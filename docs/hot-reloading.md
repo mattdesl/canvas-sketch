@@ -59,7 +59,7 @@ canvasSketch(sketch, { animate: true });
 
 For example, if you are using ThreeJS you can use `renderer.dispose()` to clean up its WebGL context during unload.
 
-If you aren't using `--hot`, the browser will clean up the resources, timers and events for you upon reloading the page. However, unloading is still good practice if you want your sketch to be entirely self-contained and reusable.
+With regular page reloading (without the `--hot` flag), the browser will clean up resources automatically during page unload (including timers, events and canvas contexts). However, manually unloading resources is still a good practice if you want your sketch to be entirely self-contained and reusable.
 
 ## Multiple Sketches
 
