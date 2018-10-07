@@ -4,21 +4,58 @@
 
 ### Hot Reloading
 
-The `canvas-sketch` CLI can support *Hot Reloading* in your sketches. When enabled, code changes will be evaluated and applied without forcing an entire page reload. Use the `--hot` flag to enable it:
+The command-line tool supports *Hot Reloading* your sketches. When enabled, code changes will be evaluated and applied without forcing an entire page reload.
+
+Use the `--hot` flag to enable it:
 
 ```sh
 canvas-sketch my-sketch.js --hot
 ```
 
-This provides a much better feedback loop while developing creative content, as you no longer have jarring flashes as the page reloads, and the `{ time }` and `{ frame }` parameters will be persisted between code updates.
+This provides a much better feedback loop while developing creative content, as you no longer have jarring flashes as the page reloads, and the `{ time }` and `{ frame }` parameters of animated sketches will be persisted between code updates.
+
+<p align="center">
+  <img src="assets/images/hotreload.png" width="75%" />
+</p>
 
 ## How it works
 
-This is implemented by destroying the previous state of your sketch, unmounting it from the DOM, and then re-creating and re-mounting it from your new code. This way, you can change settings and other properties that are outside the scope of your sketch and render function, and the changes will still be applied without losing the current time.
+This is implemented by destroying the previously running instance of your sketch, unmounting it from the DOM, and then re-creating and re-mounting it with your newly evaluated code. This means that you can change settings and other properties outside the scope of your render function, and the changes will still be applied.
 
-## Gotchas
+## Managing Side-Effects
 
-The feature is 
+Since your sketch will be un-loaded and re-created each time you update the code, it's important to "clean up" any side effects that your sketch creates. This is less important if you are using standard page reloading, as the browser will do that for you.
+
+For example, here is an example of unloading an interval timer and mouse events:
+
+```js
+const sketch = () => {
+  const timer = setInterval(() => {
+    console.log('Tick!');
+  });
+
+  const onClick = () => {
+    console.log('Screen clicked!');
+  };
+  window.addEventListener('click', onClick);
+
+  return {
+    render ({ context, width, height, frame }) {
+      // Render your content...
+    },
+
+    unload () {
+      // Dispose of side-effects
+      clearInterval(timer);
+      window.removeEventListener('click', onClick);
+    }
+  };
+};
+
+canvasSketch(sketch, { animate: true });
+```
+
+For example, if you are using ThreeJS you can use `renderer.dispose()` to clean up its WebGL context during unload.
 
 ## Multiple Sketches
 

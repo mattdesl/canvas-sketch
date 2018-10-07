@@ -57,7 +57,7 @@ const sketch = ({ context }) => {
 
   // Add some light
   const light = new THREE.PointLight('#45caf7', 1, 15.5);
-  light.position.set(2, 2, -4).multiplyScalar(1.25);
+  light.position.set(2, 2, -4).multiplyScalar(1.5);
   scene.add(light);
 
   // draw each frame
@@ -74,6 +74,9 @@ const sketch = ({ context }) => {
       mesh.rotation.y = time * (10 * Math.PI / 180);
       controls.update();
       renderer.render(scene, camera);
+    },
+    unload () {
+      renderer.dispose();
     }
   };
 };
