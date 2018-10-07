@@ -101,7 +101,7 @@ To update the CLI tool, you can re-install it globally:
 npm install canvas-sketch-cli@latest -g
 ```
 
-When you run `canvas-sketch` in a folder, it will often install the library locally as a `dependency` in your `package.json` for that folder. To update this, you can re-install the library (not the CLI) locally:
+When you run `canvas-sketch` in a folder, it will often install the library locally as a `dependency` in your `package.json` for that folder. To update this, you can re-install the library (not the CLI) locally in each project folder that uses it:
 
 ```sh
 npm install canvas-sketch@latest

@@ -4,6 +4,8 @@
 
 ### Hot Reloading
 
+> :wrench: You must update to `canvas-sketch@0.0.23` and `canvas-sketch-cli@1.0.21` or newer to use this feature. See [Updating](./installation.md#updating-canvas-sketch) for details.
+
 The command-line tool supports *Hot Reloading* your sketches. When enabled, code changes will be evaluated and applied without forcing an entire page reload.
 
 Use the `--hot` flag to enable it:
