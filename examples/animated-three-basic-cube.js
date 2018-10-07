@@ -71,7 +71,7 @@ const sketch = ({ context }) => {
     },
     // And render events here
     render ({ time, deltaTime }) {
-      mesh.rotation.y += deltaTime * (5 * Math.PI / 180);
+      mesh.rotation.y = time * (10 * Math.PI / 180);
       controls.update();
       renderer.render(scene, camera);
     }
