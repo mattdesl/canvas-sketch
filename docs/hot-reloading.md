@@ -26,7 +26,7 @@ This is implemented by destroying the previously running instance of your sketch
 
 ## Managing Side-Effects
 
-Since your sketch will be un-loaded and re-created each time you update the code, it's important to "clean up" any side effects that your sketch creates. This is less important if you are using standard page reloading, as the browser will do that for you.
+Since your sketch will be un-loaded and re-created each time you update the code, it's important to "clean up" any side effects that your sketch creates.
 
 For example, here is an example of unloading an interval timer and mouse events:
 
@@ -58,6 +58,8 @@ canvasSketch(sketch, { animate: true });
 ```
 
 For example, if you are using ThreeJS you can use `renderer.dispose()` to clean up its WebGL context during unload.
+
+If you aren't using `--hot`, the browser will clean up the resources, timers and events for you upon reloading the page. However, unloading is still good practice if you want your sketch to be entirely self-contained and reusable.
 
 ## Multiple Sketches
 
