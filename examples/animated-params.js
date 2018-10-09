@@ -1,5 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
+const palettes = require('nice-color-palettes');
 
 // Params:
 // time, frame, duration, fps
@@ -13,28 +14,43 @@ const settings = {
   fps: 24,
   parent: document.body,
   params: {
-    background: 'pink',
-    time: {
-      value: 0.5,
+    seed: {
+      value: 0,
       min: 0,
-      max: 1,
-      step: 0.001
+      max: 10000000,
+      step: 1
     },
-    number: 0.25,
-    text: 'some text',
+    count: 11,
+    background: 'pink',
+    foreground: {
+      type: 'color',
+      value: 'hsl(0, 0%, 0%)'
+    },
+    thickness: {
+      value: 0.25,
+      min: 0.01,
+      max: 1,
+      step: 0.01
+    },
+    length: {
+      value: 0.25,
+      min: 0.01,
+      max: 1,
+      step: 0.01
+    },
     download: ({ exportFrame }) => exportFrame(),
     // togglePlay: ({ togglePlay }) => togglePlay()
   }
 };
 
 // Start the sketch
-canvasSketch(({ update, exportFrame }) => {
-  return ({ context, frame, width, height, playhead }) => {
+canvasSketch(({ update, exportFrame, paramControls }) => {
+  return ({ context, frame, width, height, playhead, params }) => {
     context.clearRect(0, 0, width, height);
-    context.fillStyle = 'white';
+    context.fillStyle = params.background;
     context.fillRect(0, 0, width, height);
 
-    const gridSize = 7;
+    const gridSize = params.count;
     const padding = width * 0.2;
     const tileSize = (width - padding * 2) / gridSize;
 
@@ -60,14 +76,15 @@ canvasSketch(({ update, exportFrame }) => {
         mod = Math.pow(mod, 3);
 
         // now choose a length, thickness and initial rotation
-        const length = tileSize * 0.65;
-        const thickness = tileSize * 0.1;
+        const length = tileSize * params.length;
+        const thickness = tileSize * params.thickness;
         const initialRotation = Math.PI / 2;
 
         // And rotate each line a bit by our modifier
         const rotation = initialRotation + mod * Math.PI;
 
         // Now render...
+        context.fillStyle = params.foreground;
         draw(context, tx, ty, length, thickness, rotation);
       }
     }
@@ -75,7 +92,6 @@ canvasSketch(({ update, exportFrame }) => {
 
   function draw (context, x, y, length, thickness, rotation) {
     context.save();
-    context.fillStyle = 'black';
 
     // Rotate in place
     context.translate(x, y);
