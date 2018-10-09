@@ -130,7 +130,7 @@ parameter | type | default | description
 `canvas` | `<canvas>` | undefined | A canvas to use for the artwork, otherwise will create a new canvas.
 `context` | String \| Context | `"2d"` | Can be an existing canvas context, or a string like `"webgl"` or `"2d"` hinting which canvas type should be created.
 `attributes` | Object | `{}` | Optional context attributes when creating a new canvas in WebGL or 2D
-`parent` | Element | `<body>` | The parent to append to when mounting, if the canvas is not already added to the DOM.
+`parent` | Element \| Boolean | `<body>` | The parent to append to when mounting, if the canvas is not already added to the DOM. If `false`, the canvas will not be mounted to DOM.
 
 #### Export Settings
 
@@ -164,6 +164,7 @@ parameter | type | default | description
 `pixelated` | Boolean | false | When true, the canvas will be set up with image smoothing ideal for pixel art.
 `hotkeys` | Boolean | true | Attaches hotkeys like `Cmd + S` to the window, for exporting and other features. Set this to false to disable export hotkeys.
 `p5` | Boolean \| P5 | false | Specify `true` or a P5 instance to integrate this sketch with P5.js.
+`id` | String | undefined | When using `--hot` through the CLI tool, sketches are managed by a unique string identifier. If you have more than one sketch in your application, you must provide unique string identifiers to each sketch with the `id` setting in order to use hot replacement on all of them.
 
 </div>
 
@@ -272,7 +273,7 @@ const sketch = () => {
 
 #### TODO: Still need to document these. They include:
 
-- render, resize, begin, end, tick, dispose, preExport, postExport
+- render, resize, begin, end, tick, unload, preExport, postExport
 
 ## `SketchManager`
 
@@ -303,5 +304,6 @@ Instance variables include:
 
 - `manager.props` — A getter to retrieve the current properties of the sketch
 - `manager.settings` — A getter to retrieve the settings applied to the sketch
+- `manager.sketch` — A getter to retrieve the 'sketch' interface, which may be a renderer function or a [renderer object](#renderer-object)
 
 #### <sup>[← Back to Documentation](./README.md)

@@ -62,6 +62,9 @@ canvas-sketch --new --template=three --open
 
 # Build your sketch to a sharable HTML + JS website
 canvas-sketch src/foobar.js --build
+
+# Develop with "Hot Reloading" instead of full page reload
+canvas-sketch src/foobar.js --hot
 ```
 
 For more features and details, see the [Documentation](./docs/README.md).

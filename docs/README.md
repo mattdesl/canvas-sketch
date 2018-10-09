@@ -24,6 +24,8 @@ These tools can be used on their own, or combined with your favourite graphics l
 
 - [Animated Sketches](./animated-sketches.md)
 
+- [Hot Reloading](./hot-reloading.md)
+
 - [Developing with Physical Units (inches, centimeters)](./physical-units.md)
 
   - [Paper Size Presets](./physical-units.md#paper-size-presets)
