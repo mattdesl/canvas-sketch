@@ -5,14 +5,24 @@ const palettes = require('nice-color-palettes');
 // Params:
 // time, frame, duration, fps
 
+const parent = document.createElement('div');
+document.body.appendChild(parent);
+parent.style.cssText = `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const settings = {
-  animate: true,
+  animate: false,
   duration: 3,
   dimensions: [ 640, 640 ],
   scaleToView: true,
   playbackRate: 'throttle',
   fps: 24,
-  parent: document.body,
+  parent,
   params: {
     seed: {
       value: 0,
