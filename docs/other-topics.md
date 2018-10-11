@@ -95,7 +95,7 @@ Here are some examples:
 
 ### Utilities for Randomness, Math, Geometry, Color, etc.
 
-See [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch).
+See [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util).
 
 Examples:
 
