@@ -2,21 +2,6 @@
 
 ---
 
-<!--<style>
-.param-table table {
-  font-size: 13px;
-}
-.param-table table tr td:nth-child(2) {
-  min-width: 130px;
-}
-.param-table table tr td:nth-child(3) {
-  min-width: 120px;
-}
-.param-table table td {
-  padding: 20px 13px;
-}
-</style>-->
-
 ### `canvas-sketch` — API Docs
 
 Below are the docs for the `canvas-sketch` JavaScript library. It should work in Node.js and the browser, including browserify, Webpack, Rollup, and similar build tools.

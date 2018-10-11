@@ -8,7 +8,7 @@ The recommended way to use `canvas-sketch` and its tooling is with its *command-
 
 Requirements:
 
-- [Node.js](https://nodejs.org/en/) 8.10.0 or higher
+- [Node.js](https://nodejs.org/en/) 8.0.0 or higher
 - [npm](https://www.npmjs.com/) 5.6.0 or higher
 - A command-line terminal (such as the default `Terminal.app` in macOS, or [cmder](http://cmder.net/) in Windows)
 
