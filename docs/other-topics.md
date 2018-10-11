@@ -95,11 +95,40 @@ Here are some examples:
 
 ### Utilities for Randomness, Math, Geometry, Color, etc.
 
-TODO.
+See [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util).
+
+Examples:
+
+```js
+// Math utilities
+const { lerp, clamp } = require('canvas-sketch-util/math');
+
+// Randomness & noise utilities
+const { noise2D } = require('canvas-sketch-util/random');
+```
+
+These utilities have been extracted into a separate module as they are not directly dependent on `canvas-sketch`, and can be useful outside the scope of this framework.
 
 ### Developing Pen Plotter Artwork
 
-TODO.
+You can also use `canvas-sketch` to develop pen plotter artwork, for example with [AxiDraw V3](https://shop.evilmadscientist.com/productsmenu/846).
+
+Some examples:
+
+- [pen-plotter-circles.js](../examples/pen-plotter-circles.js) - Typical example of pen plotter artwork using polylines
+- [pen-plotter-patchwork](../examples/pen-plotter-patchwork.js) - Advanced example of pen plotter algorithms, as well as manually exporting PNG and SVG layers
+
+<p align="center">
+  <img src="assets/images/penplot2.png" width="50%" />
+</p>
+
+
+You can use the `--template=penplot` flag in the CLI along with `--new` to quickly generate a new pen plotter print. (Since `canvas-sketch-cli@1.1.0`)
+
+To learn more about AxiDraw and pen plotter art, see here:
+
+- [Pen Plotter Art & Algorithms - Part 1](https://mattdesl.svbtle.com/pen-plotter-1)
+- [Pen Plotter Art & Algorithms - Part 2](https://mattdesl.svbtle.com/pen-plotter-2)
 
 ### Async Sketches: Loading Images & Other Assets
 

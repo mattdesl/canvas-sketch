@@ -73,12 +73,16 @@ Frame numbers are exported with left-padded zeros, such as `0005.png`. If you ha
 
 After exporting all your frames to a folder, you can use FFMPEG, After Effects, Photoshop, or your favourite "PNG Sequence to Movie" software.
 
-The `canvas-sketch-cli` also includes two built-in utilities for converting image sequences to GIF and MP4 formats:
+The `canvas-sketch-cli` also includes two built-in utilities for converting image sequences to GIF and MP4 formats. Both of these tool depend on `ffmpeg`:
 
 - `canvas-sketch-gif` converts frames to GIF
 - `canvas-sketch-mp4` converts frames to MP4
 
 These tools depend on `ffmpeg` and expect it to be available on the PATH environment (see [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for details).
+
+> :bulb:
+> 
+> <sup>If you don't have `ffmpeg` installed, you can use the free online tool [https://giftool.surge.sh/](https://giftool.surge.sh/)</sup>
 
 Example usage:
 
