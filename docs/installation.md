@@ -20,7 +20,7 @@ If you don't have these tools, or would rather not use them, see the following:
 
 ### Quick Start
 
-The fastest way to get started is to install the tool globally with `npm`.
+The fastest way to get started is to install the tool globally (or [locally](#installing-the-cli-locally)) with `npm`.
 
 In your terminal, enter the following:
 
@@ -106,6 +106,26 @@ When you run `canvas-sketch` in a folder, it will often install the library loca
 ```sh
 npm install canvas-sketch@latest
 ```
+
+### Installing the CLI Locally
+
+If you prefer not to install your CLI tools globally, you can install the CLI locally in each project. First, make sure you have a `package.json` already defined. Then, install the CLI locally as a `devDependency`:
+
+```sh
+npm install canvas-sketch-cli --save-dev
+```
+
+To update this local CLI version, simply re-run this command. Each project you installed the CLI in locally will have to be updated individually.
+
+Now, you can add the `canvas-sketch` command to your `npm run scripts` fields, or run it directly via `npx`:
+
+```sh
+npx canvas-sketch my-sketch.js
+```
+
+Using `npx` will run the locally-installed version of the CLI tool rather than a globally-installed version.
+
+
 
 ## 
 
