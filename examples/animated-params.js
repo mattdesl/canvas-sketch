@@ -2,35 +2,21 @@ const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
 const palettes = require('nice-color-palettes');
 
-// Params:
-// time, frame, duration, fps
-
-const parent = document.createElement('div');
-document.body.appendChild(parent);
-parent.style.cssText = `
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
 const settings = {
-  animate: false,
-  duration: 3,
+  animate: true,
+  playing: true,
+  duration: 2,
   dimensions: [ 640, 640 ],
   scaleToView: true,
   playbackRate: 'throttle',
   fps: 24,
-  parent,
   params: {
-    seed: {
-      value: 0,
-      min: 0,
-      max: 10000000,
-      step: 1
+    settings: {
+      storageKey: __filename,
+      // visible: false,
+      export: true
     },
-    count: 11,
+    count: [ 3, 2, 20, 1 ],
     background: 'pink',
     foreground: {
       type: 'color',
@@ -47,14 +33,12 @@ const settings = {
       min: 0.01,
       max: 1,
       step: 0.01
-    },
-    download: ({ exportFrame }) => exportFrame(),
-    // togglePlay: ({ togglePlay }) => togglePlay()
+    }
   }
 };
 
 // Start the sketch
-canvasSketch(({ update, exportFrame, paramControls }) => {
+canvasSketch(({ update, params }) => {
   return ({ context, frame, width, height, playhead, params }) => {
     context.clearRect(0, 0, width, height);
     context.fillStyle = params.background;

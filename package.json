@@ -15,6 +15,7 @@
     "dateformat": "^3.0.3",
     "deep-equal": "^1.0.1",
     "defined": "^1.0.0",
+    "drag-drop": "^4.2.0",
     "get-canvas-context": "^1.0.2",
     "is-class": "0.0.5",
     "is-dom": "^1.0.9",
