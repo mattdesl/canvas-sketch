@@ -4,7 +4,7 @@ const palettes = require('nice-color-palettes');
 
 const settings = {
   animate: true,
-  playing: true,
+  playing: false,
   duration: 2,
   dimensions: [ 640, 640 ],
   scaleToView: true,
@@ -16,8 +16,22 @@ const settings = {
       // visible: false,
       export: true
     },
-    count: [ 3, 2, 20, 1 ],
+    test: 'foobar',
+    // coordinate2D: [ x, y ],
+    // coordinate3D: [ x, y, z ],
+    // coordinateMatrix: [ 0, 0, 0, 0, 0, 0 ], // how to handle so many?
+    count: {
+      min: 2,
+      max: 10,
+      step: 1,
+      value: 4
+    },
     background: 'pink',
+    shaderColor: {
+      type: 'color',
+      value: 'pink',
+      output: 'rgb32'
+    },
     foreground: {
       type: 'color',
       value: 'hsl(0, 0%, 0%)'
