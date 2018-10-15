@@ -65,27 +65,3 @@ These tools can be used on their own, or combined with your favourite graphics l
 If you are interested in helping develop or maintain `canvas-sketch` ecosystem:
 
 - [Contribution Guideline](./contributing.md)
-
-
-
-<!-- 
-# foo
-
-- [Installing and Using `canvas-sketch`](#)
-- [A "Hello, World" Sketch](#)
-- [Adding Animation](#)
-- [Exporting Print Resolution PNG Images](#)
-- [Exporting Image Sequences for GIF & MP4](#)
-- [Exporting SVG and Pen Plotter Artwork](#)
-- [Using Physical Units (inches, centimeters)](#)
-- [Utilities: Randomness, Math, Color and More](#)
-- [Using WebGL, ThreeJS, Pixi and other libraries](#)
-- [Loading Images, Audio and Other Assets](#)
-- [Using Git File Name Hashing for Long-Term Archiving](#)
-- [Advanced Media Exporting (3D Models, Layers, etc)](#)
-
-<img src="./assets/images/print.png" width="100%" />
-<p></p>
-<img src="./assets/images/blob.gif" width="40%" />
-<p></p>
-<img src="./assets/images/animation-02.gif" width="40%" /> -->

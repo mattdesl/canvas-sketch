@@ -1,41 +1,24 @@
 const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
-const palettes = require('nice-color-palettes');
+// const palettes = require('nice-color-palettes');
 
 const settings = {
   animate: true,
-  playing: false,
+  playing: true,
   duration: 2,
   dimensions: [ 640, 640 ],
   scaleToView: true,
   playbackRate: 'throttle',
   fps: 24,
   params: {
-    settings: {
-      storageKey: __filename,
-      // visible: false,
-      export: true
-    },
-    test: 'foobar',
-    // coordinate2D: [ x, y ],
-    // coordinate3D: [ x, y, z ],
-    // coordinateMatrix: [ 0, 0, 0, 0, 0, 0 ], // how to handle so many?
     count: {
       min: 2,
       max: 10,
       step: 1,
-      value: 4
+      value: 2
     },
     background: 'pink',
-    shaderColor: {
-      type: 'color',
-      value: 'pink',
-      output: 'rgb32'
-    },
-    foreground: {
-      type: 'color',
-      value: 'hsl(0, 0%, 0%)'
-    },
+    foreground: 'red',
     thickness: {
       value: 0.25,
       min: 0.01,
@@ -47,6 +30,16 @@ const settings = {
       min: 0.01,
       max: 1,
       step: 0.01
+    },
+
+    testBool: true,
+    testNumber: 3,
+    testText: 'foobar',
+    // can also try 'rgb-float' for 0..1 range
+    testColor: {
+      type: 'color',
+      format: 'rgb-byte',
+      value: [ 0, 255, 0 ]
     }
   }
 };
