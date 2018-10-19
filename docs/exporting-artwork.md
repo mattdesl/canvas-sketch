@@ -178,6 +178,6 @@ To further improve reproducibility, you can export a JSON metadata layer (for ex
 
 ## 
 
-<sub>To create more interesting artwork, check out the guide on [Other Topics](./other-topics.md) to learn about WebGL, GLSL, Pen Plotters and more.</sub>
+<sub>Next, check out the guide on [WebGL, GLSL and ThreeJS](./webgl.md).</sub>
 
 #### <sup>[← Back to Documentation](./README.md)

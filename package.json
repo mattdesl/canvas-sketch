@@ -38,7 +38,7 @@
     "browserify": "^16.2.2",
     "budo": "^11.3.0",
     "camera-project": "^1.0.2",
-    "canvas-sketch-util": "^1.0.2",
+    "canvas-sketch-util": "^1.4.0",
     "classnames": "^2.2.6",
     "clean-pslg": "^1.1.2",
     "controlkit": "^0.1.9",

@@ -42,13 +42,15 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Automatic Git Hashing for Long-Term Archiving](./exporting-artwork.md#git-commit--file-hashing)
 
+- [WebGL, GLSL, Three.js and More](./webgl.md)
+
+  - [GLSL Files](./webgl.md#glsl-files)
+
+  - [Using glslify for modular GLSL](./webgl.md#using-glslify-for-modular-glsl)
+
+  - [Using Three.js, P5.js, and Other Libraries](./webgl.md#threejs)
+
 - [Other Topics](./other-topics.md)
-
-  - [Using WebGL](./other-topics.md#using-webgl)
-
-  - [Using glslify for modular GLSL](./other-topics.md#using-glslify-for-modular-glsl)
-
-  - [Using ThreeJS, P5.js, and other libraries](./other-topics.md#using-threejs-p5js-and-other-libraries)
 
   - [Utilities for Randomness, Math, Geometry, Color, etc.](./other-topics.md#utilities-for-randomness-math-geometry-color-etc)
 
