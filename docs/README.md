@@ -32,7 +32,7 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Bleeds & Safe Zones](./physical-units.md#bleeds--safe-zones)
 
-  - [Running `canvas-sketch` in Node.js for Very Large Prints](./physical-units.md#running-canvas-sketch-in-node-js-for-very-large-prints)
+  - [Running `canvas-sketch` in Node.js for Very Large Prints](./physical-units.md#running-canvas-sketch-in-nodejs-for-very-large-prints)
 
 - [Exporting Artwork to PNG, GIF, SVG, MP4 and other files](./exporting-artwork.md)
 
@@ -40,21 +40,23 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Exporting Other File Types](./exporting-artwork.md#exporting-other-file-types)
 
-  - [Automatic Git Hashing for Long-Term Archiving](./exporting-artwork.md#automatic-git-hashing-for-long-term-archiving)
+  - [Automatic Git Hashing for Long-Term Archiving](./exporting-artwork.md#git-commit--file-hashing)
+
+- [WebGL, GLSL, Three.js and More](./webgl.md)
+
+  - [GLSL Files](./webgl.md#glsl-files)
+
+  - [Using glslify for modular GLSL](./webgl.md#using-glslify-for-modular-glsl)
+
+  - [Using Three.js, P5.js, and Other Libraries](./webgl.md#threejs)
 
 - [Other Topics](./other-topics.md)
-
-  - [Using WebGL](./other-topics.md#using-webgl)
-
-  - [Using glslify for modular GLSL](./other-topics.md#using-glslify-for-modular-glsl)
-
-  - [Using ThreeJS, P5.js, and other libraries](./other-topics.md#using-threejs-p5js-and-other-libraries)
 
   - [Utilities for Randomness, Math, Geometry, Color, etc.](./other-topics.md#utilities-for-randomness-math-geometry-color-etc)
 
   - [Developing Pen Plotter Artwork](./other-topics.md#developing-pen-plotter-artwork)
 
-  - [Async Sketches: Loading Images & Other Assets](./other-topics.md#loading-images--other-assets)
+  - [Async Sketches: Loading Images & Other Assets](./other-topics.md#async-sketches-loading-images--other-assets)
 
   - [Building for Web, Installations & VJ](./other-topics.md#building-for-web-installations--vj)
 

@@ -1,17 +1,11 @@
-/**
- * A WebGL example of a basic rotating cube, using ThreeJS.
- * @author Matt DesLauriers (@mattdesl)
- */
-
 const canvasSketch = require('canvas-sketch');
 
-// Import THREE and assign it to global scope
+// Ensure ThreeJS is in global scope for the 'examples/'
 global.THREE = require('three');
 
-// Now import any ThreeJS example utilities
+// Include any additional ThreeJS examples below
 require('three/examples/js/controls/OrbitControls');
 
-// Setup our sketch
 const settings = {
   // Make the loop animated
   animate: true,
@@ -27,21 +21,20 @@ const sketch = ({ context }) => {
     context
   });
 
-  // Black background
+  // WebGL background color
   renderer.setClearColor('#000', 1);
 
-  // create a camera
+  // Setup a camera
   const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
   camera.position.set(2, 2, -4);
   camera.lookAt(new THREE.Vector3());
 
-  // set up some orbit controls
+  // Setup camera controller
   const controls = new THREE.OrbitControls(camera);
 
-  // setup your scene
+  // Setup your scene
   const scene = new THREE.Scene();
 
-  // A cube with PBR mamterial
   const mesh = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
     new THREE.MeshPhysicalMaterial({
@@ -75,6 +68,7 @@ const sketch = ({ context }) => {
       controls.update();
       renderer.render(scene, camera);
     },
+    // Dispose of WebGL context (optional)
     unload () {
       renderer.dispose();
     }

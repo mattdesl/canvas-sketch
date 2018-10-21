@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/images/canvas-sketch-cli-2.png" width="50%" />
+  <img src="docs/assets/images/chrome-example.png" width="50%" />
 </p>
 
 ### Quick Start with Node.js & npm
@@ -98,6 +98,7 @@ const sketch = () => {
     fill.addColorStop(0, 'cyan');
     fill.addColorStop(1, 'orange');
 
+    // Fill rectangle
     context.fillStyle = fill;
     context.fillRect(margin, margin, width - margin * 2, height - margin * 2);
   };

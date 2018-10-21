@@ -8,7 +8,7 @@ The recommended way to use `canvas-sketch` and its tooling is with its *command-
 
 Requirements:
 
-- [Node.js](https://nodejs.org/en/) 8.10.0 or higher
+- [Node.js](https://nodejs.org/en/) 8.0.0 or higher
 - [npm](https://www.npmjs.com/) 5.6.0 or higher
 - A command-line terminal (such as the default `Terminal.app` in macOS, or [cmder](http://cmder.net/) in Windows)
 
@@ -105,6 +105,20 @@ When you run `canvas-sketch` in a folder, it will often install the library loca
 
 ```sh
 npm install canvas-sketch@latest
+```
+
+### Installing the CLI Locally
+
+If you prefer not to install your CLI tools globally, you can install the CLI locally in each project that you need it by saving it as a `devDependency`:
+
+```sh
+npm install canvas-sketch-cli --save-dev
+```
+
+Now, to run it in each project, you can add `canvas-sketch` commands to your [`npm run` scripts](https://docs.npmjs.com/cli/run-script), or use [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) to run the locally-installed version:
+
+```sh
+npx canvas-sketch my-sketch.js --open
 ```
 
 ## 
