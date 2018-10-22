@@ -5,6 +5,7 @@ const glsl = require('glslify');
 // Setup our sketch
 const settings = {
   context: 'webgl',
+  dimensions: [ 1024, 1024 ],
   animate: true
 };
 
@@ -13,26 +14,10 @@ const frag = glsl(`
   precision highp float;
 
   uniform float time;
-  uniform float aspect;
   varying vec2 vUv;
 
-  #pragma glslify: noise = require('glsl-noise/simplex/4d');
-
   void main () {
-    vec2 uv = vUv - 0.5;
-    uv.x *= aspect;
-
-    float anim = sin(time) * 0.5 + 0.5;
-
-    float a = 0.05;
-    float b = 1.0;
-    float c = 0.5;
-    uv.x += a * noise(vec4(uv.xy * b, time * c, -1.0));
-    uv.y += a * noise(vec4(uv.xy * b, time * c, 1.0));
-
-    float len = mod(fract(length(uv) * 5.0) + time * 0.25, 1.0);
-
-    vec3 color = mix(vec3(0.25), vec3(0.5), len);
+    vec3 color = 0.5 + 0.5 * cos(time + vUv.xyx + vec3(0.0, 2.0, 4.0));
     gl_FragColor = vec4(color, 1.0);
   }
 `);
@@ -48,8 +33,7 @@ const sketch = ({ gl }) => {
     // Specify additional uniforms to pass down to the shaders
     uniforms: {
       // Expose props from canvas-sketch
-      time: ({ time }) => time,
-      aspect: ({ width, height }) => width / height
+      time: ({ time }) => time
     }
   });
 };

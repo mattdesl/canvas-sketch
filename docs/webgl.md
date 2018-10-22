@@ -93,6 +93,10 @@ const vertex = glslify(`
 `)
 ```
 
+> :bulb:
+>
+> <sub>If you are using VSCode, you can achieve GLSL syntax highlighting with [Comment Tagged Templates](https://marketplace.visualstudio.com/items?itemName=bierner.comment-tagged-templates) and [GLSL Syntax](https://marketplace.visualstudio.com/items?itemName=slevesque.shader) extensions.</sub>
+
 This technique was used in the following animated WebGL sketch:
 
 ![blob](assets/images/blob.gif)
