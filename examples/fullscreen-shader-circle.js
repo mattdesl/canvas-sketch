@@ -5,17 +5,33 @@ const glsl = require('glslify');
 // Setup our sketch
 const settings = {
   context: 'webgl',
-  animate: true
+  animate: true,
+  params: {
+    scale: { type: 'range', step: 0.001, value: 0.5 }
+  }
 };
 
 // Your glsl code
 const frag = glsl(`
+  #extension GL_OES_standard_derivatives : enable
   precision highp float;
+
+  #pragma glslify: aastep = require('glsl-aastep');
+
   uniform float time;
+  uniform float scale;
+  uniform float aspect;
+
+  uniform vec3 offsets;
   varying vec2 vUv;
+
   void main () {
-    vec3 color = 0.5 + 0.5 * cos(time + vUv.xyx + vec3(0.0, 2.0, 4.0));
-    gl_FragColor = vec4(color, 1.0);
+    vec2 q = vUv - 0.5;
+    q.x *= aspect;
+
+    float dist = length(q);
+    dist = aastep(scale, dist);
+    gl_FragColor = vec4(vec3(dist), 1.0);
   }
 `);
 
@@ -27,10 +43,13 @@ const sketch = ({ gl }) => {
     gl,
     // Specify fragment and/or vertex shader strings
     frag,
+    extensions: [ 'OES_standard_derivatives' ],
     // Specify additional uniforms to pass down to the shaders
     uniforms: {
       // Expose props from canvas-sketch
-      time: ({ time }) => time
+      time: ({ time }) => time,
+      aspect: ({ width, height }) => width / height,
+      scale: ({ params }) => params.scale
     }
   });
 };
