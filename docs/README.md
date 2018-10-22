@@ -48,6 +48,8 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Using glslify for modular GLSL](./webgl.md#using-glslify-for-modular-glsl)
 
+  - [Live Shader Coding](./webgl.md#live-shader-coding)
+
   - [Using Three.js, P5.js, and Other Libraries](./webgl.md#threejs)
 
 - [Other Topics](./other-topics.md)

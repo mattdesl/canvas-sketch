@@ -93,11 +93,72 @@ const vertex = glslify(`
 `)
 ```
 
+> :bulb:
+>
+> <sub>If you are using VSCode, you can achieve GLSL syntax highlighting with [Comment Tagged Templates](https://marketplace.visualstudio.com/items?itemName=bierner.comment-tagged-templates) and [GLSL Syntax](https://marketplace.visualstudio.com/items?itemName=slevesque.shader) extensions.</sub>
+
 This technique was used in the following animated WebGL sketch:
 
 ![blob](assets/images/blob.gif)
 
 > <sub>See [here](../examples/animated-regl-dither-blob.js) for the full source code of this sketch.</sub>
+
+### Live Shader Coding
+
+You can use [Hot Reloading](./hot-reloading.md) to make a live coding environment for GLSL shaders. For convenience, you can use the [canvas-sketch-util/shader](https://github.com/mattdesl/canvas-sketch-util/blob/master/docs/shader.md) module.
+
+The CLI includes a `shader` template when creating new sketches:
+
+```sh
+canvas-sketch test.js --new --template=shader --hot --open
+```
+
+This will scaffold & start a basic shader:
+
+```js
+const canvasSketch = require('canvas-sketch');
+const createShader = require('canvas-sketch-util/shader');
+const glsl = require('glslify');
+
+// Setup our sketch
+const settings = {
+  context: 'webgl',
+  animate: true
+};
+
+// Your glsl code
+const frag = glsl(`
+  precision highp float;
+
+  uniform float time;
+  varying vec2 vUv;
+
+  void main () {
+    vec3 color = 0.5 + 0.5 * cos(time + vUv.xyx + vec3(0.0, 2.0, 4.0));
+    gl_FragColor = vec4(color, 1.0);
+  }
+`);
+
+// Your sketch, which simply returns the shader
+const sketch = ({ gl }) => {
+  // Create the shader and return it
+  return createShader({
+    // Pass along WebGL context
+    gl,
+    // Specify fragment and/or vertex shader strings
+    frag,
+    // Specify additional uniforms to pass down to the shaders
+    uniforms: {
+      // Expose props from canvas-sketch
+      time: ({ time }) => time
+    }
+  });
+};
+
+canvasSketch(sketch, settings);
+```
+
+You can now edit & save the script to see the shader hot-reload.
 
 <a name="threejs"></a>
 
