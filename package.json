@@ -22,7 +22,8 @@
     "is-promise": "^2.1.0",
     "object-assign": "^4.1.1",
     "pad-left": "^2.1.0",
-    "right-now": "^1.0.0"
+    "right-now": "^1.0.0",
+    "touches": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
