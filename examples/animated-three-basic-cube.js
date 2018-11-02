@@ -1,3 +1,8 @@
+/**
+ * A basic ThreeJS cube scene.
+ * @author Matt DesLauriers (@mattdesl)
+ */
+
 const canvasSketch = require('canvas-sketch');
 
 // Ensure ThreeJS is in global scope for the 'examples/'

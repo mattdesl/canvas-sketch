@@ -1,3 +1,13 @@
+/**
+ * An example of a rotating rainbow sphere, using Nadieh Bremer's
+ * loop as a reference, but implemented with a custom shader.
+ *
+ * See here:
+ * https://twitter.com/NadiehBremer/status/1058016472759496711
+ *
+ * @author Matt DesLauriers (@mattdesl), inspired by Nadieh Bremer's loop
+ */
+
 const canvasSketch = require('canvas-sketch');
 const THREE = require('three');
 const glslify = require('glslify');
