@@ -1,4 +1,5 @@
 const canvasSketch = require('canvas-sketch');
+const load = require('load-asset');
 
 // Import Two.js — make sure to have greater than v0.7.0-alpha.1
 // because previous versions don't support module loading or headless environments
@@ -10,7 +11,7 @@ const settings = {
   animate: true
 };
 
-const sketch = ({ canvas, width, height, pixelRatio }) => {
+const sketch = (async({ canvas, width, height, pixelRatio, update }) => {
 
   // Create the instance of Two.js
   const two = new Two({
@@ -29,6 +30,16 @@ const sketch = ({ canvas, width, height, pixelRatio }) => {
   // The height of each strip we will create
   const stripHeight = Math.ceil(imageHeight / amount);
 
+  // Generate the image and wait for load to finish before
+  // moving forward with rendering.
+  const image = await load('assets/baboon.jpg');
+
+  // Once the image is loaded, we can update the output
+  // settings to match it
+  update({
+    dimensions: settings.dimensions
+  });
+
   for (let i = 0; i < amount; i++) {
 
     let pct = i / (amount - 1);
@@ -37,7 +48,7 @@ const sketch = ({ canvas, width, height, pixelRatio }) => {
     let sprite = new Two.Rectangle(0, y, imageWidth, stripHeight);
 
     // Set the fill of the strip to be a texture
-    sprite.fill = new Two.Texture('assets/baboon.jpg');
+    sprite.fill = new Two.Texture(image);
     // Make the texture repeat in the x direction
     sprite.fill.repeat = 'repeat-x';
     // Offset the image's y position so that when all strips line up
@@ -94,6 +105,6 @@ const sketch = ({ canvas, width, height, pixelRatio }) => {
 
     }
   };
-};
+});
 
 canvasSketch(sketch, settings);
