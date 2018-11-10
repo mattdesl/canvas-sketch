@@ -113,7 +113,7 @@ The CLI includes a `shader` template when creating new sketches:
 canvas-sketch test.js --new --template=shader --hot --open
 ```
 
-This will scaffold & start a basic shader:
+This will scaffold & start a basic shader rendered by [regl](http://regl.party/):
 
 ```js
 const canvasSketch = require('canvas-sketch');

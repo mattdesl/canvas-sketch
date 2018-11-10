@@ -23,7 +23,7 @@ const frag = glsl(`
 
 // Your sketch, which simply returns the shader
 const sketch = ({ gl }) => {
-  // Create the shader and return it
+  // Create the shader and return it. It will be rendered by regl.
   return createShader({
     // Pass along WebGL context
     gl,
