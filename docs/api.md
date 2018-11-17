@@ -125,6 +125,8 @@ parameter | type | default | description
 `name` | String | *time stamp* | When `file` is not specified, generates a new file name on export using the `name` (do not include extension), or defaults to current time stamp.
 `prefix` | String | `""` | When `file` is not specified, use this prefix in the export file name generation.
 `suffix` | String | `""` | When `file` is not specified, use this suffix in the export file name generation.
+`encoding` | String | `"image/png"` | The default encoding to use when converting `<canvas>` elements to images on export, can be `image/png`, `image/jpeg` or `image/webp`
+`encodingQuality` | Number | 0.95 | The output quality for images using JPEG or WEBP `encoding`
 
 #### Animation Settings
 
@@ -150,6 +152,7 @@ parameter | type | default | description
 `hotkeys` | Boolean | true | Attaches hotkeys like `Cmd + S` to the window, for exporting and other features. Set this to false to disable export hotkeys.
 `p5` | Boolean \| P5 | false | Specify `true` or a P5 instance to integrate this sketch with P5.js.
 `id` | String | undefined | When using `--hot` through the CLI tool, sketches are managed by a unique string identifier. If you have more than one sketch in your application, you must provide unique string identifiers to each sketch with the `id` setting in order to use hot replacement on all of them.
+`data` | any | undefined | If you want to pass arbitrary data along to your sketch, you can use this key and it will be available as a `{ data }` prop in your render function.
 
 </div>
 

@@ -127,6 +127,20 @@ canvasSketch(() => {
 });
 ```
 
+### Exporting JPEG or WEBP
+
+You can use the `{ encoding, encodingQuality }` settings to export a lossy format, for example:
+
+```js
+const settings = {
+  dimensions: 'a4',
+  encoding: 'image/jpeg',
+  encodingQuality: 0.75,
+  pixelsPerInch: 300,
+  units: 'in'
+};
+```
+
 ### Exporting Pen Plotter Artwork (SVG)
 
 You can export your own SVG file as a string, like in the above examples. Since this is a common task, we've included some third-party utilities specifically designed to export SVGs compatible with AxiDraw V3 mecahnical pen plotter.
@@ -165,6 +179,46 @@ canvasSketch(() => {
 ```
 
 Also note, file descriptors can have other options like `file, suffix, prefix, name` to override the defaults.
+
+<a name="node-export"></a>
+
+### Running `canvas-sketch` in Node.js for Very Large Prints
+
+In some cases, you might run up against browser limitations in maximum canvas size (for example, prints above 15,000 x 15,000 pixels). In these cases, when using plain Canvas2D API, you might be able to run your sketch in Node.js.
+
+You will need to install the [canvas](https://github.com/Automattic/node-canvas) module, which is a Cairo backend for Node.js with an API almost identical to browser Canvas2D. Now, you can create a new canvas and pass it into `canvas-sketch` like so:
+
+```js
+const canvasSketch = require('canvas-sketch');
+const Canvas = require('canvas');
+
+// Create a new 'node-canvas' interface
+const canvas = new Canvas();
+
+const settings = {
+  // Pass in the Cairo-backed canvas
+  canvas
+  // Optionally set dimensions / units / etc
+  // ...
+};
+
+const sketch = () => {
+  return ({ context }) => {
+    // ... draw your artwork just like in the browser ...
+  };
+};
+
+canvasSketch(sketch, settings)
+  .then(() => {
+    // Once sketch is loaded & rendered, stream a PNG with node-canvas
+    const out = fs.createWriteStream('output.png');
+    const stream = canvas.createPNGStream();
+    stream.pipe(out);
+    out.on('finish', () => console.log('Done rendering'));
+  });
+```
+
+> :bulb: This feature is still experimental and doesn't support all aspects of `canvas-sketch` API. Some things, like WebGL and P5.js, may not work at all in Node.js.
 
 ### Git Commit & File Hashing
 

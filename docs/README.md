@@ -32,13 +32,13 @@ These tools can be used on their own, or combined with your favourite graphics l
 
   - [Bleeds & Safe Zones](./physical-units.md#bleeds--safe-zones)
 
-  - [Running `canvas-sketch` in Node.js for Very Large Prints](./physical-units.md#running-canvas-sketch-in-nodejs-for-very-large-prints)
-
 - [Exporting Artwork to PNG, GIF, SVG, MP4 and other files](./exporting-artwork.md)
 
   - [Exporting Animations](./exporting-artwork.md#exporting-animations)
 
   - [Exporting Other File Types](./exporting-artwork.md#exporting-other-file-types)
+
+  - [Running `canvas-sketch` in Node.js for Very Large Prints](./exporting-artwork.md#node-export)
 
   - [Automatic Git Hashing for Long-Term Archiving](./exporting-artwork.md#git-commit--file-hashing)
 

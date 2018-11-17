@@ -1,8 +1,10 @@
 const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
 
+const array = [ 12, 14 ];
+
+
 const settings = {
-  animate: true,
   duration: 3,
   dimensions: [ 640, 640 ],
   scaleToView: true,
@@ -11,7 +13,7 @@ const settings = {
 };
 
 // Start the sketch
-canvasSketch(() => {
+canvasSketch(({ update }) => {
   return ({ context, frame, width, height, playhead }) => {
     context.clearRect(0, 0, width, height);
     context.fillStyle = 'white';
