@@ -1,5 +1,5 @@
 const canvasSketch = require('canvas-sketch');
-const { exportPolylines, polylinesToSVG } = require('canvas-sketch-util/penplot');
+const { polylinesToSVG } = require('canvas-sketch-util/penplot');
 const random = require('canvas-sketch-util/random');
 const clustering = require('density-clustering');
 const convexHull = require('convex-hull');
