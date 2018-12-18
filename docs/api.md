@@ -94,7 +94,7 @@ const settings = {
 
 parameter | type | default | description
 --- | --- | --- | ---
-`dimension` | Array \| String | *window size* | The dimension of your sketch in `[width, height]` units. If not specified, the sketch will fill the browser window. You can also specify a [preset string](./physical-units.md#paper-size-presets) such as `"A4"` or `"Letter"`.
+`dimensions` | Array \| String | *window size* | The dimensions of your sketch in `[width, height]` units. If not specified, the sketch will fill the browser window. You can also specify a [preset string](./physical-units.md#paper-size-presets) such as `"A4"` or `"Letter"`.
 `units` | String | `"px"` | The working units if `dimensions` is specified, can be `"in"`, `"cm"`, `"px"`, `"ft"`, `"m"`, `"mm"`.
 `pixelsPerInch` | Number | 72 | When `units` is a physical measurement (e.g. inches), this value will be used as the resolution to convert inches to pixels for exporting and rendering.
 `orientation` | String | `"initial"` | If `"landscape"` or `"portrait"` are specified, the dimensions will be rotated to the respective orientation, otherwise no change will be made. Useful alongside [`dimensions` presets](./physical-units.md#paper-size-presets). 
