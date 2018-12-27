@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const load = require('load-asset');
 
-// Import Two.js — make sure to have greater than v0.7.0-alpha.1
+// Import Two.js - make sure to have greater than v0.7.0-alpha.1
 // because previous versions don't support module loading or headless environments
 const Two = require('two.js');
 
@@ -11,37 +11,24 @@ const settings = {
   animate: true
 };
 
-const sketch = (async({ canvas, width, height, pixelRatio, update }) => {
-
+const sketch = async ({ canvas }) => {
   // Create the instance of Two.js
-  const two = new Two({
-    width: width,
-    height: height,
-    domElement: canvas,
-    ratio: pixelRatio
-  });
+  const two = new Two({ domElement: canvas });
 
-  // The known dimensions of the baboon image
-  const imageWidth = 512;
-  const imageHeight = 512;
+  // Generate the image and wait for load to finish before
+  // moving forward with rendering.
+  const image = await load('assets/baboon.jpg');
+
+  // Get the dimensions of the baboon image
+  const imageWidth = image.width;
+  const imageHeight = image.height;
 
   // How many strips will there be?
   const amount = 25;
   // The height of each strip we will create
   const stripHeight = Math.ceil(imageHeight / amount);
 
-  // Generate the image and wait for load to finish before
-  // moving forward with rendering.
-  const image = await load('assets/baboon.jpg');
-
-  // Once the image is loaded, we can update the output
-  // settings to match it
-  update({
-    dimensions: settings.dimensions
-  });
-
   for (let i = 0; i < amount; i++) {
-
     let pct = i / (amount - 1);
     let y = imageHeight * (pct - 0.5);
     // Create a rectangle strip that represents a slice of the image
@@ -60,18 +47,14 @@ const sketch = (async({ canvas, width, height, pixelRatio, update }) => {
 
     // Add the sprite to the scene
     two.add(sprite);
-
   }
 
-  two.scene.translation.set(two.width / 2, two.height / 2);
-
   return {
-    resize ({ pixelRatio, viewportWidth, viewportHeight }) {
-
+    resize ({ pixelRatio, width, height }) {
       // Update width and height of Two.js scene based on
       // canvas-sketch auto changing viewport parameters
-      two.width = viewportWidth;
-      two.height = viewportHeight;
+      two.width = width;
+      two.height = height;
       two.ratio = pixelRatio;
 
       // This needs to be passed down to the renderer's width and height as well
@@ -80,31 +63,27 @@ const sketch = (async({ canvas, width, height, pixelRatio, update }) => {
 
       // Position scene to be at the center of the canvas
       two.scene.translation.set(two.width / 2, two.height / 2);
+
       // Scale the scene to fit the canvas
       two.scene.scale = two.width / imageWidth;
-
     },
-    render ({ time, deltaTime }) {
-
+    render ({ time }) {
       // Define the speed at which the offset smear occurs
       const speed = (1 + Math.sin(time * 5)) / 2;
 
       for (let i = 0; i < amount; i++) {
-
         const sprite = two.scene.children[i];
         // The normalized value of the strip's index
         const pct = i / amount;
 
         // Set the repeated image offset
         sprite.fill.offset.x += speed * Math.sin(pct * Math.PI * 3);
-
       }
 
-      // Update two.js via the `render` method — *not* the `update` method.
+      // Update two.js via the `render` method - *not* the `update` method.
       two.render();
-
     }
   };
-});
+};
 
 canvasSketch(sketch, settings);

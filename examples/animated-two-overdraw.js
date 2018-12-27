@@ -1,6 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 
-// Import Two.js — make sure to have greater than v0.7.0-alpha.1
+// Import Two.js - make sure to have greater than v0.7.0-alpha.1
 // because previous versions don't support module loading or headless environments
 const Two = require('two.js');
 
@@ -11,13 +11,12 @@ const settings = {
 };
 
 const sketch = ({ canvas, width, height, pixelRatio }) => {
-
   // Create the instance of Two.js
   const two = new Two({
-    width: width,
-    height: height,
-    domElement: canvas,
+    width,
+    height,
     ratio: pixelRatio,
+    domElement: canvas,
     overdraw: true
   });
 
@@ -29,21 +28,18 @@ const sketch = ({ canvas, width, height, pixelRatio }) => {
   two.add(star);
 
   return {
-    resize ({ pixelRatio, viewportWidth, viewportHeight }) {
-
+    resize ({ pixelRatio, width, height }) {
       // Update width and height of Two.js scene based on
       // canvas-sketch auto changing viewport parameters
-      two.width = viewportWidth;
-      two.height = viewportHeight;
+      two.width = width;
+      two.height = height;
       two.ratio = pixelRatio;
 
       // This needs to be passed down to the renderer's width and height as well
       two.renderer.width = two.width;
       two.renderer.height = two.height;
-
     },
-    render ({ time, deltaTime }) {
-
+    render ({ time }) {
       const x = Math.random() * two.width;
       const y = Math.random() * two.height;
 
@@ -63,9 +59,8 @@ const sketch = ({ canvas, width, height, pixelRatio }) => {
         star.fill = '#000';
       }
 
-      // Update two.js via the `render` method — *not* the `update` method.
+      // Update two.js via the `render` method - *not* the `update` method.
       two.render();
-
     }
   };
 };
