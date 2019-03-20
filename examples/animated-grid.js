@@ -1,14 +1,12 @@
 const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
 
-const array = [ 12, 14 ];
-
-
 const settings = {
   duration: 3,
   dimensions: [ 640, 640 ],
   scaleToView: true,
   playbackRate: 'throttle',
+  animate: true,
   fps: 24
 };
 
