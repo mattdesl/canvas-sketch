@@ -114,7 +114,7 @@ In the final [canvas-dot-flower.js](../examples/canvas-dot-flower.js) example, w
   <img src="assets/images/dot-flower-guide-2.png" width="75%" />
 </p>
 
-Using the `exported` prop, we can ignore rendering this yellow outline on PNG output.
+Using the `exporting` prop, we can ignore rendering this yellow outline on PNG output.
 
 ```js
 const settings = {
