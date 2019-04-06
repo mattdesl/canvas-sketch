@@ -95,7 +95,17 @@ After implementing some pixel sorting, we end up with:
 
 ### Building for Web, Installations & VJ
 
-TODO.
+You can also use `canvas-sketch` as a simple alternative to Webpack/Browserify/Parcel/etc in order to develop and build a static website. This is not as fully featured and not as flexible as purpose-built frontend tools, but it may be sufficient for some web artworks, toys, and for installations & VJing.
+
+To build your `sketch.js` file into a standalone HTML website named `index.html`, use the following command:
+
+```sh
+canvas-sketch sketch.js --name index --build --inline
+```
+
+Now you can open the HTML site directly in FireFox, or use a minimal [http-server](https://www.npmjs.com/package/http-server) to run it locally through Chrome.
+
+Also see the [CLI](./cli.md) documentation for more information.
 
 ## 
 
