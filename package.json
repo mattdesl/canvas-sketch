@@ -21,8 +21,7 @@
     "is-promise": "^2.1.0",
     "object-assign": "^4.1.1",
     "pad-left": "^2.1.0",
-    "right-now": "^1.0.0",
-    "two.js": "^0.7.0-beta.1"
+    "right-now": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
@@ -36,8 +35,8 @@
     "array-almost-equal": "^1.0.0",
     "babelify": "^9.0.0",
     "bezier-easing": "^2.1.0",
-    "browserify": "^16.2.2",
-    "budo": "^11.3.0",
+    "browserify": "^16.2.3",
+    "budo": "^11.6.2",
     "camera-project": "^1.0.2",
     "canvas-pixels": "0.0.0",
     "canvas-sketch-util": "^1.4.0",
@@ -79,6 +78,7 @@
     "tape": "^4.9.1",
     "three": "^0.93.0",
     "triangle-centroid": "^1.0.0",
+    "two.js": "^0.7.0-beta.3",
     "uglify-es": "^3.3.9"
   },
   "scripts": {
