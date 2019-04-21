@@ -57,7 +57,7 @@ const sketch = ({ context, width, height }) => {
   // const samples = PD.rgamma(count, 2, 10)
   // const samples = PD.rbeta(count, 1000, 0.25);
   // const samples = PD.rbinom(count, 50, 0.65);
-  
+
   // const points3D = (samples).map(t => {
   //   const scale = 1;
   //   const T = 1 + 0.1 * Random.gaussian();
@@ -75,7 +75,7 @@ const sketch = ({ context, width, height }) => {
     100,
     50
   ];
-  
+
   const stems = stemAngles.map(angle => {
     const rotation = Random.gaussian(angle, 10) * Math.PI / 180;
     const size = [ Random.gaussian(30, 10), Random.gaussian(120, 20) ];
@@ -133,7 +133,7 @@ const sketch = ({ context, width, height }) => {
       };
       roughCanvas.rectangle(position[0] - size[0] / 2, position[1] - size[1] / 2, size[0], size[1], params);
     });
-    
+
 
     const r = 6;
     const angle = Math.PI / 2 + time * 0.25;
@@ -208,6 +208,6 @@ function createContextUtil (context) {
   }
 
   function mesh (fn, opt = {}) {
-    
+
   }
 }

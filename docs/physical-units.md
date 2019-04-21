@@ -161,7 +161,7 @@ const maxRadius = (trimHeight / 2) - (1 / 4);
 
 You can also use Node.js to export high-resolution print artwork, see the [Exporting Artwork](./exporting-artwork.md#node-export) guide for details.
 
-## 
+##
 
 <sub>Now that you're exporting high-resolution prints, you should read about [Exporting Artwork to PNG, GIF, MP4 and Other Files](./exporting-artwork.md).</sub>
 

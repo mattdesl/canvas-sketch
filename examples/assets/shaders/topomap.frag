@@ -15,7 +15,7 @@ float noise05 (float freq, vec3 coord) {
 }
 
 float terrain (vec3 coord) {
-  float e = 1.0 * noise05(1.0, coord) + 
+  float e = 1.0 * noise05(1.0, coord) +
       0.5 * noise05(2.0, coord) +
       0.25 * noise05(4.0, coord) +
       0.13 * noise05(8.0, coord) +

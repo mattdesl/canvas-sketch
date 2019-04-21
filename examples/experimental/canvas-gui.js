@@ -20,7 +20,7 @@ HUD
 Settings:
 - Dimensions
 - Orientation
-- 
+-
 
 */
 

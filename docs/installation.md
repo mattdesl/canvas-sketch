@@ -121,7 +121,7 @@ Now, to run it in each project, you can add `canvas-sketch` commands to your [`n
 npx canvas-sketch my-sketch.js --open
 ```
 
-## 
+##
 
 <sub>Now that you're set up, you might like to read [A "Hello, World" Sketch](./hello-world.md).</sub>
 

@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <sub>↓</sub> 
+  <sub>↓</sub>
 </p>
 
 <p align="center">

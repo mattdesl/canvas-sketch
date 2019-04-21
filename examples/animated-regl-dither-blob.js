@@ -89,7 +89,7 @@ const sketch = ({ gl, canvasWidth, canvasHeight }) => {
 
         float ditherSize = 256.0;
         diffuse = dither(gl_FragCoord.xy / resolution.xy * ditherSize, diffuse);
-        
+
         gl_FragColor = vec4(color * diffuse, 1.0);
       }
     `),

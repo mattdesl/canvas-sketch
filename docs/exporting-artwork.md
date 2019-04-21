@@ -65,7 +65,7 @@ Alternatively, you can also specify a `{ file }` option, which will ignore the n
 
 When you use `Cmd + Shift + S` or `Ctrl + Shift + S` to export an animation, it will begin recording frames and log progress in the browser console. You can hit this keystroke again to stop recording.
 
-> :warning:  
+> :warning:
 >
 > <sup>If your animation has no defined duration (i.e. it is endless), it will continue exporting frames forever!</sup>
 
@@ -81,7 +81,7 @@ The `canvas-sketch-cli` also includes two built-in utilities for converting imag
 These tools depend on `ffmpeg` and expect it to be available on the PATH environment (see [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for details).
 
 > :bulb:
-> 
+>
 > <sup>If you don't have `ffmpeg` installed, you can use the free online tool [https://giftool.surge.sh/](https://giftool.surge.sh/)</sup>
 
 Example usage:
@@ -97,7 +97,7 @@ canvas-sketch-gif tmp/ output.gif --fps=24
 canvas-sketch-mp4 tmp/ --fps=24
 ```
 
-> :bulb:  
+> :bulb:
 >
 > <sup>Make sure to match the `--fps` flag to your `{ fps }` sketch settings for best results.</sup>
 
@@ -230,7 +230,7 @@ If you are using `canvas-sketch-cli` from within a git repo, you can use `Cmd + 
 
 To further improve reproducibility, you can export a JSON metadata layer (for example, containing `dat.gui` slider parameters), or embed information (like a random seed) into the `{ suffix }` option.
 
-## 
+##
 
 <sub>Next, check out the guide on [WebGL, GLSL and ThreeJS](./webgl.md).</sub>
 

@@ -70,7 +70,7 @@ canvasSketch(mainSketch, { id: 'primary' });
 canvasSketch(otherSketch, { id: 'secondary' });
 ```
 
-## 
+##
 
 <sub>Now that you know about hot replacement, you may want to read about [Developing with Physical Units](./physical-units.md).</sub>
 

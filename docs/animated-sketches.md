@@ -67,7 +67,7 @@ The result:
 
 For details on how to export animations (like the GIF above), see the [Exporting](./exporting-artwork.md) guide.
 
-## 
+##
 
 <sub>After animation, you might like to read about using [Hot Reloading](./hot-reloading.md) during development.</sub>
 

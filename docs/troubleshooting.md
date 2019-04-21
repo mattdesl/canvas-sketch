@@ -85,7 +85,7 @@ To use `canvas-sketch-mp4` and `canvas-sketch-gif`, you'll need to install `ffmp
 
 Once installed, `ffmpeg` should be available on your PATH environment variable. This may require restarting terminal or rebooting your computer.
 
-## 
+##
 
 #### <sup>[← Back to Documentation](./README.md)
 

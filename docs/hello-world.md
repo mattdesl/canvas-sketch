@@ -8,7 +8,7 @@ After [installing the command-line interface](./installation.md), you can start 
 
 With `canvas-sketch`, you define an artwork by a *sketch* function. This sets up local state and loads any assets.
 
-This *sketch* function then returns a *renderer* function. The renderer is in charge of drawing the artwork based on `props`, i.e. the current state of the application. 
+This *sketch* function then returns a *renderer* function. The renderer is in charge of drawing the artwork based on `props`, i.e. the current state of the application.
 
 To start, let's generate a new sketch file at `./hello.js`.
 
@@ -118,7 +118,7 @@ const sketch = () => {
 };
 ```
 
-## 
+##
 
 <sub>Now that you've got a basic sketch, you can move on to [Animated Sketches](./animated-sketches.md).</sub>
 

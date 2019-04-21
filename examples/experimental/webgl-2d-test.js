@@ -86,7 +86,7 @@ const sketch = ({ gl, width, height }) => {
   return ({ gl, width, height, time }) => {
     glx.update({ width, height });
     glx.clear({ color: 'white', alpha: 1 });
-    
+
     lines({ rotation: time });
     const data = lines.geometry;
     data.positions.forEach((position, i) => {
@@ -112,14 +112,14 @@ const sketch = ({ gl, width, height }) => {
     //   attribute vec3 normal;
     //   attribute vec2 uv;
     //   attribute vec3 random;
-    
+
     //   uniform mat4 projection;
     //   uniform mat4 model;
     //   uniform mat4 view;
-    
+
     //   varying vec2 vUv;
     //   varying vec3 vNormal;
-    
+
     //   void main () {
     //     vUv = uv;
     //     vNormal = normal;

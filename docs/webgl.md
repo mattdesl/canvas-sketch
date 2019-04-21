@@ -171,7 +171,7 @@ Here are some examples:
 - [ThreeJS – Basic Cube](../examples/animated-three-basic-cube.js)
 - [p5.js – Basic Example](../examples/animated-p5.js)
 
-## 
+##
 
 <sub>Now that you've covered most of the guide, check out [Other Topics](./other-topics.md) for a few more tricks, like rendering to an AxiDraw Mechcanical Pen Plotter.</sub>
 

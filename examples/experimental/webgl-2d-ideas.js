@@ -40,7 +40,7 @@ const mesh = ktx.
 
 line()  // single line render, set position uniform in shader, per-instance stuff
 curve() // single curve render, can be bezier or quadratic, primitive is a plane w/ segments, per-instance stuff
-polyline() // not per-instance, 
+polyline() // not per-instance,
 polygon() // triangulated then rendered
 
 Later:

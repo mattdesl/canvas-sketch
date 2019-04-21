@@ -37,7 +37,7 @@ function exportPolylines (polylines, opt = {}) {
   const lineWidth = defined(opt.lineWidth, DEFAULT_SVG_LINE_WIDTH);
 
   const data = `<?xml version="1.0" standalone="no"?>
-  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
     "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   <svg width="${dimensionsInCM[0]}cm" height="${dimensionsInCM[1]}cm"
        xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${viewWidth} ${viewHeight}">

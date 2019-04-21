@@ -44,7 +44,7 @@ The `sketch` function can be sync or async (i.e. returns a promise), and is expe
 function sketch (initialProps) {
   // ... load & setup content
   return function (renderProps) {
-    // ... render content 
+    // ... render content
   };
 }
 
@@ -97,7 +97,7 @@ parameter | type | default | description
 `dimensions` | Array \| String | *window size* | The dimensions of your sketch in `[width, height]` units. If not specified, the sketch will fill the browser window. You can also specify a [preset string](./physical-units.md#paper-size-presets) such as `"A4"` or `"Letter"`.
 `units` | String | `"px"` | The working units if `dimensions` is specified, can be `"in"`, `"cm"`, `"px"`, `"ft"`, `"m"`, `"mm"`.
 `pixelsPerInch` | Number | 72 | When `units` is a physical measurement (e.g. inches), this value will be used as the resolution to convert inches to pixels for exporting and rendering.
-`orientation` | String | `"initial"` | If `"landscape"` or `"portrait"` are specified, the dimensions will be rotated to the respective orientation, otherwise no change will be made. Useful alongside [`dimensions` presets](./physical-units.md#paper-size-presets). 
+`orientation` | String | `"initial"` | If `"landscape"` or `"portrait"` are specified, the dimensions will be rotated to the respective orientation, otherwise no change will be made. Useful alongside [`dimensions` presets](./physical-units.md#paper-size-presets).
 `scaleToFit` | Boolean | true | When true, scales down the canvas to fit within the browser window.
 `scaleToView` | Boolean | false | When true, scales up or down the canvas so that it is no larger or smaller than it needs to be based on the window size. This makes rendering more crisp and performant, but may not accurately represent the exported image. This is ignored during export.
 `bleed` | Number | 0 | You can pad the dimensions of your artwork by `bleed` units, e.g. for print trim and safe zones.

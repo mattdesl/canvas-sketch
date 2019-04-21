@@ -72,7 +72,7 @@ If you are interested in helping develop or maintain `canvas-sketch` ecosystem:
 
 
 
-<!-- 
+<!--
 # foo
 
 - [Installing and Using `canvas-sketch`](#)

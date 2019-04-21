@@ -107,6 +107,6 @@ Now you can open the HTML site directly in FireFox, or use a minimal [http-serve
 
 Also see the [CLI](./cli.md) documentation for more information.
 
-## 
+##
 
 #### <sup>[← Back to Documentation](./README.md)

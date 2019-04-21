@@ -148,6 +148,6 @@ The HTML file can include `{{entry}}` which will get replaced by the `<script>` 
 
 Note that `main.css` is relative to the directory being served, which defaults to the working directory, but can be set differently during development and build with the `--dir` flag.
 
-## 
+##
 
 #### <sup>[← Back to Documentation](./README.md)
