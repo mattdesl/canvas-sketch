@@ -102,7 +102,7 @@ parameter | type | default | description
 `scaleToView` | Boolean | false | When true, scales up or down the canvas so that it is no larger or smaller than it needs to be based on the window size. This makes rendering more crisp and performant, but may not accurately represent the exported image. This is ignored during export.
 `bleed` | Number | 0 | You can pad the dimensions of your artwork by `bleed` units, e.g. for print trim and safe zones.
 `pixelRatio` | Number | device ratio | The pixel ratio of the canvas for rendering and export. Defaults to `window.devicePixelRatio`.
-`exportPixelRatio` | Number | `pixelRatio` | The pixel ratio to use when exporting, defaults to `pixelRatio`.
+`exportPixelRatio` | Number | `pixelRatio` | The pixel ratio to use when exporting, defaults to `pixelRatio`. Not affected by `maxPixelRatio`.
 `maxPixelRatio` | Number | Infinity | A maximum value for pixel ratio, in order to clamp the density for Retina displays.
 `scaleContext` | Boolean | true | WHen true, 2D contexts will be scaled to account for the difference between `width` / `height` (physical measurements) and `canvasWidth` / `canvasHeight` (in-browser measurements).
 `resizeCanvas` | Boolean | true | When true, canvas width and height will be set. You can stop the canvas from being resized by setting this to false.

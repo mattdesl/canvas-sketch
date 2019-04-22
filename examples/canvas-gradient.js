@@ -4,7 +4,7 @@ const canvasSketch = require('canvas-sketch');
 const settings = {
   dimensions: 'a4',
   encoding: 'image/jpeg',
-  encodingQuality: 0.6,
+  encodingQuality: 0.95,
   pixelsPerInch: 300,
   units: 'in'
 };
