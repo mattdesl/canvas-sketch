@@ -231,7 +231,7 @@ function | description
 --- | ---
 `render()` | Dispatches a re-draw, which will in turn trigger your sketch's renderer.
 `update(obj)` | Pass new settings, such as `{ width, height }` or `{ canvas }` to mutate the state of the sketch.
-`exportFrame(obj)` | Programmatically trigger a frame export. You can specify `{ commit: true }` if you also wish to git commit before exporting.
+`exportFrame(obj)` | Programmatically trigger a frame export. You can specify `{ commit: true }` if you also wish to git commit before exporting, or `{ save: false }` if you wish to disable file saving and return with a promise of the exported layers (data, dataURL, etc).
 `play()` | Play/resume the loop. If already playing, this does nothing.
 `pause()` | Pause the loop. If already paused, this does nothing.
 `stop()` | Stop the loop and return to frame zero. If already stopped, this does nothing.
