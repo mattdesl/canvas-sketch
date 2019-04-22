@@ -4,6 +4,9 @@
   "isCanvasSketch": true,
   "description": "A utility for quickly prototyping 2D and WebGL sketches",
   "main": "./dist/canvas-sketch.umd.js",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "author": {
     "name": "Matt DesLauriers",
