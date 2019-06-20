@@ -11,7 +11,7 @@ const settings = {
   // Set loop duration to 3 seconds
   duration: 3,
   // Use a small size for our GIF output
-  dimensions: [ 256, 256 ],
+  dimensions: [ 512, 512 ],
   // Optionally specify an export frame rate, defaults to 30
   fps: 24
 };
