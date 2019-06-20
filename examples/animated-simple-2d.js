@@ -42,5 +42,10 @@ canvasSketch(() => {
     context.rotate(rotation);
     context.fillRect(-thickness / 2, -length / 2, thickness, length);
     context.restore();
+
+    // return [
+    //   { data: 'one', extension: '.txt' },
+    //   { data: 'two', extension: '.txt' }
+    // ]
   };
 }, settings);
