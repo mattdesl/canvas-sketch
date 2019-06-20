@@ -14,6 +14,8 @@ Below are the docs for the `canvas-sketch-cli` command-line interface (CLI). Thi
 - [Creating Sketches](#creating-sketches)
 - [Running Sketches](#running-sketches)
 - [Building to a Website](#building-to-a-website)
+- [FFMPEG Streaming](#ffmpeg-streaming)
+- [MP4 and GIF Conversion Utilities](#mp4-and-gif-conversion-utilities)
 
 ## Usage
 
@@ -46,6 +48,7 @@ Options:
   --name             The name of the JS file, defaults to input file name
   --js               The served JS src string, defaults to name
   --html             The HTML input file, defaults to a basic template
+  --stream, -S       Enable ffmpeg streaming for MP4/GIF formats
 ```
 
 ## Creating a Sketch
@@ -147,6 +150,65 @@ The HTML file can include `{{entry}}` which will get replaced by the `<script>` 
 ```
 
 Note that `main.css` is relative to the directory being served, which defaults to the working directory, but can be set differently during development and build with the `--dir` flag.
+
+## FFMPEG Streaming
+
+If you have `ffmpeg` installed and visible in your path, you can enable streaming into GIF and MP4 files instead of exporting sequences of frames. See [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for installation instructions.
+
+The command looks like this:
+
+```sh
+# Save animation to MP4 file
+canvas-sketch animation.js --output=tmp --stream
+
+# Save animation to GIF file
+canvas-sketch animation.js --output=tmp --stream=gif
+
+# Save animation to GIF but scale it down to 512 px wide
+canvas-sketch animation.js --output=tmp --stream [ gif --scale=512:-1 ]
+```
+
+If you pass `--stream` with no options, it will default to `--stream=mp4`.
+
+This flag supports the "subarg" pattern, which might look a bit strange but it allows us to pass options into the `--stream` flag. These options are:
+
+- `--scale`, `-s` for scaling `width:height`, you can use `-1` which means 'auto' (preserve aspect ratio)
+- `--time`, `-t` for the duration, such as `-t=4s` for 4 second loop
+- `--start`, `-s` for the start time, such as `-s=1s` to start after 1 second
+
+## MP4 and GIF Conversion Utilities
+
+The `canvas-sketch-cli` comes equipped with two built-in utilities for converting image sequences to GIF and MP4 formats.
+
+- `canvas-sketch-gif` converts input to GIF
+- `canvas-sketch-mp4` converts input to MP4
+
+These tools depend on `ffmpeg` and expect it to be available on the PATH environment.
+
+Example usage:
+
+```sh
+# Do some sketching and export sequence to tmp/
+canvas-sketch foo.js --output=tmp/
+
+# Now convert the sequence of 0-padded PNGs to a GIF
+canvas-sketch-gif tmp/ output.gif --fps=24
+
+# Or to a MP4 file, generating a new filename by timestamp
+canvas-sketch-mp4 tmp/ --fps=24
+
+# You can specify an exact frame sequence/extension
+canvas-sketch-mp4 tmp/%02d.png
+
+# You can also use the tool to convert MP4 to GIF and vice versa
+canvas-sketch-mp4 anim.mp4 anim.gif
+```
+
+> :bulb:  
+>
+> <sup>Make sure to match the `--fps` flag to your `{ fps }` sketch settings for best results.</sup>
+
+You can read the full CLI documentation in [Converting GIF and MP4 Files](./cli.md#converting-gif-and-mp4-files).
 
 ## 
 
