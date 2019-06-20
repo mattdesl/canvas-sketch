@@ -76,6 +76,8 @@ There are currently two approaches to exporting MP4 and GIF files:
 
 #### FFMPEG Streaming
 
+> Note: This feature needs at least canvas-sketch@0.5.x and canvas-sketch-cli@1.6.x to work.
+
 If you have `ffmpeg` installed (see [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for details), you can use the `--stream` flag to enable GIF or MP4 streaming.
 
 Here are some examples:
