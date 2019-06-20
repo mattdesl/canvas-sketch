@@ -153,7 +153,7 @@ Note that `main.css` is relative to the directory being served, which defaults t
 
 ## FFMPEG Streaming
 
-> Note: This feature needs at least canvas-sketch@0.5.x and canvas-sketch-cli@1.6.x to work.
+> Note: This feature needs at least `canvas-sketch@0.5.x` and `canvas-sketch-cli@1.6.x` to work.
 
 If you have `ffmpeg` installed and visible in your path, you can enable streaming into GIF and MP4 files instead of exporting sequences of frames. See [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for installation instructions.
 
