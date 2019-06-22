@@ -6,9 +6,6 @@
 const canvasSketch = require('canvas-sketch');
 const { polylinesToSVG } = require('canvas-sketch-util/penplot');
 
-const p5 = require('p5');
-new p5();
-
 const lines = [];
 
 const settings = {
