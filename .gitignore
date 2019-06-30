@@ -5,3 +5,4 @@ node_modules
 tmp/
 **/node_modules
 dist/
+examples/build
