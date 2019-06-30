@@ -1,5 +1,7 @@
 /**
- * A Canvas2D example of pixel-perfect RGBA manipualation.
+ * A Canvas2D + SVG Pen Plotter example of "Cubic Disarray"
+ * (a recreation of an artwork by Georg Nees in 1968-71).
+ *
  * @author Stephane Tombeur (https://github.com/stombeur)
  */
 
