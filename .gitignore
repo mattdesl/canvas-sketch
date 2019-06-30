@@ -2,7 +2,6 @@ bower_components
 node_modules
 *.log
 .DS_Store
-bundle.js
-dist/
-examples/build/
 tmp/
+**/node_modules
+dist/
