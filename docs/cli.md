@@ -49,6 +49,7 @@ Options:
   --js               The served JS src string, defaults to name
   --html             The HTML input file, defaults to a basic template
   --stream, -S       Enable ffmpeg streaming for MP4/GIF formats
+  --https            Use HTTPS (SSL) in dev server instead of HTTP
 ```
 
 ## Creating a Sketch
