@@ -14,6 +14,7 @@ function cm(value, unit) {
     .to('cm');
 }
 
+// create svg paths from polylines [[x,y], ...]
 function polyLinesToSvgPaths(polylines, opt = {}) {
   if (!opt.units || typeof opt.units !== 'string')
     throw new TypeError(
@@ -35,6 +36,7 @@ function polyLinesToSvgPaths(polylines, opt = {}) {
   return commands;
 }
 
+// create svg paths from Arc objects
 function arcsToSvgPaths(arcs, opt = {}) {
   if (!opt.units || typeof opt.units !== 'string')
     throw new TypeError(
@@ -59,6 +61,8 @@ function arcsToSvgPaths(arcs, opt = {}) {
   return commands;
 }
 
+// convert paths to an svg file
+// mostly formatting into svg-xml
 function pathsToSvgFile(paths, opt = {}) {
   opt = opt || {};
 
@@ -101,27 +105,15 @@ function pathsToSvgFile(paths, opt = {}) {
     '  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ',
     '      "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">',
     '  <svg width="' + width + units + '" height="' + height + units + '"',
-    '      xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ' +
-      viewWidth +
-      ' ' +
-      viewHeight +
-      '">',
+    '      xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ' + viewWidth + ' ' + viewHeight + '">',
     '    <g>',
-    '      <path d="' +
-      svgPath +
-      '" fill="' +
-      fillStyle +
-      '" stroke="' +
-      strokeStyle +
-      '" stroke-width="' +
-      lineWidth +
-      units +
-      '" />',
+    '      <path d="' + svgPath + '" fill="' + fillStyle + '" stroke="' + strokeStyle + '" stroke-width="' + lineWidth + units + '" />',
     '    </g>',
     '</svg>'
   ].join('\n');
 }
 
+// container class for the data needed to create an svg arc path
 class Arc {
   constructor() {
     this.startX = 0;
@@ -135,6 +127,7 @@ class Arc {
     this.sweepFlag = 1;
   }
 
+  // transform canvas pixels to svg
   toSvgPixels(units, decimalPlaces = 5) {
     let a = new Arc();
     a.startX = (TO_PX * cm(this.startX, units)).toFixed(decimalPlaces);
@@ -152,6 +145,11 @@ class Arc {
   }
 }
 
+// this class makes it easier to handle svg output
+// use in this order:
+// - new SvgFile()
+// - addLine or addArc or addCircle (repeat x times)
+// - toSvg(options)
 class SvgFile {
   constructor(options = {}) {
     this.lines = [];
@@ -179,6 +177,8 @@ class SvgFile {
   }
 }
 
+// create a circle from 2 180degree arcs
+// (a single 360 degree arc cancels itself out in svg)
 function createCircle(cx, cy, radius) {
   let a1 = new Arc();
   a1.startX = cx + radius;
@@ -199,11 +199,16 @@ function createCircle(cx, cy, radius) {
   return [a1, a2];
 }
 
+// create an Arc object
 function createArc(cx, cy, radius, sAngle, eAngle) {
   let zeroX = cx + radius,
     zeroY = cy,
     start = rotate([zeroX, zeroY], [cx, cy], sAngle),
     end = rotate([zeroX, zeroY], [cx, cy], eAngle);
+
+  // zero = 3 o'clock like in canvas2D
+  // to calculate the x,y for the start of the arc, we rotate [zero] around [cx,cy] for [sAngle] degrees
+  // same for the end of the arc, but [eAngle] degrees
 
   let a1 = new Arc();
   a1.radiusX = radius;
@@ -212,11 +217,13 @@ function createArc(cx, cy, radius, sAngle, eAngle) {
   a1.startY = start[1];
   a1.endX = end[0];
   a1.endY = end[1];
+  // if the arc spans >= 180 degrees, use the large-arc-flag
   a1.largeArcFlag = (eAngle - sAngle) >= 180 ? 1 : 0;
 
   return a1;
 }
 
+// rotate a [point] over [angle] degrees around [center]
 const rotate = (point, center, angle) => {
   if (angle === 0) return point;
 
