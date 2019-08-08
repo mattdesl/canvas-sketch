@@ -13,7 +13,7 @@ const settings = {
   // Use a small size for our GIF output
   dimensions: [ 512, 512 ],
   // Optionally specify an export frame rate, defaults to 30
-  fps: 24
+  fps: 30
 };
 
 // Start the sketch
