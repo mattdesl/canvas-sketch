@@ -179,6 +179,8 @@ This flag supports the "subarg" pattern, which might look a bit strange but it a
 - `--time`, `-t` for the duration, such as `-t=4s` for 4 second loop
 - `--start`, `-s` for the start time, such as `-s=1s` to start after 1 second
 
+Note that GIF should generally not exceed 50 FPS, otherwise it may produce choppy outputs.
+
 ## MP4 and GIF Conversion Utilities
 
 The `canvas-sketch-cli` comes equipped with two built-in utilities for converting image sequences to GIF and MP4 formats.

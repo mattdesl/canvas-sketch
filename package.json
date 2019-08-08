@@ -84,14 +84,7 @@
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
     "lib:bundle": "microbundle --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/",
-    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/",
-    "lib:server": "budo examples/index.js:bundle.js --dir examples --live -- -t glslify",
-    "lib": "npm-run-all --parallel lib:watch lib:server",
-    "start": "npm-run-all --parallel lib:watch site:dev",
-    "site:dev": "node website/dev.js",
-    "site:bundle": "NODE_ENV=production node website/dev.js",
-    "build": "mkdir -p dist/ && npm run lib:bundle && npm run site:bundle",
-    "docs:dev": "documentation serve --watch lib/canvas-sketch.js -f html"
+    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/"
   },
   "keywords": [
     "sketch",
