@@ -71,16 +71,20 @@ When you use `Cmd + Shift + S` or `Ctrl + Shift + S` to export an animation, it 
 
 There are currently two approaches to exporting MP4 and GIF files:
 
-- [FFMPEG Streaming](#ffmpeg-streaming) — if you have `ffmpeg` installed, you can use this to quickly generate a MP4 or GIF file
-- [Frame Sequences](#frame-sequences) — if you don't have `ffmpeg`, you can use this to generate a sequence of image frames
+- [FFMPEG Streaming](#ffmpeg-streaming) — this uses `ffmpeg` to stream frames into an MP4 or GIF file
+- [Frame Sequences](#frame-sequences) — (default behaviour) you can export a sequence of frames, and then later process them into a video
 
 #### FFMPEG Streaming
 
 > Note: This feature needs at least `canvas-sketch@0.5.x` and `canvas-sketch-cli@1.6.x` to work.
 
-If you have `ffmpeg` installed (see [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for details), you can use the `--stream` flag to enable GIF or MP4 streaming.
+First, you'll need `ffmpeg` or a variant installed. If you haven't installed this before, you can do the following to install a global utility:
 
-Here are some examples:
+```sh
+npm install @ffmpeg-installer/ffmpeg --global
+```
+
+Now you should be able to use the `--stream` flag with `canvas-sketch-cli`. Examples:
 
 ```sh
 # Save animations to MP4 file
@@ -95,20 +99,13 @@ canvas-sketch animation.js --output=tmp --stream [ gif --scale=512:-1 ]
 
 If you pass `--stream` with no options, it will default to `--stream=mp4`.
 
-For more info, see [FFMPEG Streaming](./cli.md#ffmpeg-streaming) in the CLI docs.
-
 #### Frame Sequences
 
-If you don't have `ffmpeg`, or if you want to encode your own movie files, you can export a sequence of frames instead. This is the default behaviour of canvas-sketch.
+If you'd rather encode your own movie files, you can export a sequence of frames instead. This is the default behaviour of canvas-sketch, and it also works with custom file types (useful for e.g. generating a sequence of SVG or GLTF files).
 
 Frame numbers are exported with left-padded zeros, such as `0005.png`. If you have multiple layers, they will be exported as `[layer]-[frame][extension]`.
 
 After exporting all your frames to a folder, you can use FFMPEG, After Effects, Photoshop, or your favourite "PNG Sequence to Movie" software.
-
-> :bulb:
-> 
-> <sup>If you don't have `ffmpeg` installed, you can use this free online tool for converting PNG sequences to GIF:  
-> [https://giftool.surge.sh/](https://giftool.surge.sh/)</sup>
 
 ### Exporting Other File Types
 
