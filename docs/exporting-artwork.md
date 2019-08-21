@@ -84,7 +84,7 @@ After exporting all your frames to a folder, you can use FFMPEG, After Effects, 
 
 #### FFMPEG Streaming
 
-> Note: This feature needs at least `canvas-sketch@0.5.x` and `canvas-sketch-cli@1.6.x` to work.
+> Note: This feature needs at least `canvas-sketch@0.5.x` and `canvas-sketch-cli@1.10.1` to work.
 
 First, you'll need `ffmpeg` or a variant installed. If you haven't installed this before, you can do the following to install a global utility:
 
