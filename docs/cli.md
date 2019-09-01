@@ -20,7 +20,8 @@ Below are the docs for the `canvas-sketch-cli` command-line interface (CLI). Thi
 ## Usage
 
 ```
-canvas-sketch [file] [opts] -- [browserifyArgs]
+Usage:
+  canvas-sketch [file] [opts] -- [browserifyArgs]
 
 Examples:
   canvas-sketch my-file.js
@@ -29,6 +30,7 @@ Examples:
   canvas-sketch src/sketch.js --new
 
 Options:
+  --help, -h         Show help message
   --version, -v      Display version
   --new, -n          Stub out a new sketch
   --template, -t     Set the template to use with --new,
@@ -50,6 +52,8 @@ Options:
   --html             The HTML input file, defaults to a basic template
   --stream, -S       Enable ffmpeg streaming for MP4/GIF formats
   --https            Use HTTPS (SSL) in dev server instead of HTTP
+  --source-map       Source map option, can be false, "inline",
+                     "external", or "auto" (default)
 ```
 
 ## Creating a Sketch
