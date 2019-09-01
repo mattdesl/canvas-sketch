@@ -1,7 +1,6 @@
-const test = require('ava');
-const canvasSketch = require('../dist/canvas-sketch');
+import test from 'ava';
 
 test('foo', t => {
-  canvasSketch();
+  //canvasSketch();
   t.pass()
 });
