@@ -184,6 +184,7 @@ prop | type | description
 `scaleX` | Number | The current X scaling factor of the context, which is equivalent to `canvasWidth / width`
 `scaleY` | Number | The current Y scaling factor of the context, which is equivalent to `canvasHeight / height`
 `pixelRatio` | Number | The current pixel density being used when rendering the canvas and adjusting the CSS style size. e.g. Full-screen canvas in Retina devices will have a pixelRatio of 2.
+`pixelsPerInch` | Number | When `units` is a physical measurement (e.g. inches), this value will be used as the resolution to convert inches to pixels for exporting and rendering.
 
 #### DOM Props
 
