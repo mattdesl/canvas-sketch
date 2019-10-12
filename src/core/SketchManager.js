@@ -1,80 +1,76 @@
-export default class SketchManager {
+import Props from "./Props";
 
-  constructor () {
+export default class SketchManager {
+  constructor() {
+    this._sketch = undefined;
     this._props = {};
     this._settings = {};
-    this._sketch = null;
   }
 
-  async load () {
-
+  get sketch() {
+    return this._sketch;
   }
 
-  start () {
-
+  get props() {
+    return this._props;
   }
 
-  stop () {
-
+  get settings() {
+    return this._settings;
   }
 
-  pause () {
+  async load(sketchLoader, settings = {}) {
+    if (typeof sketchLoader !== "function") {
+      throw new Error(`You must specify a "sketch" function to canvasSketch, for example:
+ 
+ const sketch = () => {
+   return ({ context, width, height }) => {
+     // ... render your content
+   };
+ };`);
+    }
 
+    // First we unload any previous sketch
+    if (this.sketch) await this.unload();
+
+    // Now we setup the sketch initially,
+    // this will create a new canvas if necessary
+    this._setup(settings);
+
+    // Then we update the props
+    this.update(settings);
+
+    // Now load the sketch and get the result
+    const sketchResult = await safelyAwait(sketchLoader, this.props);
+    this._sketch = sketchResult || {};
   }
 
-  togglePlay () {
+  async unload() {}
 
+  async destroy() {
+    await this.unload();
+    this.unmount();
   }
 
-  mount () {
+  mount() {}
 
+  unmount() {}
+
+  update(newSettings = {}) {}
+
+  _setup(settings = {}) {
+    this._settings = Object.assign({}, settings);
+    this._props = new Props(this.settings);
   }
+}
 
-  unmount () {
+/*
+await load()
+mount()
+*/
 
-  }
-
-  unload () {
-
-  }
-
-  destroy () {
-    
-  }
-
-  render () {
-
-  }
-
-  update (settings) {
-
-  }
-
-  async exportFrame () {
-
-  }
-
-  startRecording () {
-
-  }
-
-  stopRecording () {
-
-  }
-
-  get recording () {
-
-  }
-
-  get props () {
-
-  }
-
-  get settings () {
-
-  }
-
-  get sketch () {
-    
-  }
+async function safelyAwait(fn, ...args) {
+  const p = fn(...args);
+  if (p && typeof p.then === "function") return await p;
+  return p;
 }

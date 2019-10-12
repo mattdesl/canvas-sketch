@@ -1,6 +1,9 @@
 {
   "name": "canvas-sketch",
-  "main": "./src/canvas-sketch.js",
+  "main": "dist/canvasSketch.js",
+  "umd:main": "dist/canvasSketch.umd.js",
+  "module": "dist/canvasSketch.mjs",
+  "source": "src/canvasSketch.js",
   "version": "1.0.0-beta",
   "isCanvasSketch": true,
   "description": "Tools for generative art and creative coding in the browser",
@@ -18,14 +21,22 @@
     "is-class": "0.0.8",
     "is-dom": "^1.1.0",
     "is-promise": "^2.1.0",
+    "jsdom": "^15.1.1",
     "pad-left": "^2.1.0",
     "right-now": "^1.0.0"
   },
   "devDependencies": {
     "ava": "^2.3.0",
+    "d3-path": "^1.0.8",
+    "eslint-config-prettier": "^6.4.0",
     "puppeteer": "^1.19.0"
   },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
   "scripts": {
+    "build": "microbundle -i src/index.js",
+    "dev": "microbundle -i src/index.js --watch",
     "test": "ava test/*.js --verbose",
     "test:dev": "npm run test -- --watch"
   },
