@@ -4,7 +4,6 @@ node_modules
 .DS_Store
 tmp/
 **/node_modules
-dist/
 examples/build
 build/
 .cache

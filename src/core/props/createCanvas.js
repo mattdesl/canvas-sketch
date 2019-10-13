@@ -1,4 +1,4 @@
-import { isBrowser } from "../util/env";
+import { isBrowser } from "../../util/env";
 
 function getCanvasContext(canvas, type, attributes = {}) {
   if (typeof type !== "string") {

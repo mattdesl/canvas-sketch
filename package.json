@@ -1,9 +1,6 @@
 {
   "name": "canvas-sketch",
-  "main": "dist/canvasSketch.js",
-  "umd:main": "dist/canvasSketch.umd.js",
-  "module": "dist/canvasSketch.mjs",
-  "source": "src/canvasSketch.js",
+  "main": "dist/canvasSketch.umd.js",
   "version": "1.0.0-beta",
   "isCanvasSketch": true,
   "description": "Tools for generative art and creative coding in the browser",
@@ -17,12 +14,17 @@
     "convert-length": "^1.0.1",
     "dateformat": "^3.0.3",
     "deep-equal": "^1.1.0",
+    "express": "^4.17.1",
     "get-canvas-context": "^1.0.2",
     "is-class": "0.0.8",
     "is-dom": "^1.1.0",
     "is-promise": "^2.1.0",
     "jsdom": "^15.1.1",
+    "maxstache": "^1.0.7",
+    "npm-run-all": "^4.1.5",
     "pad-left": "^2.1.0",
+    "parcel-bundler": "^1.12.4",
+    "raf": "^3.4.1",
     "right-now": "^1.0.0"
   },
   "devDependencies": {
@@ -34,11 +36,13 @@
   "browserslist": [
     "last 2 Chrome versions"
   ],
+  "ava": {},
   "scripts": {
-    "build": "microbundle -i src/index.js",
-    "dev": "microbundle -i src/index.js --watch",
+    "bundle:build": "microbundle -i src/index.js --strict --external=none --target=browser -f umd,es --name canvasSketch",
+    "bundle:dev": "microbundle -i src/index.js --strict --external=none --target=browser --watch -f umd,es --name canvasSketch",
     "test": "ava test/*.js --verbose",
-    "test:dev": "npm run test -- --watch"
+    "test:dev": "npm run test -- --watch",
+    "dev": "npm-run-all --parallel bundle:dev test:dev"
   },
   "keywords": [
     "sketch",

@@ -1,8 +1,9 @@
 import SketchManager from "./SketchManager";
-const noop = () => {};
 
-export default async function canvasSketch(sketch, settings = {}) {
+export default async function canvasSketchCore(sketch, settings = {}) {
   const manager = new SketchManager();
-  await manager.load(sketch, settings);
+  if (sketch) {
+    await manager.load(sketch, settings);
+  }
   return manager;
 }
