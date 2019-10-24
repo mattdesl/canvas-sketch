@@ -6,3 +6,5 @@ bundle.js
 dist/
 examples/build/
 tmp/
+build/
+.cache/

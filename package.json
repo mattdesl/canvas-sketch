@@ -84,8 +84,10 @@
   },
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
-    "lib:bundle": "microbundle --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/",
-    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --external=convert-length --no-compress --target=browser --sourcemap=inline --format=umd -o ./dist/"
+    "lib:bundle": "npm run lib:bundle:es && npm run lib:bundle:umd",
+    "lib:bundle:es": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --external=none --format=\"es\" -o ./dist/",
+    "lib:bundle:umd": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"umd\" -o ./dist/",
+    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"es,umd\" -o ./dist/"
   },
   "keywords": [
     "sketch",
