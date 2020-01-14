@@ -1,12 +1,3 @@
-#
-
-### :warning:
-### WORK IN PROGRESS
-
-**This is in early beta stages, don't expect it to work reliably across versions yet. I'm looking for collaborators and beta testers, so please post an issue if you find any problems or want to help out with this project in some way.**
-
----
-
 ### canvas-sketch
 
 `canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.
