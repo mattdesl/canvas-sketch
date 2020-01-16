@@ -104,7 +104,7 @@ parameter | type | default | description
 `pixelRatio` | Number | device ratio | The pixel ratio of the canvas for rendering and export. Defaults to `window.devicePixelRatio`.
 `exportPixelRatio` | Number | `pixelRatio` | The pixel ratio to use when exporting, defaults to `pixelRatio`. Not affected by `maxPixelRatio`.
 `maxPixelRatio` | Number | Infinity | A maximum value for pixel ratio, in order to clamp the density for Retina displays.
-`scaleContext` | Boolean | true | WHen true, 2D contexts will be scaled to account for the difference between `width` / `height` (physical measurements) and `canvasWidth` / `canvasHeight` (in-browser measurements).
+`scaleContext` | Boolean | true | When true, 2D contexts will be scaled to account for the difference between `width` / `height` (physical measurements) and `canvasWidth` / `canvasHeight` (in-browser measurements).
 `resizeCanvas` | Boolean | true | When true, canvas width and height will be set. You can stop the canvas from being resized by setting this to false.
 `styleCanvas` | Boolean | true | When true, canvas style width and height will be added to account for pixelRatio scaling. Disable this by setting it to false.
 
@@ -280,7 +280,7 @@ const start = async () => {
 };
 ```
 
-Functions inlcude:
+Functions include:
 
 - `manager.play()`, `manager.pause()`, `manager.stop()` — control playback
 - `manager.render()` — trigger a re-render of current frame
