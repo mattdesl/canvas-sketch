@@ -59,7 +59,7 @@ const sketch = async () => {
 
 See the [props](#props) for details about what is contained in the object passed to these functions.
 
-You can also return a [renderer object](#renderer-object) for more advanced functionality, for example to react to canvas resize events.
+You can also return a [renderer object](#renderer-objects) for more advanced functionality, for example to react to canvas resize events.
 
 ```js
 const sketch = () => {
