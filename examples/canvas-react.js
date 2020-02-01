@@ -1,7 +1,6 @@
 /**
- *
  * Example how to integrate canvas-sketch into react component
- *
+ * @author @cheepo2109
  */
 
 import React, { useEffect } from "react";
@@ -13,7 +12,7 @@ const settings = {
   units: "in"
 };
 
-const sketch = ({ seed }) => {
+const sketch = ({}) => {
   //Basic example from canvas-sketch repo
   return ({ context, width, height }) => {
     // Margin in inches
@@ -37,8 +36,10 @@ const sketch = ({ seed }) => {
 const Sketch = () => {
   const ref = React.createRef();
   useEffect(() => {
-    settings.canvas = ref.current;
-    canvasSketch(sketch, settings);
+    canvasSketch(sketch, {
+      ...settings,
+      canvas: ref.current
+    });
   }, [ref]);
   return <canvas ref={ref} />;
 };
