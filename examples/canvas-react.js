@@ -35,12 +35,20 @@ const sketch = ({}) => {
 
 const Sketch = () => {
   const ref = React.createRef();
+
   useEffect(() => {
-    canvasSketch(sketch, {
-      ...settings,
-      canvas: ref.current
-    });
+    const getSketchManager = async () =>
+      await canvasSketch(sketch, {
+        ...settings,
+        canvas: ref.current
+      });
+
+    getSketchManager();
+
+    return () =>
+      getSketchManager().then(sketchManager => sketchManager.destroy());
   }, [ref]);
+
   return <canvas ref={ref} />;
 };
 
