@@ -77,13 +77,13 @@ If you get an EACCESS error when installing `canvas-sketch-cli` globally, you ma
 
 ### Installing `ffmpeg` For Animation Sequences
 
-To use `canvas-sketch-mp4` and `canvas-sketch-gif`, you'll need to install `ffmpeg` for your platform:
+To use `canvas-sketch-mp4` and `canvas-sketch-gif`, you'll need to install `ffmpeg` for your platform. You can either install native `ffmpeg` (such as through `brew install ffmpeg` on macOS), or you can install this module which will be resolved locally or globally:
 
-- **macOS** Use [homebrew](https://brew.sh/) and run `brew install ffmpeg`
-- **Windows** TODO
-- **Linux** TODO
+```sh
+npm install @ffmpeg-installer/ffmpeg --global
+```
 
-Once installed, `ffmpeg` should be available on your PATH environment variable. This may require restarting terminal or rebooting your computer.
+Once installed, `ffmpeg` should be added to your PATH environment variable for. This may require restarting terminal or rebooting your computer.
 
 ## 
 

@@ -59,7 +59,7 @@ const sketch = async () => {
 
 See the [props](#props) for details about what is contained in the object passed to these functions.
 
-You can also return a [renderer object](#renderer-object) for more advanced functionality, for example to react to canvas resize events.
+You can also return a [renderer object](#renderer-objects) for more advanced functionality, for example to react to canvas resize events.
 
 ```js
 const sketch = () => {
@@ -102,9 +102,9 @@ parameter | type | default | description
 `scaleToView` | Boolean | false | When true, scales up or down the canvas so that it is no larger or smaller than it needs to be based on the window size. This makes rendering more crisp and performant, but may not accurately represent the exported image. This is ignored during export.
 `bleed` | Number | 0 | You can pad the dimensions of your artwork by `bleed` units, e.g. for print trim and safe zones.
 `pixelRatio` | Number | device ratio | The pixel ratio of the canvas for rendering and export. Defaults to `window.devicePixelRatio`.
-`exportPixelRatio` | Number | `pixelRatio` | The pixel ratio to use when exporting, defaults to `pixelRatio`.
+`exportPixelRatio` | Number | `pixelRatio` | The pixel ratio to use when exporting, defaults to `pixelRatio`. Not affected by `maxPixelRatio`.
 `maxPixelRatio` | Number | Infinity | A maximum value for pixel ratio, in order to clamp the density for Retina displays.
-`scaleContext` | Boolean | true | WHen true, 2D contexts will be scaled to account for the difference between `width` / `height` (physical measurements) and `canvasWidth` / `canvasHeight` (in-browser measurements).
+`scaleContext` | Boolean | true | When true, 2D contexts will be scaled to account for the difference between `width` / `height` (physical measurements) and `canvasWidth` / `canvasHeight` (in-browser measurements).
 `resizeCanvas` | Boolean | true | When true, canvas width and height will be set. You can stop the canvas from being resized by setting this to false.
 `styleCanvas` | Boolean | true | When true, canvas style width and height will be added to account for pixelRatio scaling. Disable this by setting it to false.
 
@@ -184,6 +184,7 @@ prop | type | description
 `scaleX` | Number | The current X scaling factor of the context, which is equivalent to `canvasWidth / width`
 `scaleY` | Number | The current Y scaling factor of the context, which is equivalent to `canvasHeight / height`
 `pixelRatio` | Number | The current pixel density being used when rendering the canvas and adjusting the CSS style size. e.g. Full-screen canvas in Retina devices will have a pixelRatio of 2.
+`pixelsPerInch` | Number | When `units` is a physical measurement (e.g. inches), this value will be used as the resolution to convert inches to pixels for exporting and rendering.
 
 #### DOM Props
 
@@ -231,7 +232,7 @@ function | description
 --- | ---
 `render()` | Dispatches a re-draw, which will in turn trigger your sketch's renderer.
 `update(obj)` | Pass new settings, such as `{ width, height }` or `{ canvas }` to mutate the state of the sketch.
-`exportFrame(obj)` | Programmatically trigger a frame export. You can specify `{ commit: true }` if you also wish to git commit before exporting.
+`exportFrame(obj)` | Programmatically trigger a frame export. You can specify `{ commit: true }` if you also wish to git commit before exporting, or `{ save: false }` if you wish to disable file saving and return with a promise of the exported layers (data, dataURL, etc).
 `play()` | Play/resume the loop. If already playing, this does nothing.
 `pause()` | Pause the loop. If already paused, this does nothing.
 `stop()` | Stop the loop and return to frame zero. If already stopped, this does nothing.
@@ -279,7 +280,7 @@ const start = async () => {
 };
 ```
 
-Functions inlcude:
+Functions include:
 
 - `manager.play()`, `manager.pause()`, `manager.stop()` — control playback
 - `manager.render()` — trigger a re-render of current frame

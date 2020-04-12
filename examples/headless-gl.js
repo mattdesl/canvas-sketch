@@ -1,4 +1,4 @@
-const canvasSketch = require('../');
+const canvasSketch = require('canvas-sketch');
 const createShader = require('canvas-sketch-util/shader');
 const glslify = require('glslify');
 

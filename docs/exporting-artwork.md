@@ -63,46 +63,51 @@ Alternatively, you can also specify a `{ file }` option, which will ignore the n
 
 ### Exporting Animations
 
-When you use `Cmd + Shift + S` or `Ctrl + Shift + S` to export an animation, it will begin recording frames and log progress in the browser console. You can hit this keystroke again to stop recording.
+When you use `Cmd + Shift + S` or `Ctrl + Shift + S` to export an animation, it will begin recording image frames and log progress in the browser console. You can hit this keystroke again to stop recording.
 
-> :warning:  
+> :warning: 
 >
 > <sup>If your animation has no defined duration (i.e. it is endless), it will continue exporting frames forever!</sup>
+
+There are currently two approaches to exporting MP4 and GIF files:
+
+- [Frame Sequences](#frame-sequences) — (default behaviour) you can export a sequence of frames, and then later process them into a video
+- [FFMPEG Streaming](#ffmpeg-streaming) — this uses `ffmpeg` to stream frames into an MP4 or GIF file
+
+#### Frame Sequences
+
+If you'd like to encode your own movie files, you can export a sequence of frames from your sketch. This is the default behaviour of canvas-sketch, and it also works with custom file types (useful for e.g. generating a sequence of SVG or GLTF files).
 
 Frame numbers are exported with left-padded zeros, such as `0005.png`. If you have multiple layers, they will be exported as `[layer]-[frame][extension]`.
 
 After exporting all your frames to a folder, you can use FFMPEG, After Effects, Photoshop, or your favourite "PNG Sequence to Movie" software.
 
-The `canvas-sketch-cli` also includes two built-in utilities for converting image sequences to GIF and MP4 formats. Both of these tool depend on `ffmpeg`:
+#### FFMPEG Streaming
 
-- `canvas-sketch-gif` converts frames to GIF
-- `canvas-sketch-mp4` converts frames to MP4
+> Note: This feature needs at least `canvas-sketch@0.5.x` and `canvas-sketch-cli@1.10.1` to work.
 
-These tools depend on `ffmpeg` and expect it to be available on the PATH environment (see [How to Install `ffmpeg`](./troubleshooting.md#installing-ffmpeg-for-animation-sequences) for details).
-
-> :bulb:
-> 
-> <sup>If you don't have `ffmpeg` installed, you can use the free online tool [https://giftool.surge.sh/](https://giftool.surge.sh/)</sup>
-
-Example usage:
+First, you'll need `ffmpeg` or a variant installed. If you haven't installed this before, you can do the following to install a global utility:
 
 ```sh
-# Do some sketching and export sequence to tmp/
-canvas-sketch foo.js --output=tmp/
-
-# Now convert the sequence of 0-padded PNGs to a GIF
-canvas-sketch-gif tmp/ output.gif --fps=24
-
-# Or to a MP4 file, generating a new filename by timestamp
-canvas-sketch-mp4 tmp/ --fps=24
+npm install @ffmpeg-installer/ffmpeg --global
 ```
 
-> :bulb:  
->
-> <sup>Make sure to match the `--fps` flag to your `{ fps }` sketch settings for best results.</sup>
+Now you should be able to use the `--stream` flag with `canvas-sketch-cli` to enable FFMPEG streaming. Animations will be saved directly into a MP4 or GIF file, instead of a sequence.
 
+Examples:
 
-You can read the full CLI documentation in [Converting GIF and MP4 Files](./cli.md#converting-gif-and-mp4-files).
+```sh
+# Save animations to MP4 file
+canvas-sketch animation.js --output=tmp --stream
+
+# Save animations to GIF file instead
+canvas-sketch animation.js --output=tmp --stream=gif
+
+# Save animations to GIF but scale it down to 512 px wide
+canvas-sketch animation.js --output=tmp --stream [ gif --scale=512:-1 ]
+```
+
+If you pass `--stream` with no options, it will default to `--stream=mp4`.
 
 ### Exporting Other File Types
 
