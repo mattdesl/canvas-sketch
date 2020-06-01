@@ -195,10 +195,10 @@ You will need to install the [canvas](https://github.com/Automattic/node-canvas)
 
 ```js
 const canvasSketch = require('canvas-sketch');
-const Canvas = require('canvas');
+const {createCanvas} = require('canvas');
 
 // Create a new 'node-canvas' interface
-const canvas = new Canvas();
+const canvas = createCanvas();
 
 const settings = {
   // Pass in the Cairo-backed canvas
