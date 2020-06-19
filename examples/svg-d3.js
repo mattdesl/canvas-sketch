@@ -29,6 +29,11 @@ const sketch = ({ canvas, width, height }) => {
     }
   });
 
+  // Destroy existing SVG element
+  d3.select('body')
+    .select('svg')
+    .remove();
+
   // Create a svg element
   const svg = d3.select('body')
     .append('svg');
