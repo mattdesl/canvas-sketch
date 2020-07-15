@@ -34,10 +34,16 @@ When using `canvas-sketch` with other servers (such as Webpack, Parcel, Rollup, 
 
 If you are using `canvas-sketch-cli`, you can control where the exported media is saved to.
 
-Use the `--output` flag to specify a folder relative to your current working directory, and exported files will be saved there.
+By default, the CLI will try to export to your `Downloads` folder. Use the `--output` flag to specify a folder relative to your current working directory, and exported files will be saved there instead.
 
 ```sh
 canvas-sketch src/index.js --output=media/
+```
+
+You can also use an environment variable, `CANVAS_SKETCH_OUTPUT`, which will override the default Downloads path, but won't take precedence over the `--output` flag. This variable can be an absolute path, or relative (it will be resolved relative to the current working directory).
+
+```sh
+CANVAS_SKETCH_OUTPUT=./outputs canvas-sketch src/index.js
 ```
 
 ### File Naming
