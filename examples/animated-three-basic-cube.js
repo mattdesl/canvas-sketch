@@ -35,7 +35,7 @@ const sketch = ({ context }) => {
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
-  const controls = new THREE.OrbitControls(camera);
+  const controls = new THREE.OrbitControls(camera, context.canvas);
 
   // Setup your scene
   const scene = new THREE.Scene();
