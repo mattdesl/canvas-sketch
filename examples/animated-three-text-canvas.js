@@ -77,7 +77,7 @@ const sketch = async ({ context }) => {
   camera.lookAt(new THREE.Vector3());
 
   // set up some orbit controls
-  const controls = new THREE.OrbitControls(camera);
+  const controls = new THREE.OrbitControls(camera, context.canvas);
 
   // setup your scene
   const scene = new THREE.Scene();
