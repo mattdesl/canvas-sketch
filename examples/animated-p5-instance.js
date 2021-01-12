@@ -8,7 +8,7 @@ const preload = p5 => {
 
 const settings = {
   // Use p5 in instance mode, passing the preloader
-  // Can also ust pass { p5 } setting if you don't need preloader
+  // Can also just pass { p5 } setting if you don't need preloader
   p5: { p5, preload },
   // Turn on a render loop
   animate: true
