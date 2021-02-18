@@ -5,13 +5,13 @@
  * @author Matt DesLauriers (@mattdesl)
  */
 
-const canvasSketch = require('canvas-sketch');
+const canvasSketch = require("canvas-sketch");
 
 // Grab P5.js from npm
-const p5 = require('p5');
+const p5 = require("p5");
 
 // Attach p5.js it to global scope
-new p5()
+new p5();
 
 const settings = {
   // Tell canvas-sketch we're using p5.js
@@ -19,13 +19,14 @@ const settings = {
   // Turn on a render loop (it's off by default in canvas-sketch)
   animate: true,
   // We can specify WebGL context if we want
-  context: 'webgl',
+  context: "webgl",
   // Optional loop duration
-  duration: 6,
+  duration: 5,
+  dimensions: [512, 512],
   // Enable MSAA
   attributes: {
-    antialias: true
-  }
+    antialias: true,
+  },
 };
 
 // Optionally preload before you load the sketch
@@ -39,13 +40,13 @@ canvasSketch(() => {
 
   // Attach events to window to receive them
   window.mouseClicked = () => {
-    console.log('Mouse clicked');
+    console.log("Mouse clicked");
   };
 
   // Return a renderer to 'draw' the p5.js content
   return ({ playhead, width, height }) => {
     // Draw with p5.js things
-    clear()
+    clear();
     normalMaterial();
     rotateX(playhead * 2 * PI);
     rotateZ(playhead * 2 * PI);

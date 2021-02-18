@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, shrink-to-fit=0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>canvas-sketch</title>
+  <style>
+  html {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+
+  canvas {
+    margin: auto;
+    display: block;
+    box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.15);
+  }
+  </style>
+</head>
+<body>
+  <script src='/dist/canvas-sketch.umd.js'></script>
+
+  <script>
+    /**
+     * A Canvas2D example of "10 PRINT" algorithm.
+     * @author Guido Schmidt (@guidoschmidt)
+     */
+
+   const settings = {
+      dimensions: [2048, 2048]
+    };
+
+    const sketch = props => {
+      const tileCount = 30;
+      const tiles = Array(tileCount)
+        .fill(0)
+        .map((_, i) => {
+          return Array(tileCount)
+            .fill(0)
+            .map((_, j) => {
+              const [width, height] = [
+                props.width / tileCount,
+                props.height / tileCount
+              ];
+              const randomNumber = Math.random();
+              if (randomNumber > 0.5) {
+                return {
+                  x: i * width,
+                  y: j * height,
+                  toX: i * width + width,
+                  toY: j * height + height
+                };
+              } else {
+                return {
+                  x: i * width,
+                  y: j * height + height,
+                  toX: i * width + width,
+                  toY: j * height
+                };
+              }
+            });
+        });
+
+      return ({ context, width, height }) => {
+        context.fillStyle = 'black';
+        context.fillRect(0, 0, width, height);
+
+        context.lineWidth = '4';
+        context.strokeStyle = 'white';
+
+        tiles.map(row => {
+          row.map(rect => {
+            context.beginPath();
+            context.moveTo(rect.x, rect.y);
+            context.lineTo(rect.toX, rect.toY);
+            context.stroke();
+          });
+        });
+      };
+    };
+
+    canvasSketch(sketch, settings);
+  </script>
+</body>
+</html>

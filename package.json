@@ -19,8 +19,7 @@
     "is-dom": "^1.0.9",
     "is-promise": "^2.1.0",
     "object-assign": "^4.1.1",
-    "pad-left": "^2.1.0",
-    "right-now": "^1.0.0"
+    "pad-left": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
@@ -48,6 +47,7 @@
     "defined": "^1.0.0",
     "density-clustering": "^1.3.0",
     "eases": "^1.0.8",
+    "esbuild": "^0.8.47",
     "euclidean-distance": "^1.0.0",
     "factor-bundle": "^2.5.0",
     "gl-matrix": "^2.6.1",
@@ -83,10 +83,12 @@
   },
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
-    "lib:bundle": "npm run lib:bundle:es && npm run lib:bundle:umd",
-    "lib:bundle:es": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --external=none --format=\"es\" -o ./dist/",
-    "lib:bundle:umd": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"umd\" -o ./dist/",
-    "lib:watch": "microbundle watch --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"es,umd\" -o ./dist/"
+    "lib:bundle:esm": "esbuild lib/canvas-sketch.js --define:global=window --minify --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --format=esm --outfile=dist/canvas-sketch.esm.js",
+    "lib:bundle:cjs": "node lib/build-umd.js",
+    "lib:bundle": "npm run lib:bundle:esm && npm run lib:bundle:cjs",
+    "lib2:bundle:es": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --external=none --format=\"es\" -o ./dist/",
+    "lib2:bundle:umd": "microbundle --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"umd\" -o ./dist/",
+    "lib2:watch": "microbundle watch --entry lib/canvas-sketch.js --no-compress --target=browser --sourcemap=inline --external=none --format=\"es,umd\" -o ./dist/"
   },
   "keywords": [
     "sketch",
