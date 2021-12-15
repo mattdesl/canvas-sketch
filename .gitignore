@@ -8,3 +8,4 @@ examples/build/
 tmp/
 build/
 .cache/
+coverage
