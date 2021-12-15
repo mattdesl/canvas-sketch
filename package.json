@@ -11,6 +11,7 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
+    "canvas": "^2.8.0",
     "convert-length": "^1.0.1",
     "dateformat": "^3.0.3",
     "deep-equal": "^1.0.1",
@@ -33,13 +34,11 @@
     "@babel/runtime": "^7.0.0-beta.51",
     "@mattdesl/microbundle": "^0.4.5",
     "array-almost-equal": "^1.0.0",
-    "babel-jest": "^26.6.0",
     "babelify": "^9.0.0",
     "bezier-easing": "^2.1.0",
     "browserify": "^16.2.3",
     "budo": "^11.6.2",
     "camera-project": "^1.0.2",
-    "canvas": "^2.6.1",
     "canvas-pixels": "0.0.0",
     "canvas-sketch-util": "^1.8.0",
     "classnames": "^2.2.6",
