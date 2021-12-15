@@ -18,6 +18,7 @@
     "is-class": "0.0.5",
     "is-dom": "^1.0.9",
     "is-promise": "^2.1.0",
+    "jest": "^27.4.5",
     "object-assign": "^4.1.1",
     "pad-left": "^2.1.0",
     "right-now": "^1.0.0"
@@ -60,7 +61,6 @@
     "glslify": "^6.1.1",
     "hex-rgb": "^3.0.0",
     "insert-css": "^2.0.0",
-    "jest": "^26.6.0",
     "lerp": "^1.0.3",
     "lineclip": "^1.1.5",
     "load-asset": "^1.2.0",
