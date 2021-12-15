@@ -79,7 +79,7 @@
     "rimraf": "^2.6.2",
     "seed-random": "^2.2.0",
     "tape": "^4.9.1",
-    "three": "^0.93.0",
+    "three": "^0.135.0",
     "triangle-centroid": "^1.0.0",
     "two.js": "^0.7.0-beta.3",
     "uglify-es": "^3.3.9"
