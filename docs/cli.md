@@ -78,9 +78,13 @@ Once running, you can open the browser to [http://localhost:9966/](http://localh
 Currently the following `--template` types are supported:
 
 - [`default`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/default.js)
-- [`three`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/three.js)
-- [`regl`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/regl.js)
+- [`p5`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/p5.js)
 - [`penplot`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/penplot.js)
+- [`regl`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/regl.js)
+- [`shader`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/shader.js)
+- [`three`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/three.js)
+- [`two`](https://github.com/mattdesl/canvas-sketch-cli/blob/master/src/templates/two.js)
+
 
 For example, to start a new ThreeJS sketch:
 
