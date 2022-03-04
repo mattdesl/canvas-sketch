@@ -35,7 +35,7 @@
     "babelify": "^9.0.0",
     "bezier-easing": "^2.1.0",
     "browserify": "^16.2.3",
-    "budo": "^11.6.2",
+    "budo": "^11.7.0",
     "camera-project": "^1.0.2",
     "canvas-pixels": "0.0.0",
     "canvas-sketch-util": "^1.8.0",
