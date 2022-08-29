@@ -4,7 +4,7 @@
 
 ### Installation
 
-The recommended way to use `canvas-sketch` and its tooling is with its *command-line interface*. This will run a local development server that handles browser reload on file save, high-quality PNG exporting, and other features.
+The recommended way to use `canvas-sketch` and its tooling is with its _command-line interface_. This will run a local development server that handles browser reload on file save, high-quality PNG exporting, and other features.
 
 Requirements:
 
@@ -14,9 +14,9 @@ Requirements:
 
 If you don't have these tools, or would rather not use them, see the following:
 
-- [Installing Node.js, npm and a terminal](./faq.md#installing-nodejs-npm-and-a-terminal)
-- [Using `canvas-sketch` with Webpack and Other Bundlers](./faq.md#using-canvas-sketch-with-webpack-and-other-bundlers)
-- [Using `canvas-sketch` without Node.js and npm](./faq.md#using-canvas-sketch-without-nodejs-and-npm)
+- [Installing Node.js, npm and a terminal](./troubleshooting.md#installing-nodejs-npm-and-a-terminal)
+- [Using `canvas-sketch` with Webpack and Other Bundlers](./troubleshooting.md#using-canvas-sketch-with-webpack-and-other-bundlers)
+- [Using `canvas-sketch` without Node.js and npm](./troubleshooting.md#using-canvas-sketch-without-nodejs-and-npm)
 
 ### Quick Start
 
@@ -55,15 +55,15 @@ Now you can edit the newly created JavaScript file in the `sketches/` folder. Wh
 For example, try changing the `'white'` fill style to `'red'`.
 
 ```js
-const canvasSketch = require('canvas-sketch');
+const canvasSketch = require("canvas-sketch");
 
 const settings = {
-  dimensions: [ 2048, 2048 ]
+  dimensions: [2048, 2048],
 };
 
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = 'red'; // <-- Try changing the color
+    context.fillStyle = "red"; // <-- Try changing the color
     context.fillRect(0, 0, width, height);
   };
 };
@@ -121,7 +121,7 @@ Now, to run it in each project, you can add `canvas-sketch` commands to your [`n
 npx canvas-sketch my-sketch.js --open
 ```
 
-## 
+##
 
 <sub>Now that you're set up, you might like to read [A "Hello, World" Sketch](./hello-world.md).</sub>
 
