@@ -35,7 +35,7 @@ npx canvas-sketch-cli --new --open
 
 > :bulb: Using `npx`, instead of the `canvas-sketch` command, you will use `npx canvas-sketch-cli` (notice the `-cli` suffix).
 
-![install](./assets/images/install.png)
+<img src="./assets/images/install.png" width="60%" />
 
 The above command does a few things:
 
