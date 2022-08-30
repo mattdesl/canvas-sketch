@@ -35,6 +35,8 @@ npx canvas-sketch-cli --new --open
 
 > :bulb: Using `npx`, instead of the `canvas-sketch` command, you will use `npx canvas-sketch-cli` (notice the `-cli` suffix).
 
+![install](./assets/images/install.png)
+
 The above command does a few things:
 
 - Stub out a new sketch into `sketches/[current-timestamp].js`
@@ -42,10 +44,6 @@ The above command does a few things:
 - Install any required dependencies (in this case, `canvas-sketch`)
 
 It also launches your default browser to [http://localhost:9966/](http://localhost:9966/) (the development server), showing a blank white canvas.
-
-<p align="center">
-  <img src="./assets/images/installation-2.png" width="60%" />
-</p>
 
 Now you can edit the newly created JavaScript file in the `sketches/` folder. When you save changes, the browser will reload immediately.
 
@@ -77,6 +75,8 @@ You can install the latest version like so:
 ```sh
 npm install canvas-sketch-cli -g
 ```
+
+> :bulb: If you run into errors, see [Troubleshooting](./troubleshooting.md#fixing-eaccess-error-on-npm-install--g).
 
 Example usage:
 
