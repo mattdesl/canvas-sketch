@@ -141,6 +141,8 @@ Now, to run it in each project, you can add `canvas-sketch` commands to your [`n
 npx canvas-sketch my-sketch.js --open
 ```
 
+> :bulb: If you've installed `canvas-sketch-cli` locally, you can then use `npx` to run the command in that project folder without needing to include the `-cli` suffix.
+
 ##
 
 <sub>Now that you're set up, you might like to read [A "Hello, World" Sketch](./hello-world.md).</sub>
