@@ -2,7 +2,7 @@
 
 ---
 
-### Installation
+## Installation
 
 The recommended way to use `canvas-sketch` and its tooling is with its _command-line interface_. This will run a local development server that handles browser reload on file save, high-quality PNG exporting, and other features.
 
@@ -18,7 +18,15 @@ If you don't have these tools, or would rather not use them, see the following:
 - [Using `canvas-sketch` with Webpack and Other Bundlers](./troubleshooting.md#using-canvas-sketch-with-webpack-and-other-bundlers)
 - [Using `canvas-sketch` without Node.js and npm](./troubleshooting.md#using-canvas-sketch-without-nodejs-and-npm)
 
-### Quick-Start with `npx`
+## How to Install the CLI
+
+You can choose between three ways to install and use the CLI tool:
+
+- Option 1: Quick-start with `npx`
+- Option 2: Installing globally with `--global`
+- Option 3: Installing locally with `--save-dev`
+
+### Option 1: Quick-Start with `npx`
 
 A simple way to use the tool is with [`npx`](https://docs.npmjs.com/cli/v7/commands/npx) which comes built-in to npm. Run it like this:
 
@@ -68,17 +76,19 @@ const sketch = () => {
 canvasSketch(sketch, settings);
 ```
 
-### Global Installation
+### Option 2: Installing the CLI Globally (`--global`)
 
 You might want to install the CLI tool globally, so that you can just type `canvas-sketch` into your terminal. This is the command that a lot of the documentation will assume.
 
-You can install the latest version like so:
+You can use the following to install it globally:
 
 ```sh
-npm install canvas-sketch-cli -g
+npm install canvas-sketch-cli --global
 ```
 
 > :bulb: If you run into errors, see [Troubleshooting](./troubleshooting.md#fixing-eaccess-error-on-npm-install--g).
+
+After installing, you may need to quit and re-open your terminal app.
 
 Example usage:
 
@@ -92,6 +102,24 @@ cd my-sketches
 # Start a new sketch and open the browser
 canvas-sketch sketch.js --new --open
 ```
+
+### Option 3: Installing the CLI Locally (`--save-dev`)
+
+If you prefer not to install your CLI tools globally, you can install the CLI locally in each project that you need it by saving it as a `devDependency`:
+
+```sh
+npm install canvas-sketch-cli --save-dev
+```
+
+Now, to run it in each project, you can add `canvas-sketch` commands to your [`npm run` scripts](https://docs.npmjs.com/cli/run-script), or use [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) which will try to run the locally-installed version first:
+
+```sh
+npx canvas-sketch my-sketch.js --open
+```
+
+> :bulb: If you've installed `canvas-sketch-cli` locally, you can then use `npx` to run the command in that project folder without needing to include the `-cli` suffix.
+
+## More Tips
 
 #### 💾 Exporting as PNG
 
@@ -115,35 +143,51 @@ canvas-sketch sketches/my-sketch.js --build
 pbpaste | canvas-sketch foo.js --new
 ```
 
-### Updating `canvas-sketch`
 
-To update the CLI tool, you can re-install it globally:
+## Updating
 
-```sh
-npm install canvas-sketch-cli@latest -g
-```
+There are two separate packages, so you might need to update them separately:
 
-When you run `canvas-sketch` in a folder, it will often install the library locally as a `dependency` in your `package.json` for that folder. To update this, you can re-install the library (not the CLI) locally in each project folder that uses it:
+- The `canvas-sketch` JavaScript API and library
+- The `canvas-sketch-cli` CLi tool and application
+
+### Updating `canvas-sketch` (JavaScript API and Library)
+
+When you run `canvas-sketch-cli` in a folder, it will often install the library locally as a `dependency` in your `package.json` for that folder. To update this, you can re-install the library (not the CLI) locally in each project folder that uses it:
 
 ```sh
 npm install canvas-sketch@latest
 ```
 
-### Installing the CLI Locally
+### 1. Updating the CLI using the Quick-Start `npx`
 
-If you prefer not to install your CLI tools globally, you can install the CLI locally in each project that you need it by saving it as a `devDependency`:
-
-```sh
-npm install canvas-sketch-cli --save-dev
-```
-
-Now, to run it in each project, you can add `canvas-sketch` commands to your [`npm run` scripts](https://docs.npmjs.com/cli/run-script), or use [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) which will try to run the locally-installed version first:
+If you're just using `npx` Quick-Start, you will need to clear the npx cache. Run the following:
 
 ```sh
-npx canvas-sketch my-sketch.js --open
+npx clear-npx-cache@1.0.1
 ```
 
-> :bulb: If you've installed `canvas-sketch-cli` locally, you can then use `npx` to run the command in that project folder without needing to include the `-cli` suffix.
+Then you can re-run your command with `npx` and it will pick up the latest version, such as:
+
+```sh
+npx canvas-sketch-cli sketch.js
+```
+
+### 2. Updating a Globally Installed CLI (`--global`)
+
+If you've previously installed the tool globally (Option 2), you can update it just by re-installing:
+
+```sh
+npm install canvas-sketch-cli@latest --global
+```
+
+### 3. Updating a Locally Installed CLI (`--save-dev`)
+
+If you've previously installed the tool locally (Option 3), you can update it just by re-installing:
+
+```sh
+npm install canvas-sketch-cli@latest --save-dev
+```
 
 ##
 
