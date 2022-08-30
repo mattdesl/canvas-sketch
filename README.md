@@ -2,8 +2,6 @@
 
 `canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.
 
-<!-- - :sparkles: Website (not yet public) -->
-
 - :closed_book: [Documentation](./docs/README.md)
 
 - :wrench: [Examples](./examples/)
@@ -24,12 +22,9 @@
 
 ### Quick Start with Node.js & npm
 
-To jump directly into `canvas-sketch`, try the following terminal commands with `node@8.x` and `npm@5.x` or newer.
+To jump directly into `canvas-sketch`, try the following terminal commands with `node@15.x` and `npm@7.x` or newer:
 
 ```sh
-# Install the CLI tool globally
-npm install canvas-sketch-cli -g
-
 # Make a new folder to hold all your generative sketches
 mkdir my-sketches
 
@@ -37,28 +32,36 @@ mkdir my-sketches
 cd my-sketches
 
 # Scaffold a new 'sketch.js' file and open the browser
-canvas-sketch sketch.js --new --open
+npx canvas-sketch-cli sketch.js --new --open
 ```
 
-While in the browser, hit `Cmd + S` or `Ctrl + S` to export a high-resolution PNG of your artwork to your `~/Downloads` folder.
+> :bulb: Notice the `x` in `npx`, and the `-cli` in `canvas-sketch-cli`
+
+Now, while in the browser, hit `Cmd + S` or `Ctrl + S` to export a high-resolution PNG of your artwork to your `~/Downloads` folder.
+
+### More Commands
 
 Some other commands to try:
 
 ```sh
 # Start the tool on an existing file and change PNG export folder
-canvas-sketch src/foobar.js --output=./tmp/
+npx canvas-sketch-cli src/foobar.js --output=./tmp/
 
 # Start a new sketch from the Three.js template
-canvas-sketch --new --template=three --open
+npx canvas-sketch-cli --new --template=three --open
 
 # Build your sketch to a sharable HTML + JS website
-canvas-sketch src/foobar.js --build
+npx canvas-sketch-cli src/foobar.js --build
 
 # Develop with "Hot Reloading" instead of full page reload
-canvas-sketch src/foobar.js --hot
+npx canvas-sketch-cli src/foobar.js --hot
 ```
 
 For more features and details, see the [Documentation](./docs/README.md).
+
+### Installation Guide
+
+The examples above use `npx` which is a convenient way to install and run a local CLI tool, but you might want to setup `canvas-sketch` as a global command. You can see more details in the [Installation Guide](./docs/installation.md).
 
 ### Code Example
 

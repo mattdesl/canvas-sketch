@@ -8,8 +8,8 @@ The recommended way to use `canvas-sketch` and its tooling is with its _command-
 
 Requirements:
 
-- [Node.js](https://nodejs.org/en/) 8.0.0 or higher
-- [npm](https://www.npmjs.com/) 5.6.0 or higher
+- [Node.js](https://nodejs.org/en/) 15 or higher
+- [npm](https://www.npmjs.com/) 7 or higher
 - A command-line terminal (such as the default `Terminal.app` in macOS, or [cmder](http://cmder.net/) in Windows)
 
 If you don't have these tools, or would rather not use them, see the following:
@@ -18,27 +18,24 @@ If you don't have these tools, or would rather not use them, see the following:
 - [Using `canvas-sketch` with Webpack and Other Bundlers](./troubleshooting.md#using-canvas-sketch-with-webpack-and-other-bundlers)
 - [Using `canvas-sketch` without Node.js and npm](./troubleshooting.md#using-canvas-sketch-without-nodejs-and-npm)
 
-### Quick Start
+### Quick-Start with `npx`
 
-The fastest way to get started is to install the tool globally with `npm`.
-
-In your terminal, enter the following:
+A simple way to use the tool is with [`npx`](https://docs.npmjs.com/cli/v7/commands/npx) which comes built-in to npm. Run it like this:
 
 ```sh
-# Install the CLI tool globally
-npm install canvas-sketch-cli -g
-
-# Make a new folder to hold all your sketches
+# Make a new folder to hold all your generative sketches
 mkdir my-sketches
 
 # Move into that folder
 cd my-sketches
 
-# Start a new sketch and open the browser
-canvas-sketch --new --open
+# Scaffold a new sketch file and open the browser
+npx canvas-sketch-cli --new --open
 ```
 
-This does a few things:
+> :bulb: Using `npx`, instead of the `canvas-sketch` command, you will use `npx canvas-sketch-cli` (notice the `-cli` suffix).
+
+The above command does a few things:
 
 - Stub out a new sketch into `sketches/[current-timestamp].js`
 - Generate a default `package.json` for your dependencies
@@ -69,6 +66,29 @@ const sketch = () => {
 };
 
 canvasSketch(sketch, settings);
+```
+
+### Global Installation
+
+You might want to install the CLI tool globally, so that you can just type `canvas-sketch` into your terminal. This is the command that a lot of the documentation will assume.
+
+You can install the latest version like so:
+
+```sh
+npm install canvas-sketch-cli -g
+```
+
+Example usage:
+
+```sh
+# Make a new folder to hold all your sketches
+mkdir my-sketches
+
+# Move into that folder
+cd my-sketches
+
+# Start a new sketch and open the browser
+canvas-sketch sketch.js --new --open
 ```
 
 #### 💾 Exporting as PNG
@@ -115,7 +135,7 @@ If you prefer not to install your CLI tools globally, you can install the CLI lo
 npm install canvas-sketch-cli --save-dev
 ```
 
-Now, to run it in each project, you can add `canvas-sketch` commands to your [`npm run` scripts](https://docs.npmjs.com/cli/run-script), or use [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) to run the locally-installed version:
+Now, to run it in each project, you can add `canvas-sketch` commands to your [`npm run` scripts](https://docs.npmjs.com/cli/run-script), or use [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) which will try to run the locally-installed version first:
 
 ```sh
 npx canvas-sketch my-sketch.js --open
