@@ -43,7 +43,9 @@ The above command does a few things:
 - Generate a default `package.json` for your dependencies
 - Install any required dependencies (in this case, `canvas-sketch`)
 
-It also launches your default browser to [http://localhost:9966/](http://localhost:9966/) (the development server), showing a blank white canvas.
+It also launches your default browser to [http://localhost:9966/](http://localhost:9966/) (the development server), showing a blank white canvas:
+
+<img src="./assets/images/installation-2.png" width="60%" />
 
 Now you can edit the newly created JavaScript file in the `sketches/` folder. When you save changes, the browser will reload immediately.
 
