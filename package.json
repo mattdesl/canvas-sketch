@@ -66,8 +66,8 @@
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
     "lib:bundle": "npm run lib:bundle:es && npm run lib:bundle:umd",
-    "lib:bundle:es": "microbundle -i lib/canvas-sketch.js --no-compress --external=none --format=\"esm\" -o ./dist/",
-    "lib:bundle:umd": "microbundle -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=\"umd\" -o ./dist/",
+    "lib:bundle:es": "microbundle -i lib/canvas-sketch.js --no-compress --external=none --format=esm -o ./dist/",
+    "lib:bundle:umd": "microbundle -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=umd -o ./dist/",
     "lib:watch": "microbundle watch -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=\"esm,umd\" -o ./dist/"
   },
   "keywords": [
