@@ -3,20 +3,20 @@
  * @author Matt DesLauriers (@mattdesl)
  */
 
-const canvasSketch = require('canvas-sketch');
-const canvasPainter = require('./util/canvas-painter');
+const canvasSketch = require("canvas-sketch");
+const canvasPainter = require("./util/canvas-painter");
 
-const Random = require('./util/random');
-const { clamp, linspace } = require('./util/math');
+const Random = require("./util/random");
+const { clamp, linspace } = require("./util/math");
 
 // Setup our sketch & export parameters
 const settings = {
-  dimensions: [ 1024, 1024 ],
+  dimensions: [1024, 1024],
   animate: true,
   fps: 24,
   duration: 6,
   scaleToView: true,
-  playbackRate: 'throttle'
+  playbackRate: "throttle",
 };
 
 const sketch = ({ context, width, height, render }) => {
@@ -55,13 +55,13 @@ const sketch = ({ context, width, height, render }) => {
 
     // Create the full curve
     // Note: This is a bit inefficient! We could just compute only the slice we want.
-    const array = linspace(resolution, true).map(t => {
+    const array = linspace(resolution, true).map((t) => {
       const angle = Math.PI * 2 * t;
 
       // Get point along torus
       let point = torus(torusRadius, torusInnerRadius, angle, rotation);
 
-      let [ x, y, z ] = point;
+      let [x, y, z] = point;
 
       // Apply noise frequency to coordinates
       x *= freq;
@@ -71,7 +71,7 @@ const sketch = ({ context, width, height, render }) => {
       // Compute noise coordinates
       return [
         amplitude * Random.noise4D(x, y, z, -1),
-        amplitude * Random.noise4D(x, y, z, 1)
+        amplitude * Random.noise4D(x, y, z, 1),
       ];
     });
 
@@ -92,17 +92,17 @@ const sketch = ({ context, width, height, render }) => {
   // Gets new random noise & hue
   const randomize = () => {
     // Reset our random noise function to a new seed
-    Random.setSeed( '849151'||Random.getRandomSeed());
+    Random.setSeed("849151" || Random.getRandomSeed());
     // Choose a new starting hue
     hueStart = Random.value();
     // Log the seed for later reproducibility
-    console.log('Seed:', Random.getSeed());
+    console.log("Seed:", Random.getSeed());
   };
 
   return {
     render: ({ context, width, height, playhead }) => {
       // Clear the background with nearly black
-      context.fillStyle = 'pink';
+      context.fillStyle = "pink";
       context.fillRect(0, 0, width, height);
 
       context.save();
@@ -119,16 +119,16 @@ const sketch = ({ context, width, height, render }) => {
       const hsl = [
         Math.floor(hue * 360),
         `${Math.floor(100 * sat)}%`,
-        `${Math.floor(100 * light)}%`
-      ].join(', ');
+        `${Math.floor(100 * light)}%`,
+      ].join(", ");
       const stroke = `hsl(${hsl})`;
 
       const line = generate(playhead);
       painter.polyline(line, {
         stroke,
         lineWidth: 6 / scale,
-        linecap: 'round',
-        lineJoin: 'round'
+        linecap: "round",
+        lineJoin: "round",
       });
 
       context.restore();
@@ -137,7 +137,7 @@ const sketch = ({ context, width, height, render }) => {
       // On loop start, re-compute the noise tables so we get a new
       // set of random values on the next loop
       randomize();
-    }
+    },
   };
 };
 
