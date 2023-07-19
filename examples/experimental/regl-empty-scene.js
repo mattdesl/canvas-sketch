@@ -1,13 +1,13 @@
-const canvasSketch = require('canvas-sketch');
-const createRegl = require('regl');
+const canvasSketch = require("canvas-sketch");
+const createRegl = require("regl");
 
 const settings = {
   // Use a WebGL context instead of 2D canvas
-  context: 'webgl',
+  context: "webgl",
   // Enable MSAA in WebGL
   attributes: {
-    antialias: true
-  }
+    antialias: true,
+  },
 };
 
 canvasSketch(({ gl }) => {
@@ -24,7 +24,7 @@ canvasSketch(({ gl }) => {
 
     // Clear back buffer with red
     regl.clear({
-      color: [ 0.25, 0.75, 0.25, 1 ]
+      color: [0.25, 0.75, 0.25, 1],
     });
 
     // Draw your meshes

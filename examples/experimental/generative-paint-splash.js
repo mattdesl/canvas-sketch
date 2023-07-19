@@ -1,7 +1,6 @@
-const sketcher = require('canvas-sketch');
+const sketcher = require("canvas-sketch");
 
-const settings = {
-};
+const settings = {};
 
 const sketch = ({ context }) => {
   // Utility to draw a circle with or without a fill
@@ -15,11 +14,11 @@ const sketch = ({ context }) => {
   return ({ context, width, height, frame }) => {
     // Fill page with solid color
     // The 'width' and 'height' will be in inches here
-    context.fillStyle = '#000';
+    context.fillStyle = "#000";
     context.fillRect(0, 0, width, height);
 
-    context.strokeStyle = '#fff';
-    context.fillStyle = '#fff';
+    context.strokeStyle = "#fff";
+    context.fillStyle = "#fff";
     context.lineWidth = 0.005;
     const count = 32 * 4;
     for (let i = 0; i < count; i++) {

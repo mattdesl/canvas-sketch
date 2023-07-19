@@ -1,37 +1,37 @@
-const canvasSketch = require('canvas-sketch');
-const { vec2, quat, mat4 } = require('gl-matrix');
-const defined = require('defined');
-const { cubicSpline } = require('./util/geom');
-const Random = require('./util/random');
-const { clamp, lerp, lerpArray, expand2D, linspace } = require('./util/math');
-const simplify = require('simplify-path');
-const hsl2rgb = require('float-hsl2rgb');
+const canvasSketch = require("canvas-sketch");
+const { vec2, quat, mat4 } = require("gl-matrix");
+const defined = require("defined");
+const { cubicSpline } = require("./util/geom");
+const Random = require("./util/random");
+const { clamp, lerp, lerpArray, expand2D, linspace } = require("./util/math");
+const simplify = require("simplify-path");
+const hsl2rgb = require("float-hsl2rgb");
 //73787, 720474, 822882, 40002, 708321
 // Random.setSeed(Random.getRandomSeed());
-Random.setSeed('708321');
-console.log('Seed', Random.getSeed());
+Random.setSeed("708321");
+console.log("Seed", Random.getSeed());
 
 const settings = {
-  dimensions: [ 1024, 1024 ],
+  dimensions: [1024, 1024],
   // exportPixelRatio: 2,
   animate: true,
   fps: 24,
   scaleToView: true,
   duration: 20,
-  playbackRate: 'throttle'
+  playbackRate: "throttle",
 };
 
 const colors = {
-  background: '#f4d9be',
-  foreground: '#ff911c',
-  pen: '#1975ff'
+  background: "#f4d9be",
+  foreground: "#ff911c",
+  pen: "#1975ff",
 };
 
 const sketch = ({ context, width, height, render }) => {
   const paint = (opt = {}) => {
     let fill = opt.fill;
     let stroke = opt.stroke;
-    const defaultColor = 'black';
+    const defaultColor = "black";
     const alpha = defined(opt.alpha, 1);
 
     // Default to fill-only
@@ -39,16 +39,16 @@ const sketch = ({ context, width, height, render }) => {
 
     if (fill) {
       const fillAlpha = defined(opt.fillAlpha, 1);
-      context.fillStyle = typeof fill === 'boolean' ? defaultColor : fill;
+      context.fillStyle = typeof fill === "boolean" ? defaultColor : fill;
       context.globalAlpha = alpha * fillAlpha;
       context.fill();
     }
     if (stroke) {
       const strokeAlpha = defined(opt.strokeAlpha, 1);
-      context.strokeStyle = typeof stroke === 'boolean' ? defaultColor : stroke;
+      context.strokeStyle = typeof stroke === "boolean" ? defaultColor : stroke;
       context.lineWidth = defined(opt.lineWidth, 1);
-      context.lineCap = opt.lineCap || 'butt';
-      context.lineJoin = opt.lineJoin || 'miter';
+      context.lineCap = opt.lineCap || "butt";
+      context.lineJoin = opt.lineJoin || "miter";
       context.miterLimit = defined(opt.miterLimit, 10);
       context.globalAlpha = alpha * strokeAlpha;
       context.stroke();
@@ -63,26 +63,23 @@ const sketch = ({ context, width, height, render }) => {
     paint(opt);
   };
 
-  const segment = (x, y, length, angle, opt = {}) => {
-
-  };
+  const segment = (x, y, length, angle, opt = {}) => {};
 
   const polyline = (path, opt = {}) => {
     context.beginPath();
-    path.forEach(point => context.lineTo(point[0], point[1]));
+    path.forEach((point) => context.lineTo(point[0], point[1]));
     if (opt.closed) context.closePath();
     paint(opt);
   };
 
   const polylines = (lines, opt = {}) => {
-    lines.forEach(path => {
+    lines.forEach((path) => {
       context.beginPath();
-      path.forEach(point => context.lineTo(point[0], point[1]));
+      path.forEach((point) => context.lineTo(point[0], point[1]));
       if (opt.closed) context.closePath();
       paint(opt);
     });
   };
-
 
   // Wavy line across the page
   // const line = arcs01(100).map(t => {
@@ -122,7 +119,7 @@ const sketch = ({ context, width, height, render }) => {
     const amplitude = 0.7;
     const freq = 2.0;
     const resolution = 5000;
-    const array = linspace(resolution, true).map(t => {
+    const array = linspace(resolution, true).map((t) => {
       // const angle = Math.PI * 2 * t;
       // let point = [ Math.cos(angle), Math.sin(angle) ];
       // vec2.scale(point, point, freq);
@@ -134,10 +131,10 @@ const sketch = ({ context, width, height, render }) => {
       const angle = Math.PI * 2 * t;
       let point = torus(0.25, 1.5, angle, theta * 5);
       vec2.scale(point, point, freq);
-      const [ x, y, z ] = point;
+      const [x, y, z] = point;
       return [
         amplitude * Random.noise4D(x, y, z, -1),
-        amplitude * Random.noise4D(x, y, z, 1)
+        amplitude * Random.noise4D(x, y, z, 1),
       ];
     });
 
@@ -191,8 +188,8 @@ const sketch = ({ context, width, height, render }) => {
   // }
 
   return ({ context, width, height, playhead }) => {
-    context.fillStyle = 'hsl(0, 0%, 5%)';
-    context.globalCompositeOperation = 'source-over';
+    context.fillStyle = "hsl(0, 0%, 5%)";
+    context.globalCompositeOperation = "source-over";
     context.fillRect(0, 0, width, height);
 
     context.save();
@@ -200,8 +197,8 @@ const sketch = ({ context, width, height, render }) => {
     const scale = width / 2;
     context.scale(scale, scale);
 
-    context.lineJoin = 'round';
-    context.lineCap = 'round';
+    context.lineJoin = "round";
+    context.lineCap = "round";
 
     // polylines(lines, {
     //   stroke: 'black',
@@ -234,8 +231,10 @@ const sketch = ({ context, width, height, render }) => {
       polyline(line, {
         // fill: 'black',
         // closed: true,
-        stroke: `rgb(${hsl2rgb([ h, s, l ]).map(n => Math.floor(n * 255)).join(', ')})`,
-        lineWidth: 6 / scale
+        stroke: `rgb(${hsl2rgb([h, s, l])
+          .map((n) => Math.floor(n * 255))
+          .join(", ")})`,
+        lineWidth: 6 / scale,
       });
     }
 

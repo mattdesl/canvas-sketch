@@ -53,6 +53,7 @@
     "point-in-triangle": "^1.0.1",
     "preact": "^10.16.0",
     "preact-router": "^4.1.1",
+    "prettier": "^3.0.0",
     "primitive-icosphere": "^1.0.2",
     "primitive-quad": "^2.0.0",
     "regl": "^1.3.7",
@@ -63,6 +64,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run lib:bundle",
+    "format": "prettier --log-level warn --write examples/**/*.js lib/**/*.js",
     "lib:bundle": "npm run lib:bundle:es && npm run lib:bundle:umd",
     "lib:bundle:es": "microbundle -i lib/canvas-sketch.js --no-compress --external=none --format=esm -o ./dist/",
     "lib:bundle:umd": "microbundle -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=umd -o ./dist/",

@@ -1,5 +1,5 @@
-var util = require('polyline-miter-util');
-var { vec2 } = require('gl-matrix');
+var util = require("polyline-miter-util");
+var { vec2 } = require("gl-matrix");
 
 var lineA = [0, 0];
 var lineB = [0, 0];
@@ -26,14 +26,17 @@ module.exports = function (points, closed) {
       util.normal(curNormal, lineA);
     }
 
-    if (i === 1) { // add initial normals
+    if (i === 1) {
+      // add initial normals
       addNext(out, curNormal, 1);
     }
 
-    if (!next) { // no miter, simple segment
+    if (!next) {
+      // no miter, simple segment
       util.normal(curNormal, lineA); // reset normal
       addNext(out, curNormal, 1);
-    } else { // miter with last
+    } else {
+      // miter with last
       // get unit dir of next line
       util.direction(lineB, next, cur);
 
@@ -56,8 +59,8 @@ module.exports = function (points, closed) {
 
     var miterLen2 = util.computeMiter(tangent, miter, lineA, lineB, 1);
     let dot = vec2.dot(tangent, curNormal);
-    const features = [ out[0], out[total - 1] ];
-    features.forEach(feature => {
+    const features = [out[0], out[total - 1]];
+    features.forEach((feature) => {
       feature.normal = miter.slice();
       feature.length = miterLen2;
       feature.dot = dot;
@@ -68,10 +71,10 @@ module.exports = function (points, closed) {
   return out;
 };
 
-function addNext (out, normal, length, dot = 0) {
+function addNext(out, normal, length, dot = 0) {
   out.push({
-    normal: [ normal[0], normal[1] ],
+    normal: [normal[0], normal[1]],
     length,
-    dot
+    dot,
   });
 }
