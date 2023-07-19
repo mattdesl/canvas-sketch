@@ -1,12 +1,12 @@
-const canvasSketch = require('canvas-sketch');
-const Random = require('./util/random');
-const { lerp, clamp, clamp01 } = require('./util/math');
-const { vec2 } = require('gl-matrix');
+const canvasSketch = require("canvas-sketch");
+const Random = require("./util/random");
+const { lerp, clamp, clamp01 } = require("./util/math");
+const { vec2 } = require("gl-matrix");
 
 const colors = {
-  background: '#f4d9be',
-  foreground: '#ff911c',
-  pen: '#1975ff'
+  background: "#f4d9be",
+  foreground: "#ff911c",
+  pen: "#1975ff",
 };
 
 const settings = {
@@ -14,9 +14,9 @@ const settings = {
   // When exporting, use the seed as the suffix
   // This way we can reproduce it more easily later
   animate: true,
-  dimensions: [ 9, 14 ],
-  units: 'in',
-  pixelsPerInch: 300
+  dimensions: [9, 14],
+  units: "in",
+  pixelsPerInch: 300,
 };
 
 const sketch = ({ context, width, height }) => {
@@ -27,7 +27,11 @@ const sketch = ({ context, width, height }) => {
   const points = Array.from(new Array(pointCount)).map((_, i) => {
     const t = pointCount <= 1 ? 0.5 : i / (pointCount - 1);
     const size = width * 0.45;
-    const position = vec2.add([], [ width / 2, height / 2 ], Random.onSquare([ aspect * size, 1 * size ]));
+    const position = vec2.add(
+      [],
+      [width / 2, height / 2],
+      Random.onSquare([aspect * size, 1 * size]),
+    );
     // const position = vec2.add([], [ width / 2, height / 2 ], Random.onCircle(2));
     // const position = [ lerp(margin, width - margin, t), height / 2 ];
     return {
@@ -42,37 +46,49 @@ const sketch = ({ context, width, height }) => {
       lineWidth: Math.abs(0.01 * Random.gaussian(1, 0.25)),
       previous: position.slice(),
       newPointThrehold: Math.abs(Random.gaussian(0, 0.0001)),
-      position
+      position,
     };
   });
 
-  points.forEach(point => {
-    const other = Random.shuffle(points).filter(p => p !== point);
+  points.forEach((point) => {
+    const other = Random.shuffle(points).filter((p) => p !== point);
     point.friends = other.slice(0, point.maxFriends);
   });
 
   const step = () => {
-    points.forEach(point => {
+    points.forEach((point) => {
       const offset = Random.insideCircle(Random.gaussian(0, 0.1));
       vec2.add(point.position, point.position, offset);
 
-      vec2.scaleAndAdd(point.position, point.position, point.velocity, point.speed);
+      vec2.scaleAndAdd(
+        point.position,
+        point.position,
+        point.velocity,
+        point.speed,
+      );
 
-      point.friends.forEach(friend => {
+      point.friends.forEach((friend) => {
         const distance = vec2.distance(friend.position, point.position);
         if (distance <= point.attractionRadius) {
           const strength = 1 - clamp01(distance / point.attractionRadius);
           const force = vec2.sub([], friend.position, point.position);
           vec2.normalize(force, force);
-          vec2.scaleAndAdd(point.velocity, point.velocity, force, point.attractionForce * strength);
+          vec2.scaleAndAdd(
+            point.velocity,
+            point.velocity,
+            force,
+            point.attractionForce * strength,
+          );
         }
       });
 
       const maxVel = 2;
-      point.velocity = point.velocity.map(n => clamp(n, -maxVel, maxVel));
+      point.velocity = point.velocity.map((n) => clamp(n, -maxVel, maxVel));
       vec2.scale(point.velocity, point.velocity, 0.98);
 
-      if (vec2.distance(point.position, point.previous) >= point.newPointThrehold) {
+      if (
+        vec2.distance(point.position, point.previous) >= point.newPointThrehold
+      ) {
         point.history.push(point.position.slice());
         point.previous = point.position.slice();
       }
@@ -84,7 +100,7 @@ const sketch = ({ context, width, height }) => {
   // Render the shapes
   return ({ time, frame }) => {
     if (frame === 0 || clearing) {
-      context.fillStyle = 'white';
+      context.fillStyle = "white";
       context.fillRect(0, 0, width, height);
     }
     step();
@@ -92,11 +108,18 @@ const sketch = ({ context, width, height }) => {
     // context.fillStyle = 'white';
     // context.fillRect(0, 0, width, height);
 
-    points.forEach(point => {
-      point.history.forEach(history => {
+    points.forEach((point) => {
+      point.history.forEach((history) => {
         context.beginPath();
-        context.arc(history[0], history[1], point.radius, 0, Math.PI * 2, false);
-        context.fillStyle = 'black';
+        context.arc(
+          history[0],
+          history[1],
+          point.radius,
+          0,
+          Math.PI * 2,
+          false,
+        );
+        context.fillStyle = "black";
         context.fill();
       });
     });

@@ -1,25 +1,32 @@
-const Random = require('./random');
-const euclideanDistance = require('euclidean-distance');
-const { vec2, vec3 } = require('gl-matrix');
-const lineclip = require('lineclip');
-const arrayAlmostEqual = require('array-almost-equal');
-const triangleCentroid = require('triangle-centroid');
-const insideTriangle = require('point-in-triangle');
+const Random = require("./random");
+const euclideanDistance = require("euclidean-distance");
+const { vec2, vec3 } = require("gl-matrix");
+const lineclip = require("lineclip");
+const arrayAlmostEqual = require("array-almost-equal");
+const triangleCentroid = require("triangle-centroid");
+const insideTriangle = require("point-in-triangle");
 
 const tmp1 = [];
 const tmp2 = [];
-const tmpTriangle = [ 0, 0, 0 ];
+const tmpTriangle = [0, 0, 0];
 
 // Random point in N-dimensional triangle
-module.exports.randomPointInTriangle = (out = [], a, b, c, u = Random.value(), v = Random.value()) => {
-  if ((u + v) > 1) {
+module.exports.randomPointInTriangle = (
+  out = [],
+  a,
+  b,
+  c,
+  u = Random.value(),
+  v = Random.value(),
+) => {
+  if (u + v > 1) {
     u = 1 - u;
     v = 1 - v;
   }
   const dim = a.length;
   const Q = 1 - u - v;
   for (let i = 0; i < dim; i++) {
-    out[i] = (a[i] * u) + (b[i] * v) + (c[i] * Q);
+    out[i] = a[i] * u + b[i] * v + c[i] * Q;
   }
   return out;
 };
@@ -53,9 +60,13 @@ module.exports.getPolylineArclengths = (path) => {
   return distances;
 };
 
-module.exports.resampleLineBySpacing = (points, spacing = 1, closed = false) => {
+module.exports.resampleLineBySpacing = (
+  points,
+  spacing = 1,
+  closed = false,
+) => {
   if (spacing <= 0) {
-    throw new Error('Spacing must be positive and larger than 0');
+    throw new Error("Spacing must be positive and larger than 0");
   }
   let totalLength = 0;
   let curStep = 0;
@@ -64,7 +75,7 @@ module.exports.resampleLineBySpacing = (points, spacing = 1, closed = false) => 
     lastPosition++;
   }
   const result = [];
-  const tmp = [ 0, 0 ];
+  const tmp = [0, 0];
   for (let i = 0; i < lastPosition; i++) {
     const repeatNext = i === points.length - 1;
     const cur = points[i];
@@ -83,17 +94,26 @@ module.exports.resampleLineBySpacing = (points, spacing = 1, closed = false) => 
     }
   }
   return result;
-}
+};
 
 module.exports.resampleLineByCount = (points, count = 1, closed = false) => {
   if (count <= 0) return [];
   const perimeter = module.exports.getPolylinePerimeter(points, closed);
-  return module.exports.resampleLineBySpacing(points, perimeter / count, closed);
-}
+  return module.exports.resampleLineBySpacing(
+    points,
+    perimeter / count,
+    closed,
+  );
+};
 
 // Returns a list that is a cubic spline of the input points
 // This function could probably be optimized for real-time a bit better
-module.exports.cubicSpline = (points, tension = 0.5, segments = 25, closed = false) => {
+module.exports.cubicSpline = (
+  points,
+  tension = 0.5,
+  segments = 25,
+  closed = false,
+) => {
   // unroll pairs into flat array
   points = points.reduce((a, b) => a.concat(b), []);
 
@@ -177,13 +197,14 @@ module.exports.cubicSpline = (points, tension = 0.5, segments = 25, closed = fal
   // roll back up into pairs
   const rolled = [];
   for (let i = 0; i < res.length / 2; i++) {
-    rolled.push([ res[i * 2 + 0], res[i * 2 + 1] ]);
+    rolled.push([res[i * 2 + 0], res[i * 2 + 1]]);
   }
   return rolled;
 };
 
-module.exports.intersectLineSegmentLineSegment = intersectLineSegmentLineSegment;
-function intersectLineSegmentLineSegment (p1, p2, p3, p4) {
+module.exports.intersectLineSegmentLineSegment =
+  intersectLineSegmentLineSegment;
+function intersectLineSegmentLineSegment(p1, p2, p3, p4) {
   // Reference:
   // https://github.com/evil-mad/EggBot/blob/master/inkscape_driver/eggbot_hatch.py
   const d21x = p2[0] - p1[0];
@@ -208,14 +229,14 @@ function intersectLineSegmentLineSegment (p1, p2, p3, p4) {
 const FaceCull = {
   BACK: -1,
   FRONT: 1,
-  NONE: 0
+  NONE: 0,
 };
 module.exports.FaceCull = FaceCull;
 
 module.exports.isTriangleVisible = isTriangleVisible;
-function isTriangleVisible (cell, vertices, rayDir, side = FaceCull.BACK) {
+function isTriangleVisible(cell, vertices, rayDir, side = FaceCull.BACK) {
   if (side === FaceCull.NONE) return true;
-  const verts = cell.map(i => vertices[i]);
+  const verts = cell.map((i) => vertices[i]);
   const v0 = verts[0];
   const v1 = verts[1];
   const v2 = verts[2];
@@ -230,32 +251,42 @@ function isTriangleVisible (cell, vertices, rayDir, side = FaceCull.BACK) {
 // Whether the 3D triangle face is visible to the camera
 // i.e. backface / frontface culling
 module.exports.isFaceVisible = isFaceVisible;
-function isFaceVisible (cell, vertices, rayDir, side = FaceCull.BACK) {
+function isFaceVisible(cell, vertices, rayDir, side = FaceCull.BACK) {
   if (side === FaceCull.NONE) return true;
   if (cell.length === 3) {
     return isTriangleVisible(cell, vertices, rayDir, side);
   }
-  if (cell.length !== 4) throw new Error('isFaceVisible can only handle triangles and quads');
-};
+  if (cell.length !== 4)
+    throw new Error("isFaceVisible can only handle triangles and quads");
+}
 
 module.exports.clipPolylinesToBox = clipPolylinesToBox;
-function clipPolylinesToBox (polylines, bbox, border = false, closeLines = true) {
+function clipPolylinesToBox(
+  polylines,
+  bbox,
+  border = false,
+  closeLines = true,
+) {
   if (border) {
-    return polylines.map(line => {
-      const result = lineclip.polygon(line, bbox);
-      if (closeLines && result.length > 2) result.push(result[0]);
-      return result;
-    }).filter(lines => lines.length > 0);
+    return polylines
+      .map((line) => {
+        const result = lineclip.polygon(line, bbox);
+        if (closeLines && result.length > 2) result.push(result[0]);
+        return result;
+      })
+      .filter((lines) => lines.length > 0);
   } else {
-    return polylines.map(line => {
-      return lineclip.polyline(line, bbox);
-    }).reduce((a, b) => a.concat(b), []);
+    return polylines
+      .map((line) => {
+        return lineclip.polyline(line, bbox);
+      })
+      .reduce((a, b) => a.concat(b), []);
   }
 }
 
 // Normal of a 3D triangle face
 module.exports.computeFaceNormal = computeFaceNormal;
-function computeFaceNormal (cell, positions, out = []) {
+function computeFaceNormal(cell, positions, out = []) {
   const a = positions[cell[0]];
   const b = positions[cell[1]];
   const c = positions[cell[2]];
@@ -268,23 +299,34 @@ function computeFaceNormal (cell, positions, out = []) {
 
 // Area of 2D or 3D triangle
 module.exports.computeTriangleArea = computeTriangleArea;
-function computeTriangleArea (a, b, c) {
+function computeTriangleArea(a, b, c) {
   if (a.length >= 3 && b.length >= 3 && c.length >= 3) {
     vec3.subtract(tmp1, c, b);
     vec3.subtract(tmp2, a, b);
     vec3.cross(tmp1, tmp1, tmp2);
     return vec3.length(tmp1) * 0.5;
   } else {
-    return Math.abs((a[0] - c[0]) * (b[1] - a[1]) - (a[0] - b[0]) * (c[1] - a[1])) * 0.5;
+    return (
+      Math.abs((a[0] - c[0]) * (b[1] - a[1]) - (a[0] - b[0]) * (c[1] - a[1])) *
+      0.5
+    );
   }
 }
 
 module.exports.createHatchLines = createHatchLines;
-function createHatchLines (bounds, angle = -Math.PI / 4, spacing = 0.5, out = []) {
+function createHatchLines(
+  bounds,
+  angle = -Math.PI / 4,
+  spacing = 0.5,
+  out = [],
+) {
   // Reference:
   // https://github.com/evil-mad/EggBot/blob/master/inkscape_driver/eggbot_hatch.py
   spacing = Math.abs(spacing);
-  if (spacing === 0) throw new Error('cannot use a spacing of zero as it will run an infinite loop!');
+  if (spacing === 0)
+    throw new Error(
+      "cannot use a spacing of zero as it will run an infinite loop!",
+    );
 
   const xmin = bounds[0][0];
   const ymin = bounds[0][1];
@@ -298,15 +340,15 @@ function createHatchLines (bounds, angle = -Math.PI / 4, spacing = 0.5, out = []
   const rotAngle = Math.PI / 2 - angle;
   const ca = Math.cos(rotAngle);
   const sa = Math.sin(rotAngle);
-  const cx = bounds[0][0] + (w / 2);
-  const cy = bounds[0][1] + (h / 2);
+  const cx = bounds[0][0] + w / 2;
+  const cy = bounds[0][1] + h / 2;
   let i = -r;
   while (i <= r) {
     // Line starts at (i, -r) and goes to (i, +r)
-    const x1 = cx + (i * ca) + (r * sa); //  i * ca - (-r) * sa
-    const y1 = cy + (i * sa) - (r * ca); //  i * sa + (-r) * ca
-    const x2 = cx + (i * ca) - (r * sa); //  i * ca - (+r) * sa
-    const y2 = cy + (i * sa) + (r * ca); //  i * sa + (+r) * ca
+    const x1 = cx + i * ca + r * sa; //  i * ca - (-r) * sa
+    const y1 = cy + i * sa - r * ca; //  i * sa + (-r) * ca
+    const x2 = cx + i * ca - r * sa; //  i * ca - (+r) * sa
+    const y2 = cy + i * sa + r * ca; //  i * sa + (+r) * ca
     i += spacing;
     // Remove any potential hatch lines which are entirely
     // outside of the bounding box
@@ -316,13 +358,16 @@ function createHatchLines (bounds, angle = -Math.PI / 4, spacing = 0.5, out = []
     if ((y1 < ymin && y2 < ymin) || (y1 > ymax && y2 > ymax)) {
       continue;
     }
-    out.push([ [ x1, y1 ], [ x2, y2 ] ]);
+    out.push([
+      [x1, y1],
+      [x2, y2],
+    ]);
   }
   return out;
 }
 
 module.exports.expandTriangle = expandTriangle;
-function expandTriangle (triangle, border = 0) {
+function expandTriangle(triangle, border = 0) {
   if (border === 0) return triangle;
   let centroid = triangleCentroid(triangle);
   triangle[0] = expandVector(triangle[0], centroid, border);
@@ -332,7 +377,7 @@ function expandTriangle (triangle, border = 0) {
 }
 
 module.exports.expandVector = expandVector;
-function expandVector (point, centroid, amount = 0) {
+function expandVector(point, centroid, amount = 0) {
   point = vec2.copy([], point);
   const dir = vec2.subtract([], centroid, point);
   const maxLen = vec2.length(dir);
@@ -343,9 +388,9 @@ function expandVector (point, centroid, amount = 0) {
 }
 
 module.exports.clipLineToTriangle = clipLineToTriangle;
-function clipLineToTriangle (p1, p2, a, b, c, border = 0, result = []) {
+function clipLineToTriangle(p1, p2, a, b, c, border = 0, result = []) {
   if (border !== 0) {
-    let centroid = triangleCentroid([ a, b, c ]);
+    let centroid = triangleCentroid([a, b, c]);
     a = expandVector(a, centroid, border);
     b = expandVector(b, centroid, border);
     c = expandVector(c, centroid, border);
@@ -363,9 +408,9 @@ function clipLineToTriangle (p1, p2, a, b, c, border = 0, result = []) {
 
   // triangle segments
   const segments = [
-    [ a, b ],
-    [ b, c ],
-    [ c, a ]
+    [a, b],
+    [b, c],
+    [c, a],
   ];
 
   for (let i = 0; i < 3; i++) {
@@ -378,7 +423,7 @@ function clipLineToTriangle (p1, p2, a, b, c, border = 0, result = []) {
     if (fract >= 0 && fract <= 1) {
       result.push([
         p1[0] + fract * (p2[0] - p1[0]),
-        p1[1] + fract * (p2[1] - p1[1])
+        p1[1] + fract * (p2[1] - p1[1]),
       ]);
       // when we have 2 result we can stop checking
       if (result.length >= 2) break;
