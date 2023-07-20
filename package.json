@@ -99,6 +99,6 @@
     "url": "https://github.com/mattdesl/canvas-sketch/issues"
   },
   "lint-staged": {
-    "*.js": "prettier --write"
+    "*.js": "npm run format"
   }
 }
