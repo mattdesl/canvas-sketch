@@ -42,8 +42,10 @@
     "glsl-noise": "0.0.0",
     "glslify": "^6.1.1",
     "hex-rgb": "^3.0.0",
+    "husky": "^8.0.3",
     "lerp": "^1.0.3",
     "lineclip": "^1.1.5",
+    "lint-staged": "^13.2.3",
     "load-asset": "^1.2.0",
     "microbundle": "^0.15.1",
     "p5": "^0.7.2",
@@ -68,7 +70,8 @@
     "lib:bundle": "npm run lib:bundle:es && npm run lib:bundle:umd",
     "lib:bundle:es": "microbundle -i lib/canvas-sketch.js --no-compress --external=none --format=esm -o ./dist/",
     "lib:bundle:umd": "microbundle -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=umd -o ./dist/",
-    "lib:watch": "microbundle watch -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=\"esm,umd\" -o ./dist/"
+    "lib:watch": "microbundle watch -i lib/canvas-sketch.js --no-compress --sourcemap=inline --external=none --format=\"esm,umd\" -o ./dist/",
+    "prepare": "husky install"
   },
   "keywords": [
     "sketch",
@@ -94,5 +97,8 @@
   "homepage": "https://github.com/mattdesl/canvas-sketch",
   "bugs": {
     "url": "https://github.com/mattdesl/canvas-sketch/issues"
+  },
+  "lint-staged": {
+    "*.js": "npm run format"
   }
 }
