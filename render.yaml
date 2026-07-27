@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: canvas-sketch-art
+    env: static
+    buildCommand: ""
+    publishPath: "."

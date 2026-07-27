@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instant Generative Art - Drag & Drop</title>
+  <!-- Load canvas-sketch UMD bundle from CDN -->
+  <script src="https://unpkg.com/canvas-sketch@0.7.8/dist/canvas-sketch.umd.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0a0a0c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    canvas {
+      max-width: 90vw;
+      max-height: 80vh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Beautiful UI Elements */
+    .ui-container {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 10000;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 20px;
+    }
+
+    .gen-art-btn {
+      background: linear-gradient(135deg, #ff007f 0%, #7928ca 50%, #4cc9f0 100%);
+      border: none;
+      color: #fff;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(121, 40, 202, 0.4);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 0.5px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .gen-art-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(121, 40, 202, 0.6), 0 0 20px rgba(255, 0, 127, 0.2);
+    }
+
+    .gen-art-btn:active {
+      transform: scale(0.98);
+    }
+
+    .gen-art-btn-icon {
+      font-size: 20px;
+    }
+
+    .export-info {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Drag & Drop Overlay */
+    .gen-art-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 12, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 20000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      color: #fff;
+    }
+
+    .gen-art-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .gen-art-overlay-box {
+      border: 3px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 24px;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    .gen-art-overlay.active .gen-art-overlay-box {
+      border-color: #4cc9f0;
+      box-shadow: 0 0 40px rgba(76, 201, 240, 0.3);
+    }
+
+    .gen-art-overlay-icon {
+      font-size: 70px;
+      margin-bottom: 24px;
+      animation: gen-art-bounce 2s infinite;
+    }
+
+    .gen-art-overlay-text {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(45deg, #ff007f, #4cc9f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gen-art-overlay-subtext {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes gen-art-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating UI Buttons -->
+  <div class="ui-container">
+    <button class="gen-art-btn" id="upload-btn">
+      <span class="gen-art-btn-icon">✨</span> Drag & Drop Photo Here or Click
+    </button>
+    <div class="export-info">Press Cmd + S or Ctrl + S to Save PNG</div>
+  </div>
+
+  <input type="file" id="file-input" accept="image/*" style="display: none;">
+
+  <!-- Fullscreen Drag & Drop Overlay -->
+  <div class="gen-art-overlay" id="drop-overlay">
+    <div class="gen-art-overlay-box">
+      <div class="gen-art-overlay-icon">🎨</div>
+      <div class="gen-art-overlay-text">Drop to Generate Art!</div>
+      <div class="gen-art-overlay-subtext">Instantly turns your photo into a generative masterpiece</div>
+    </div>
+  </div>
+
+  <script>
+    // Asset image loader helper
+    const loadImage = (url) => new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+    });
+
+    // Helper to scale large images down to maximum 1200px dimension
+    function getScaledImage(img, maxDim = 1200) {
+      if (img.width <= maxDim && img.height <= maxDim) {
+        return img;
+      }
+      const canvas = document.createElement('canvas');
+      let w = img.width;
+      let h = img.height;
+      if (w > h) {
+        if (w > maxDim) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        }
+      } else {
+        if (h > maxDim) {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+      }
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      return canvas;
+    }
+
+    let manager;
+    let currentImage;
+
+    const start = async () => {
+      // Load initial baboon image
+      const initialImg = await loadImage('examples/assets/baboon.jpg');
+      currentImage = initialImg;
+
+      const settings = {
+        dimensions: [ currentImage.width, currentImage.height ],
+        parent: document.body
+      };
+
+      const sketch = () => {
+        return ({ context, width, height }) => {
+          // Draw image to canvas
+          context.drawImage(currentImage, 0, 0, width, height);
+
+          // Get pixel data
+          const pixels = context.getImageData(0, 0, width, height);
+          const data = pixels.data;
+          let len = width;
+
+          // Perform generative pixel sorting / glitch art
+          while (len) {
+            const newX = Math.floor(Math.random() * len--);
+            const oldX = len;
+
+            if (Math.random() > 0.85) continue;
+
+            for (let y = 0; y < height; y++) {
+              if (Math.random() > 0.925) continue;
+
+              const newIndex = newX + y * width;
+              const oldIndex = oldX + y * width;
+
+              data[oldIndex * 4 + 0] = data[newIndex * 4 + 2];
+              data[oldIndex * 4 + 1] = data[newIndex * 4 + 2];
+              data[oldIndex * 4 + 2] = data[newIndex * 4 + 2];
+            }
+          }
+
+          // Write back processed pixel data
+          context.putImageData(pixels, 0, 0);
+        };
+      };
+
+      // Run canvas-sketch UMD global
+      manager = await canvasSketch(sketch, settings);
+    };
+
+    // UI event handling
+    const uploadBtn = document.getElementById('upload-btn');
+    const fileInput = document.getElementById('file-input');
+    const dropOverlay = document.getElementById('drop-overlay');
+
+    uploadBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    const handleFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const scaled = getScaledImage(img, 1200);
+          currentImage = scaled;
+          if (manager) {
+            manager.update({
+              dimensions: [ scaled.width, scaled.height ]
+            });
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    });
+
+    let dragCounter = 0;
+
+    window.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      dragCounter++;
+      if (dragCounter === 1) {
+        dropOverlay.classList.add('active');
+      }
+    });
+
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    window.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dragCounter--;
+      if (dragCounter === 0) {
+        dropOverlay.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      dropOverlay.classList.remove('active');
+
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    start();
+  </script>
+</body>
+</html>

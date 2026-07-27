@@ -1,5 +1,8 @@
 ### canvas-sketch
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmpho0sekati%2Fcanvas-sketch)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mpho0sekati/canvas-sketch)
+
 `canvas-sketch` is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.
 
 - :closed_book: [Documentation](./docs/README.md)
